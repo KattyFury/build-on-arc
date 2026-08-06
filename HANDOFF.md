@@ -17,15 +17,23 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 
 | Bước | Thư mục | Trạng thái |
 |---|---|---|
-| 1. Lên ý tưởng | `01-ideation/` | Lý thuyết + prompt xong. **Ví dụ: trống**, chờ build `example/` |
+| 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt v2 + ví dụ thật + mục "prompt từng hụt chỗ nào" |
 | 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | Lý thuyết + 6 câu + core value xong. **Ví dụ: trống** |
 | 3. Plan chi tiết | `03-planning/` | Lý thuyết + prompt xong. **Ví dụ: trống** |
 | 4. Wireframe | `04-wireframe/` | ❌ chưa có |
 | 5. Setup môi trường | `05-setup/` | ❌ chưa có |
 | 6. (chưa đặt tên) | — | ❌ chưa có, user nói sẽ gửi nội dung |
-| Dự án mẫu | `example/` | ❌ chưa dựng |
+| Dự án mẫu | `example/` | Bước 1 xong (`example/docs/01-ideation.md`), chưa có code |
 
-**Ví dụ EZwallet đã gỡ khỏi cả 3 bước (08-06, user chốt).** Chỗ đó giờ là placeholder 🚧, sẽ điền bằng dự án trong `example/` khi build tới.
+**Dự án mẫu: Tip & Lì xì nhanh trên Arc.** Gửi tip bất cứ lúc nào + lì xì dịp Tết, đăng nhập bằng email, ví ẩn phía sau bằng Circle Wallets dev-controlled, app trả gas thay user qua Paymaster. Yêu cầu số một là **tốc độ** — chính nó là thứ dùng để loại Privy ở câu 3.
+
+**Ví dụ EZwallet đã gỡ khỏi cả 3 bước (08-06, user chốt).** Bước 2 và 3 vẫn là placeholder 🚧, điền khi build tới.
+
+### Vòng lặp đã chạy thật 1 lần (Bước 1, 08-06)
+
+Chạy prompt → lòi 5 lỗi quy trình → sửa prompt → ghi lại chỗ hụt. Hai commit tách đôi đúng luật: `ed8510d` (example) + commit sau (hướng dẫn). **Cách này chạy được, cứ thế mà làm tiếp cho Bước 2.**
+
+Lỗi nặng nhất tìm ra: prompt bảo AI "hỏi bạn từng câu" nhưng không bảo nó **DẪN** → AI thành thư ký ghi chép, ngồi đợi user nói xong mới góp ý. Đã thêm khối *"Cách làm việc"* lên đầu prompt. **Bài học chung: prompt nào cũng phải nói rõ ai dẫn ai theo** — áp dụng luôn khi viết prompt cho Bước 4, 5, 6.
 
 ## 2. CÁCH LÀM VIỆC — build song song
 
@@ -40,12 +48,11 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 ## 3. VIỆC TIẾP THEO
 
-**Đang chạy Bước 1 (lên ý tưởng) với user.** Dự án chốt: **lì xì online** (user chốt 08-06: *"lì xì nó đâu thiết thực, nhưng nó vui, chúng ta build luôn"*).
+**Bước 2 — hoàn thiện ý tưởng thành 6 câu PRD.** Việc của Claude Code: giao khối prompt trong `02-hoan-thien-y-tuong/README.md` cho user mang sang Chat, đứng chờ, nhận kết quả về lưu vào `example/docs/02-prd.md`.
 
-Còn phải làm ngay sau khi chốt xong 4 câu của Bước 1:
-- Viết mục *Ví dụ* của `01-ideation/` bằng chính 4 câu vừa trả lời
-- Dựng khung `example/`
-- User sẽ gửi nội dung sơ cho Bước 4, 5, 6
+⚠️ **Trước khi giao, xem lại prompt của Bước 2 có dính lỗi số 4 không** — tức có bảo AI *dẫn* hay chỉ bảo nó hỏi. Bước 2 hiện **chưa có khối prompt riêng**, mới chỉ có 6 câu ở dạng lý thuyết → phải soạn prompt cho nó, và soạn theo đúng khung đã sửa ở Bước 1.
+
+Sau đó: user sẽ gửi nội dung sơ cho Bước 4, 5, 6.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
