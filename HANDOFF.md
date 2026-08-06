@@ -59,7 +59,9 @@ Repo: https://github.com/KattyFury/ezwallet (public, MIT). Trên máy này nằm
 
 ### 3.3 ⚠️ Guardrail về EZwallet — nói sai là mất uy tín
 
-- **KHÔNG gọi EZwallet là "self-custody" hay "non-custodial"** kiểu tuyệt đối. Đúng là **user-controlled**: khoá do Circle MPC giữ, user ký bằng PIN. (Đã từng sai chỗ này ở Bước 2, sửa rồi — xem `PITCH.md` mục 7 guardrail #3.)
+- **EZwallet là `semi-custodial` — dùng đúng một chữ này, mọi bước, không biến thể.** Không gọi là "self-custody" / "non-custodial" (nói quá quyền của user), cũng không gọi trống không là "custodial" (nói quá quyền của Circle). Circle gọi mô hình này là *user-controlled wallets*; đó là tên sản phẩm của Circle, không phải nhãn custody — cần nhắc thì để trong ngoặc.
+  Lần đầu xuất hiện trong mỗi bước thì **kèm luôn cơ chế trong một câu**, vì "semi-custodial" là từ dân gian, không có định nghĩa chuẩn: *khoá do Circle MPC giữ, mọi chữ ký đều cần PIN của user, không có seed phrase để export; quên PIN thì khôi phục bằng câu hỏi bảo mật.*
+  (Bước 2 từng viết "self-custody", đã sửa. Xem `PITCH.md` mục 7 guardrail #3 + mục 10 của repo ezwallet.)
 - **Luôn kèm chữ Arc Testnet** khi nhắc tới tiền. Tiền test, không có giá trị thật.
 - **Không chế số liệu** người dùng / TVL / số giao dịch.
 - **Chưa audit** — không nói đã audit.
@@ -89,3 +91,5 @@ Không thuộc repo này nhưng đang treo, và nó chặn mục 3.3 gạch cu�
 - Có → chốt an toàn đã bắt được, sao lưu tự tắt, app không hỏng gì, cần đổi cách verify ở `functions/api/sync.js`.
 
 Chi tiết đầy đủ: `HANDOFF.md` của repo ezwallet, mục 9 việc 2 + checklist mục 3.
+
+**Chưa đồng bộ chữ `semi-custodial` sang repo ezwallet.** User chốt 08-06 dùng "semi-custodial" (mục 3.3). Repo ezwallet đang dùng "user-controlled" ở `PITCH.md` mục 7 guardrail #3 + mục 10 (bảng câu hỏi khó) + `SECURITY.md`. Hai repo đang nói khác nhau về cùng một thứ → phải sửa ezwallet cho khớp, đây là **tài liệu tuyên bố ra ngoài** nên sửa xong hỏi user duyệt trước khi push.
