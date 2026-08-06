@@ -18,7 +18,7 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 | Bước | Thư mục | Trạng thái |
 |---|---|---|
 | 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt v2 + ví dụ thật + mục "prompt từng hụt chỗ nào" |
-| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | Lý thuyết + 6 câu + core value xong. **Ví dụ: trống** |
+| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | Lý thuyết + prompt xong (soạn 08-06, CHƯA chạy thật). **Ví dụ: trống** |
 | 3. Plan chi tiết | `03-planning/` | Lý thuyết + prompt xong. **Ví dụ: trống** |
 | 4. Wireframe | `04-wireframe/` | ❌ chưa có |
 | 5. Setup môi trường | `05-setup/` | ❌ chưa có |
@@ -31,7 +31,7 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 
 ### Vòng lặp đã chạy thật 1 lần (Bước 1, 08-06)
 
-Chạy prompt → lòi 5 lỗi quy trình → sửa prompt → ghi lại chỗ hụt. Hai commit tách đôi đúng luật: `ed8510d` (example) + commit sau (hướng dẫn). **Cách này chạy được, cứ thế mà làm tiếp cho Bước 2.**
+Chạy prompt → lòi 5 lỗi quy trình → sửa prompt → ghi lại chỗ hụt. Hai commit tách đôi đúng luật: `ed8510d` (example) + `ba5d481` (hướng dẫn). **Cách này chạy được, cứ thế mà làm tiếp cho Bước 2.**
 
 Lỗi nặng nhất tìm ra: prompt bảo AI "hỏi bạn từng câu" nhưng không bảo nó **DẪN** → AI thành thư ký ghi chép, ngồi đợi user nói xong mới góp ý. Đã thêm khối *"Cách làm việc"* lên đầu prompt. **Bài học chung: prompt nào cũng phải nói rõ ai dẫn ai theo** — áp dụng luôn khi viết prompt cho Bước 4, 5, 6.
 
@@ -77,7 +77,11 @@ Cái **không** nới: vẫn phải là thứ mình hoặc người mình biết
 
 Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên X. Câu ngắn. Không sáo. Bảng khi so sánh, blockquote cho ghi chú đáng nhớ. Mỗi bước kết bằng một câu dẫn sang bước sau.
 
-**Dấu gạch dài: chỉ dùng en dash `–`, không dùng em dash `—`** (luật trong `CLAUDE.md`). ⚠️ Mấy bài đang có sẵn còn dùng em dash, cần rà lại một lượt.
+**Dấu gạch dài: chỉ dùng en dash , không dùng em dash ** (luật trong ).
+
+> 🔴 **NỢ – VIỆC ĐẦU TIÊN NÊN LÀM KHI QUAY LẠI.** Đếm 08-06: **80 chỗ đang dùng em dash sai luật**, rải khắp repo (01: 21 · example/docs: 18 · README: 11 · HANDOFF: 10 · 02: 9 · example/README: 7 · 03: 3 · CLAUDE.md: 1). Phần lớn do chính mình viết vào mấy phiên gần đây, không phải bài cũ.
+>
+> ⚠️ **ĐỪNG replace-all mù.** Đúng 1 chỗ phải GIỮ em dash: dòng phát biểu luật trong  (—) — thay nó là luật tự mâu thuẫn. Cách an toàn: thay hết rồi khôi phục lại đúng dòng đó, hoặc bỏ qua file  khi thay.
 
 ## 5. Git
 
