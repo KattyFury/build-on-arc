@@ -54,13 +54,25 @@ Chốt được ý tưởng rồi, tổng hợp thành 1 câu hỏi feasibility,
 Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới qua Bước 2.
 ```
 
-## Ví dụ minh họa
+## Ví dụ: EZwallet đi qua 4 câu
 
-Case study thật, đi hết 4 câu.
+Case study thật, sản phẩm đã chạy được: [ezwallet.cash](https://ezwallet.cash) — ví crypto đơn giản đến mức mẹ mình cũng dùng được.
 
-**Ý tưởng:** platform cho web2 seller tự tạo shop bán digital item (ebook, course, preset...), eCommerce checkout trên Arc.
+**Câu 0 — Định hướng Arc.** Khớp usecase *Peer-to-peer payments*: gửi và nhận stablecoin giữa người với người. Chạm thêm *Stablecoin FX* ở phần đổi USDC ↔ EURC. Quan trọng hơn là nó ăn đúng thứ chỉ Arc mới có: **USDC chính là token trả phí** của chain, nên có thể bỏ luôn bước "mua token gas trước khi chuyển tiền" — chain khác không bỏ được bước này.
 
-0. **Định hướng Arc:** đúng usecase eCommerce checkout của Arc.
-1. **Vấn đề thật, đúng đối tượng:** web2 seller bán hàng số ở Việt Nam, không cần biết crypto, chỉ cần trải nghiệm dễ như Gumroad.
-2. **Dẫn đầu hay cạnh tranh:** Gumroad, Payhip, Stan Store đã làm tốt cho web2 seller rồi, nhưng đều qua Stripe/PayPal, giữ tiền vài ngày, ăn forex, dễ bị chargeback. Điểm hơn hẳn là settlement USDC xuyên biên giới dưới 1 giây.
-3. **Khả thi:** check với Docs AI xác nhận cả 3 phần đều có sẵn. Ví riêng từng seller qua Developer-Controlled Wallets, tiền về thẳng ví seller (primarySaleRecipient) không qua nền tảng, tự động trích phí platform (platformFeeRecipient). Checkout/escrow purpose-built, có sẵn arc-escrow để fork. Onboarding không cần seed phrase qua Privy, Crossmint, hoặc Dynamic.
+**Câu 1 — Vấn đề thật, đúng đối tượng.** Vấn đề tự trải qua, không đoán: mọi ví từng đưa cho người không chơi crypto đều chết ở đúng một chỗ — màn hình seed phrase. 12 từ tiếng Anh ngẫu nhiên, "ghi ra giấy, mất là mất tiền". Đối tượng là người chưa từng đụng crypto, đặc biệt người lớn tuổi mắt kém. Thước đo cụ thể tới mức một câu: *mẹ mình có dùng được không?*
+
+**Câu 2 — Dẫn đầu hay cạnh tranh.** Ví thì đầy rồi: MetaMask, Coinbase Wallet, Trust Wallet. Không giả vờ là chưa ai làm. Điểm hơn hẳn nằm ở chỗ chọn khác: mấy ví kia làm cho người **đã** hiểu crypto và cố làm mọi thứ; EZwallet cố tình chỉ làm 4 việc (gửi / nhận / đổi / danh bạ), cho người **chưa** hiểu gì. Cụ thể là bỏ hẳn seed phrase (email + PIN 6 số), bỏ luôn dApp browser — vì đó chính là chỗ người già bị lừa. Cạnh tranh ở "ai dùng được", không cạnh tranh ở "có bao nhiêu tính năng".
+
+**Câu 3 — Khả thi.** Trước khi code, xác nhận từng mảnh đều đã có sẵn, không phải tự phát minh:
+
+| Cần gì | Dùng cái có sẵn |
+|---|---|
+| Đăng nhập không seed phrase | Circle User-Controlled Wallets (MPC giữ khoá, PIN ký từng giao dịch) |
+| Không phải mua token gas | Arc dùng USDC làm native gas |
+| Lời nhắn đi kèm tiền | Memo precompile của Arc |
+| Đổi tiền | Circle Stablecoin Kit, route qua LiFi |
+
+Kết quả sau khi làm thật: phí đo được dưới $0.01/giao dịch, chạy trên Arc Testnet, và người làm không có nền lập trình.
+
+> Chú ý cách trả lời câu 2 và câu 3: không câu nào là "sẽ", "dự kiến", "chắc là được". Câu 2 chỉ ra điểm hơn **cụ thể** thay vì nói "UX tốt hơn". Câu 3 chỉ đúng tên thứ có sẵn để dùng thay vì nói "về mặt kỹ thuật thì khả thi". Trả lời được ở mức này mới nên qua Bước 2.

@@ -17,13 +17,18 @@ Nhiều người có idea xong là nhảy vào code luôn. Kết quả là sản
 
 Không cần viết dài, chỉ cần đủ rõ để cả bạn và AI đều hiểu đang build cái gì.
 
-## Ví dụ: QR Pay
+## Ví dụ: 6 câu của EZwallet
 
-- **App này là gì?** App giúp người dùng phổ thông chuyển và nhận tiền bằng QR, trải nghiệm đơn giản như quét QR ngân hàng.
-- **Ai sẽ dùng nó?** Người dùng phổ thông.
-- **Nó giải quyết vấn đề gì?** Nạp rút phải thân thiện với người dùng phổ thông.
-- **Tính năng nào?** Đăng nhập bằng Gmail, bảo mật bằng passkey và PIN, gửi tiền bằng QR, nhận tiền bằng QR, có lịch sử giao dịch, có danh bạ khách quen, có kho QR thường dùng, hỗ trợ nhiều ngôn ngữ và tiền tệ.
-- **Không được làm gì?** Không kết nối ví bên ngoài, không cụm từ khôi phục bí mật.
+Vẫn là ý tưởng đã qua Bước 1 ([ezwallet.cash](https://ezwallet.cash)), giờ viết ra thành 6 câu.
+
+1. **App này là gì?** Ví stablecoin mobile-first, ẩn hết thuật ngữ kỹ thuật, dùng quen tay như app ngân hàng.
+2. **Ai sẽ dùng nó?** Người chưa từng đụng crypto, không biết ví hay địa chỉ hay gas là gì — đặc biệt người lớn tuổi, mắt kém.
+3. **Nó giải quyết vấn đề gì?** Seed phrase, địa chỉ `0x` dài ngoằng, phải mua token gas riêng mới chuyển được tiền. Mỗi thứ là một bức tường khiến người không rành tech không dùng được crypto dù muốn.
+4. **Nó có những tính năng nào?** Đăng nhập email + PIN 6 số; gửi kèm lời nhắn nằm trên blockchain; nhận bằng QR, đặt sẵn số tiền và lưu vào kho QR; đổi tiền bằng cách kéo thanh trượt %; danh bạ có ảnh; lịch sử kèm biên lai lưu về máy; xem số dư theo đồng tiền quen thuộc.
+5. **Người dùng sẽ sử dụng nó ra sao?** Mở app, nhập email nhận mã một lần rồi đặt PIN 6 số. Gửi thì chọn tên trong danh bạ hoặc quét QR, gõ số tiền, kèm lời nhắn. Nhận thì đưa QR của mình ra. Đổi tiền thì kéo thanh trượt.
+6. **Nó không được làm những gì?** Không seed phrase. Không hiện địa chỉ `0x` làm mặc định. Không bắt gõ số thập phân khi đổi tiền. Không có dApp browser — cố ý, vì đó là chỗ người già bị lừa. Không giữ tiền hộ, không hứa lãi, không token, không airdrop.
+
+> Câu 6 là câu hay bị bỏ nhất và cũng đáng giá nhất. "Không có dApp browser" nghe như thiếu tính năng, nhưng chính nó ngăn AI tự ý thêm vào một thứ phá hỏng sản phẩm ở tháng thứ ba. Viết ranh giới ra sớm rẻ hơn gỡ ra sau nhiều.
 
 ## Rút ra core value
 
@@ -31,15 +36,20 @@ Tới đây AI mới biết mình muốn build cái gì, chưa biết mình tin 
 
 Phép test: bỏ hết tên sản phẩm và chi tiết feature ra khỏi câu core value. Nếu câu đó vẫn đứng vững như một niềm tin độc lập, đúng rồi. Nếu phải nhắc tới sản phẩm mới hiểu được, đó vẫn là mô tả sản phẩm, chưa phải core value.
 
-## Ví dụ minh họa: ví dành cho người không biết gì về tech
+### Core value của EZwallet
 
-1. **App này là gì?** Ví crypto tối giản, ẩn hết thuật ngữ kỹ thuật, dùng như app ngân hàng quen thuộc.
-2. **Ai sẽ dùng nó?** Người chưa từng đụng crypto, không biết ví, địa chỉ, hay gas là gì.
-3. **Nó giải quyết vấn đề gì?** Rào cản kỹ thuật, seed phrase, địa chỉ dài, chọn nhầm mạng, token gas riêng, khiến người không rành tech không dùng được crypto dù muốn.
-4. **Tính năng nào?** Đăng nhập email + PIN, gửi/nhận qua QR hoặc danh bạ, xem số dư theo tiền tệ quen thuộc, gas trả bằng chính token đang cầm.
-5. **Người dùng sử dụng ra sao?** Mở app, đăng nhập email + PIN, quét QR hoặc chọn liên hệ để gửi, đưa QR cá nhân ra để nhận.
-6. **Không được làm gì?** Không bắt nhớ seed phrase, không hiện địa chỉ ví làm mặc định, không bắt chọn mạng thủ công, không giữ tiền hộ người dùng.
+> Con người không cần thích nghi với crypto. Crypto phải thích nghi với con người, đơn giản đến mức ai cũng dùng được mà vẫn giữ trọn quyền sở hữu tiền của mình.
 
-Core value, chạy qua phép test bỏ tên sản phẩm: *Self-custody shouldn't be a privilege for the tech-savvy. It should be a right for everyone.*
+Chạy qua phép test: trong câu đó không có chữ "EZwallet", không có chữ "PIN", không có chữ "thanh trượt". Bỏ hết sản phẩm đi câu vẫn đứng vững như một niềm tin. Đạt.
+
+Đem so với mấy câu dễ nhầm là core value:
+
+| Câu | Thực ra là gì |
+|---|---|
+| "Đăng nhập bằng email + PIN, không seed phrase" | Feature |
+| "Ví crypto đơn giản đến mức mẹ mình cũng dùng được" | Slogan — hay, nhưng phải nhắc tới sản phẩm mới hiểu |
+| "Crypto phải thích nghi với con người, không phải ngược lại" | Core value |
+
+Có câu này rồi thì mỗi lần phân vân "thêm tính năng này không", hỏi lại nó là ra. Thêm dApp browser vào ví cho người già? Bắt người ta thích nghi với crypto. Không thêm.
 
 Xong bước này mới qua Bước 3, mô tả chi tiết từng tính năng, luồng sử dụng và giao diện để AI biết phải build như thế nào.
