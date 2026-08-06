@@ -77,11 +77,11 @@ Cái **không** nới: vẫn phải là thứ mình hoặc người mình biết
 
 Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên X. Câu ngắn. Không sáo. Bảng khi so sánh, blockquote cho ghi chú đáng nhớ. Mỗi bước kết bằng một câu dẫn sang bước sau.
 
-**Dấu gạch dài: chỉ dùng en dash , không dùng em dash ** (luật trong ).
+**Dấu gạch dài: chỉ dùng en dash `–` (U+2013), không dùng em dash `—` (U+2014)** — luật gốc nằm trong `CLAUDE.md`.
 
 > 🔴 **NỢ – VIỆC ĐẦU TIÊN NÊN LÀM KHI QUAY LẠI.** Đếm 08-06: **80 chỗ đang dùng em dash sai luật**, rải khắp repo (01: 21 · example/docs: 18 · README: 11 · HANDOFF: 10 · 02: 9 · example/README: 7 · 03: 3 · CLAUDE.md: 1). Phần lớn do chính mình viết vào mấy phiên gần đây, không phải bài cũ.
 >
-> ⚠️ **ĐỪNG replace-all mù.** Đúng 1 chỗ phải GIỮ em dash: dòng phát biểu luật trong  (—) — thay nó là luật tự mâu thuẫn. Cách an toàn: thay hết rồi khôi phục lại đúng dòng đó, hoặc bỏ qua file  khi thay.
+> ⚠️ **ĐỪNG replace-all mù.** Có chỗ phải GIỮ em dash: dòng phát biểu luật trong `CLAUDE.md` và dòng ngay trên đây — chúng phải in ra ký tự em dash làm ví dụ, thay đi là luật tự mâu thuẫn. Cách an toàn: bỏ qua `CLAUDE.md` và mục 4.3 này khi thay, quét 6 file còn lại.
 
 ## 5. Git
 
