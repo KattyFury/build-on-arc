@@ -1,95 +1,75 @@
 # HANDOFF – build-on-arc
 
-> File làm việc, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
+> File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
+> Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
 > **Cập nhật:** 2026-08-06
 
 ---
 
 ## 0. Repo này là gì
 
-Series hướng dẫn build app trên Arc network, viết cho người Việt không rành crypto và không có nền lập trình. Mỗi bước = 1 thư mục = 1 `README.md`. Nội dung gốc là loạt bài **"Build on Arc bằng Claude Code"** đăng trên X của [@0xhieuxyz](https://x.com/0xhieuxyz) — repo này là bản có nhà, vì X thì bài chết sau 48 giờ.
+Series hướng dẫn build app trên Arc, viết cho người Việt không rành crypto và không có nền lập trình, **kèm luôn dự án mẫu trong `example/`**. Nội dung gốc là loạt bài "Build on Arc bằng Claude Code" trên X của [@0xhieuxyz](https://x.com/0xhieuxyz) — repo này là bản có nhà, vì X thì bài chết sau 48 giờ.
 
 - GitHub: https://github.com/KattyFury/build-on-arc (public)
-- Thư mục local: `D:\Files\Claude\build_on_arc\build-on-arc`
+- Local: `D:\Files\Claude\build_on_arc\build-on-arc`
 
 ## 1. Đang ở đâu
 
 | Bước | Thư mục | Trạng thái |
 |---|---|---|
-| 1. Lên ý tưởng | `01-ideation/` | ✅ xong — 4 câu (định hướng Arc · vấn đề thật · dẫn đầu hay cạnh tranh · khả thi) + prompt + ví dụ EZwallet |
-| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ xong — 6 câu PRD + core value + phép test bỏ tên sản phẩm + ví dụ EZwallet |
-| 3. Plan chi tiết | `03-planning/` | ✅ xong — prompt Senior Product Consultant (hỏi từng nhóm một) + ví dụ EZwallet |
+| 1. Lên ý tưởng | `01-ideation/` | Lý thuyết + prompt xong. **Ví dụ: trống**, chờ build `example/` |
+| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | Lý thuyết + 6 câu + core value xong. **Ví dụ: trống** |
+| 3. Plan chi tiết | `03-planning/` | Lý thuyết + prompt xong. **Ví dụ: trống** |
 | 4. Wireframe | `04-wireframe/` | ❌ chưa có |
 | 5. Setup môi trường | `05-setup/` | ❌ chưa có |
+| 6. (chưa đặt tên) | — | ❌ chưa có, user nói sẽ gửi nội dung |
+| Dự án mẫu | `example/` | ❌ chưa dựng |
 
-Working tree sạch, đã push hết. Commit cuối: `c049238`.
+**Ví dụ EZwallet đã gỡ khỏi cả 3 bước (08-06, user chốt).** Chỗ đó giờ là placeholder 🚧, sẽ điền bằng dự án trong `example/` khi build tới.
 
-## 2. VIỆC TIẾP THEO — Bước 4 (wireframe)
+## 2. CÁCH LÀM VIỆC — build song song
 
-**Đang chờ user paste nội dung Tập 4 từ series X**, giống cách đã làm với Tập 3.
+Đây là quyết định lớn nhất của repo, đừng làm khác:
 
-Vì sao chờ chứ không tự viết: bản của user có mấy câu là trải nghiệm thật ("token hết nhanh khủng khiếp", "AI làm chứ chẳng phải anh em làm") — viết hộ sẽ ra giọng generic, mất đúng thứ làm series này đáng đọc. Cách làm đã chạy ổn ở Bước 3: **user paste bài gốc → giữ nguyên luận điểm + giọng văn của user, chỉ thêm phần ví dụ EZwallet và mấy chỗ làm rõ cơ chế.**
+1. Chạy bước N với user (mình đóng đúng vai prompt trong bài mô tả)
+2. Build phần tương ứng vào `example/`
+3. Prompt hụt chỗ nào, hỏi thiếu, hỏi thừa → **sửa README của bước đó** + ghi vào mục *"Prompt này từng hụt chỗ nào"*
+4. **Tách commit:** một commit build `example/`, một commit sửa hướng dẫn
 
-Sau Bước 4 thì tới Bước 5 (setup môi trường) — README ghi rõ cần **2 bản: dùng Terminal và không cần Terminal cho newbie**.
+Lý do tách commit: `git log` trở thành bằng chứng cho người đọc thấy prompt tiến hoá thế nào, không phải xịn sẵn từ đầu. Không series nào làm phần này.
 
-## 3. QUY ĐỊNH — đọc trước khi viết bước mới
+## 3. VIỆC TIẾP THEO
 
-### 3.1 Ví dụ xuyên suốt (đã ghi trong `README.md`, mục "Quy định")
+**Đang chạy Bước 1 (lên ý tưởng) với user.** Dự án chốt: **lì xì online** (user chốt 08-06: *"lì xì nó đâu thiết thực, nhưng nó vui, chúng ta build luôn"*).
 
-Mọi bước dùng **chung một ví dụ duy nhất là EZwallet**. Đây là quy định, không phải gợi ý:
+Còn phải làm ngay sau khi chốt xong 4 câu của Bước 1:
+- Viết mục *Ví dụ* của `01-ideation/` bằng chính 4 câu vừa trả lời
+- Dựng khung `example/`
+- User sẽ gửi nội dung sơ cho Bước 4, 5, 6
 
-- Mỗi bước có **đúng một** mục ví dụ, tên `## Ví dụ: ...`, đặt ngay sau phần lý thuyết.
-- Ví dụ phải **nối tiếp** kết quả EZwallet ở bước trước, không dựng lại từ đầu, không đổi sang sản phẩm khác.
-- **Chỉ nói những gì EZwallet làm thật.** Cần dẫn chứng thì lấy từ repo ezwallet, không tự chế con số.
+## 4. QUY ĐỊNH VIẾT BÀI
 
-Lý do: người đọc chỉ nạp bối cảnh một lần rồi theo tới cuối, và EZwallet là sản phẩm chạy thật nên mọi câu trong ví dụ đều kiểm chứng được.
+### 4.1 Ví dụ xuyên suốt
 
-### 3.2 Lấy dữ kiện EZwallet ở đâu
+Mọi bước dùng chung dự án trong `example/`. Đã ghi trong `README.md` mục "Quy định" — sửa thì sửa cả hai chỗ cho khớp.
 
-Repo: https://github.com/KattyFury/ezwallet (public, MIT). Trên máy này nằm ở `D:\Files\Claude\build_on_arc\ezwallet`.
+- Mỗi bước đúng **một** mục ví dụ, tên `## Ví dụ: ...`, đứng ngay sau phần lý thuyết.
+- Nối tiếp bước trước, không dựng lại từ đầu, không đổi sản phẩm giữa chừng.
+- **Chỉ nói những gì `example/` làm thật.** Dẫn chứng thì trỏ vào file thật, không chế số liệu.
+- **Cách viết ví dụ:** đừng bịa câu hỏi rồi bịa câu trả lời. Lấy **quyết định có thật** trong `example/` rồi dựng ngược lại thành tình huống đã sinh ra nó.
 
-| Cần gì | Đọc file nào |
-|---|---|
-| Fact sheet, guardrails, câu hỏi khó | `PITCH.md` |
-| Trạng thái kỹ thuật thật, quyết định đã chốt, gotcha | `HANDOFF.md` |
-| Tính năng, stack, giới hạn | `README.md` |
-| Mô hình custody, điểm yếu đã biết | `SECURITY.md` |
+### 4.2 Tiêu chí ý tưởng đã nới (08-06)
 
-**Cách viết ví dụ cho bước mới:** đừng bịa câu hỏi rồi bịa câu trả lời. Lấy **quyết định có thật** trong repo ezwallet rồi dựng ngược lại thành tình huống đã sinh ra nó. Bước 3 làm đúng kiểu này — `GAS_RESERVE_USDC = 1`, luật gộp "bản mới nhất thắng", `idempotencyKey`, "đọc hỏng thì hiện `…` chứ không vẽ 0" đều là code thật.
+Bước 1 Câu 1 ban đầu bắt ý tưởng phải giải **vấn đề thiết thực**. User nới ra: **thứ vui, thứ mình thích, thứ người ta thật sự muốn dùng cũng được tính** — lì xì không giải quyết vấn đề gì cả nhưng vẫn đáng build.
 
-### 3.3 ⚠️ Guardrail về EZwallet — nói sai là mất uy tín
+Cái **không** nới: vẫn phải là thứ mình hoặc người mình biết **thật sự làm ngoài đời**, không ngồi tưởng tượng ra.
 
-- **EZwallet là `semi-custodial` — dùng đúng một chữ này, mọi bước, không biến thể.** Không gọi là "self-custody" / "non-custodial" (nói quá quyền của user), cũng không gọi trống không là "custodial" (nói quá quyền của Circle). Circle gọi mô hình này là *user-controlled wallets*; đó là tên sản phẩm của Circle, không phải nhãn custody — cần nhắc thì để trong ngoặc.
-  Lần đầu xuất hiện trong mỗi bước thì **kèm luôn cơ chế trong một câu**, vì "semi-custodial" là từ dân gian, không có định nghĩa chuẩn: *khoá do Circle MPC giữ, mọi chữ ký đều cần PIN của user, không có seed phrase để export; quên PIN thì khôi phục bằng câu hỏi bảo mật.*
-  (Bước 2 từng viết "self-custody", đã sửa. Xem `PITCH.md` mục 7 guardrail #3 + mục 10 của repo ezwallet.)
-- **Luôn kèm chữ Arc Testnet** khi nhắc tới tiền. Tiền test, không có giá trị thật.
-- **Không chế số liệu** người dùng / TVL / số giao dịch.
-- **Chưa audit** — không nói đã audit.
-- **Chưa được shill tính năng sao lưu danh bạ** cho tới khi test xong trên máy thật (xem mục 5).
+### 4.3 Giọng văn
 
-### 3.4 Giọng văn
+Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên X. Câu ngắn. Không sáo. Bảng khi so sánh, blockquote cho ghi chú đáng nhớ. Mỗi bước kết bằng một câu dẫn sang bước sau.
 
-Tiếng Việt đời thường, xưng "mình"/"anh em" như bài gốc trên X. Câu ngắn. Không sáo. Bảng khi so sánh, blockquote cho ghi chú đáng nhớ. Mỗi bước kết bằng một câu dẫn sang bước sau ("Xong bước này mới qua Bước N…").
+**Dấu gạch dài: chỉ dùng en dash `–`, không dùng em dash `—`** (luật trong `CLAUDE.md`). ⚠️ Mấy bài đang có sẵn còn dùng em dash, cần rà lại một lượt.
 
-## 4. Git
+## 5. Git
 
-Remote `origin` = GitHub, branch `main`. Mở máy khác:
-
-```bash
-git clone https://github.com/KattyFury/build-on-arc.git
-```
-
-Xong việc là commit + push ngay, đừng để commit nằm im ở local.
-
-## 5. Việc còn nợ ở repo KHÁC (ezwallet) — đừng quên
-
-Không thuộc repo này nhưng đang treo, và nó chặn mục 3.3 gạch cuối:
-
-**Sao lưu danh bạ bằng auth chữ ký PIN đã code + deploy + bật KV xong (08-06), còn đúng 1 việc cần MÁY THẬT:** mở ezwallet.cash trên điện thoại, đăng nhập bằng PIN, xem Console có dòng đỏ `[sync] địa chỉ recover từ chữ ký KHÔNG khớp ví đang mở` không.
-
-- Không có dòng đó → xong, sao lưu chạy thật, và mục 3.3 gạch cuối được gỡ.
-- Có → chốt an toàn đã bắt được, sao lưu tự tắt, app không hỏng gì, cần đổi cách verify ở `functions/api/sync.js`.
-
-Chi tiết đầy đủ: `HANDOFF.md` của repo ezwallet, mục 9 việc 2 + checklist mục 3.
-
-**Chưa đồng bộ chữ `semi-custodial` sang repo ezwallet.** User chốt 08-06 dùng "semi-custodial" (mục 3.3). Repo ezwallet đang dùng "user-controlled" ở `PITCH.md` mục 7 guardrail #3 + mục 10 (bảng câu hỏi khó) + `SECURITY.md`. Hai repo đang nói khác nhau về cùng một thứ → phải sửa ezwallet cho khớp, đây là **tài liệu tuyên bố ra ngoài** nên sửa xong hỏi user duyệt trước khi push.
+Remote `origin` = GitHub, branch `main`. Xong việc là commit + push ngay, đừng để commit nằm im ở local.

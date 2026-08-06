@@ -16,11 +16,13 @@ Usecase chính Arc định hướng trong [docs.arc.io](https://docs.arc.io):
 
 Có ý tưởng rồi thì check ý tưởng có khớp 1 trong 4 hướng này không. Chưa có ý tưởng thì đây là điểm bắt đầu.
 
-### Câu 1: Vấn đề thật, đúng đối tượng
+### Câu 1: Thật, và đúng đối tượng
 
-Xác định vấn đề thực tế cần giải và đối tượng khách hàng, trong chính xã hội Việt Nam. Arc định hướng builder địa phương giải vấn đề địa phương, những thứ gần gũi như bỏ heo, chơi hụi, từ thiện, lì xì... đều có thể biến thành app.
+Xác định mình đang làm cho ai, trong chính xã hội Việt Nam. Arc định hướng builder địa phương làm cho người địa phương, những thứ gần gũi như bỏ heo, chơi hụi, từ thiện, lì xì... đều biến thành app được.
 
-Vấn đề đưa ra phải là thứ chính mình hoặc người mình biết đã tự trải qua, không đoán hoặc tưởng tượng ra.
+**Không nhất thiết phải giải quyết một vấn đề.** Thứ vui, thứ mình thích, thứ người ta thật sự muốn dùng cũng tính. Lì xì đâu giải quyết vấn đề gì — nhưng cả nước vẫn lì xì mỗi năm. App vui mà có người dùng thì đáng build hơn app "giải quyết nỗi đau" mà chẳng ai mở lần thứ hai.
+
+Cái không được nới: nó phải là thứ **chính mình hoặc người mình biết thật sự làm ngoài đời**. Không ngồi tưởng tượng ra một thói quen rồi build app cho cái thói quen đó.
 
 ### Câu 2: Dẫn đầu hay cạnh tranh
 
@@ -42,8 +44,8 @@ Hỏi trước: Bạn có ý tưởng chưa, hay còn chưa biết build gì? C�
 CÂU 0: Định hướng Arc
 Gợi ý 4 định hướng Arc: Peer-to-peer payments, eCommerce checkout, Stablecoin FX, Agentic economy. Có ý tưởng rồi thì check ý tưởng có khớp 1 trong 4 hướng này không.
 
-CÂU 1: Vấn đề thật, đúng đối tượng
-Xác định vấn đề thực tế cần giải và đối tượng khách hàng, trong chính xã hội Việt Nam. Arc định hướng builder địa phương giải vấn đề địa phương.
+CÂU 1: Thật, và đúng đối tượng
+Xác định mình làm cho ai, trong chính xã hội Việt Nam. Arc định hướng builder địa phương làm cho người địa phương. KHÔNG bắt buộc phải giải quyết một vấn đề — thứ vui, thứ người ta thật sự muốn dùng cũng tính. Nhưng nó phải là thứ mình hoặc người mình biết THẬT SỰ làm ngoài đời, không tưởng tượng ra.
 
 CÂU 2: Dẫn đầu hay cạnh tranh
 Ý tưởng có lead mảng này không? Nếu đã có dự án làm rồi, ưu điểm cạnh tranh là gì?
@@ -54,25 +56,8 @@ Chốt được ý tưởng rồi, tổng hợp thành 1 câu hỏi feasibility,
 Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới qua Bước 2.
 ```
 
-## Ví dụ: EZwallet đi qua 4 câu
+## Ví dụ
 
-Case study thật, sản phẩm đã chạy được: [ezwallet.cash](https://ezwallet.cash) — ví crypto đơn giản đến mức mẹ mình cũng dùng được.
-
-**Câu 0 — Định hướng Arc.** Khớp usecase *Peer-to-peer payments*: gửi và nhận stablecoin giữa người với người. Chạm thêm *Stablecoin FX* ở phần đổi USDC ↔ EURC. Quan trọng hơn là nó ăn đúng thứ chỉ Arc mới có: **USDC chính là token trả phí** của chain, nên có thể bỏ luôn bước "mua token gas trước khi chuyển tiền" — chain khác không bỏ được bước này.
-
-**Câu 1 — Vấn đề thật, đúng đối tượng.** Vấn đề tự trải qua, không đoán: mọi ví từng đưa cho người không chơi crypto đều chết ở đúng một chỗ — màn hình seed phrase. 12 từ tiếng Anh ngẫu nhiên, "ghi ra giấy, mất là mất tiền". Đối tượng là người chưa từng đụng crypto, đặc biệt người lớn tuổi mắt kém. Thước đo cụ thể tới mức một câu: *mẹ mình có dùng được không?*
-
-**Câu 2 — Dẫn đầu hay cạnh tranh.** Ví thì đầy rồi: MetaMask, Coinbase Wallet, Trust Wallet. Không giả vờ là chưa ai làm. Điểm hơn hẳn nằm ở chỗ chọn khác: mấy ví kia làm cho người **đã** hiểu crypto và cố làm mọi thứ; EZwallet cố tình chỉ làm 4 việc (gửi / nhận / đổi / danh bạ), cho người **chưa** hiểu gì. Cụ thể là bỏ hẳn seed phrase (email + PIN 6 số), bỏ luôn dApp browser — vì đó chính là chỗ người già bị lừa. Cạnh tranh ở "ai dùng được", không cạnh tranh ở "có bao nhiêu tính năng".
-
-**Câu 3 — Khả thi.** Trước khi code, xác nhận từng mảnh đều đã có sẵn, không phải tự phát minh:
-
-| Cần gì | Dùng cái có sẵn |
-|---|---|
-| Đăng nhập không seed phrase | Circle User-Controlled Wallets (MPC giữ khoá, PIN ký từng giao dịch) |
-| Không phải mua token gas | Arc dùng USDC làm native gas |
-| Lời nhắn đi kèm tiền | Memo precompile của Arc |
-| Đổi tiền | Circle Stablecoin Kit, route qua LiFi |
-
-Kết quả sau khi làm thật: phí đo được dưới $0.01/giao dịch, chạy trên Arc Testnet, và người làm không có nền lập trình.
-
-> Chú ý cách trả lời câu 2 và câu 3: không câu nào là "sẽ", "dự kiến", "chắc là được". Câu 2 chỉ ra điểm hơn **cụ thể** thay vì nói "UX tốt hơn". Câu 3 chỉ đúng tên thứ có sẵn để dùng thay vì nói "về mặt kỹ thuật thì khả thi". Trả lời được ở mức này mới nên qua Bước 2.
+> 🚧 **Đang build.** Ví dụ của bước này lấy từ dự án mẫu trong [`example/`](../example/) — dự án đang được build **song song** với series, đúng theo từng bước. Bước nào build xong thì ví dụ của bước đó được viết vào đây, kèm mục *Prompt này từng hụt chỗ nào*.
+>
+> Làm vậy để mọi câu trong ví dụ đều là thứ đã xảy ra thật, không phải tình huống nghĩ ra cho đẹp bài.
