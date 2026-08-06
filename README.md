@@ -2,48 +2,69 @@
 
 Series hướng dẫn build app trên Arc network, đi từng bước từ lên ý tưởng tới sản phẩm chạy được. Mỗi bước có sẵn prompt để AI (Claude, ChatGPT...) guide bạn trực tiếp, không cần đã rành Arc từ trước.
 
-## Trước khi bắt đầu: cài Claude Code + VS Code
+## Bắt đầu
 
-Chưa cài thì đọc bài này trước: [hướng dẫn setup Claude Code + VS Code](https://x.com/0xhieuxyz/status/2082123528573448506).
+**1. Cài Claude Code + VS Code.** Chưa cài thì đọc bài này: [hướng dẫn setup](https://x.com/0xhieuxyz/status/2082123528573448506).
 
-Cài rồi thì clone repo này về, mở bằng Claude Code — nó tự đọc `CLAUDE.md` và biết cách dẫn bạn đi từng bước.
+**2. Clone repo này về, mở bằng Claude Code.**
 
 ```bash
 git clone https://github.com/KattyFury/build-on-arc.git
+cd build-on-arc
+claude
 ```
 
-## Bước nào dùng công cụ nào
+**3. Nói với Claude Code đúng một câu:**
+
+> Đọc CLAUDE.md rồi dẫn tôi đi từ Bước 1.
+
+Xong. Nó tự biết đưa prompt nào, lưu kết quả vào đâu, khi nào sang bước sau.
+
+### Nếu không muốn dùng Claude Code
+
+Vẫn làm tay được, không sao: mở thư mục của bước, copy khối prompt trong đó dán vào [Claude Chat](https://claude.ai), nói chuyện xong thì tự lưu kết quả lại thành file. Claude Code chỉ giúp bạn khỏi phải nhớ mình đang ở đâu.
+
+## Cách hoạt động: Chat để nghĩ, Code để giữ và để làm
 
 | Bước | Công cụ | Vì sao |
 |---|---|---|
 | 1 → 4 | **Claude Chat** (web) | Hỏi đáp qua lại và vẽ spec thì Chat nhanh hơn hẳn |
 | 5 trở đi | **Claude Code** | Đụng file thật, chạy lệnh thật |
 
-**Claude Code đóng vai người dẫn đường xuyên suốt**: nó đưa bạn prompt của từng bước, bạn mang sang Chat nói chuyện, xong thì mang kết quả chốt về cho Code lưu lại. Chat để nghĩ, Code để giữ và để làm.
+Claude Code làm người dẫn đường xuyên suốt: nó đưa bạn prompt của bước đang tới, bạn mang sang Chat nói chuyện cho xong, rồi mang **kết quả chốt** về cho Code lưu vào `docs/` trong dự án của bạn.
 
-Đừng dán từng lượt hội thoại của Chat ngược vào Code — một bước chỉ mang về **một** kết quả chốt thôi, không thì đốt token cho đúng một việc là chép chính tả.
+> ⚠️ Đừng dán từng lượt hội thoại của Chat ngược vào Code. Một bước chỉ mang về **một** kết quả chốt — không thì bạn đang trả tiền token cho đúng một việc là chép chính tả.
+
+## Mỗi bước có gì
+
+Bước nào cũng cùng một hình dạng, quen một bước là quen hết:
+
+1. **Lý thuyết** — bước này để làm gì, vì sao đừng bỏ qua
+2. **Prompt** — khối copy được, dán thẳng vào Chat
+3. **Ví dụ** — dự án mẫu trong [`example/`](example/) đi qua đúng bước đó
+4. **Prompt này từng hụt chỗ nào** — bản đầu của prompt sai ở đâu, sửa thế nào
+
+Mục 4 là thứ ít series nào có. Prompt trong đây không phải viết một lần là xong — nó được đem đi dùng thật, hụt chỗ nào thì sửa, và chỗ hụt được ghi lại nguyên vẹn. Xem `git log` là thấy nó tiến hoá thế nào.
 
 ## Cấu trúc
 
-- [`01-ideation/`](01-ideation/README.md) — lên ý tưởng, đủ 4 tiêu chí: đúng định hướng, xác định khách hàng, nên tồn tại, khả thi (xong)
-- [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) — hoàn thiện ý tưởng thành 6 câu PRD + rút core value (xong)
-- [`03-planning/`](03-planning/README.md) — AI hỏi ngược lại mình về UX, logic, xử lý lỗi, edge case, bảo mật trước khi code (xong)
-- `04-wireframe/` — wireframe trước khi code (đang làm)
-- `05-setup/` — setup môi trường (đang làm)
-- `example/` — **dự án mẫu, build song song với series** (đang làm)
+| Bước | Làm gì | Prompt | Ví dụ |
+|---|---|---|---|
+| [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ | ✅ |
+| [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ | 🚧 |
+| [`03-planning/`](03-planning/README.md) | AI hỏi ngược lại bạn về UX, logic, xử lý lỗi, edge case, bảo mật | ✅ | 🚧 |
+| `04-wireframe/` | Vẽ wireframe chốt từng màn trước khi code | 🚧 | 🚧 |
+| `05-setup/` | Setup môi trường rồi bắt đầu build | 🚧 | 🚧 |
+| [`example/`](example/) | **Dự án mẫu, build song song với series** — Tip & Lì xì nhanh trên Arc | — | — |
 
 Đi lần lượt từng bước, xong bước nào mới qua bước đó.
 
-## Quy định: ví dụ xuyên suốt
+## Về dự án mẫu
 
-Mọi bước dùng **chung một ví dụ duy nhất** là dự án mẫu trong [`example/`](example/) — một dự án nhỏ, build thật, và **build song song với chính series này**: viết xong bước nào thì đem bước đó ra dùng để build tiếp `example/`.
+Ví dụ ở mọi bước đều lấy từ **cùng một dự án** trong [`example/`](example/): *Tip & Lì xì nhanh trên Arc*. Bước sau nối tiếp bước trước trên đúng dự án đó, không đổi sản phẩm giữa chừng — bạn chỉ phải nạp bối cảnh một lần rồi theo được tới cuối.
 
-Hai lý do: người đọc chỉ phải nạp bối cảnh một lần rồi theo được tới cuối, và vì dự án được build thật nên mọi câu trả lời trong ví dụ đều là thứ đã xảy ra, không phải tình huống nghĩ ra cho đẹp bài.
+Nó được build **song song với series**: viết xong bước nào thì đem đúng bước đó ra dùng để build tiếp. Nên mọi câu trong phần ví dụ là thứ đã xảy ra thật, không phải tình huống nghĩ ra cho đẹp bài — kể cả mấy chỗ làm sai rồi phải quay lại sửa.
 
-Quy định cho bước viết sau:
-- Mỗi bước có đúng **một** mục ví dụ, đặt tên `## Ví dụ: ...`, đứng ngay sau phần lý thuyết của bước đó.
-- Ví dụ phải nối tiếp kết quả ở bước trước, không dựng lại từ đầu và không đổi sang sản phẩm khác giữa chừng.
-- Chỉ nói những gì `example/` làm thật. Cần dẫn chứng thì trỏ vào file thật, không chế số liệu.
-- Prompt của bước nào cũng phải **đem đi dùng thật rồi mới đăng**. Dùng thấy hụt chỗ nào thì sửa prompt và ghi lại nó từng hụt gì ở mục *"Prompt này từng hụt chỗ nào"*.
+> ⚠️ `example/` là dự án của tụi mình, để bạn tham chiếu. **Dự án của bạn build ở thư mục riêng, đừng build đè vào đây.**
 
-> ⚠️ `example/` là dự án của tụi mình, để bạn đọc tham chiếu. **Dự án của bạn build ở thư mục riêng, đừng build đè vào đây.**
+*(Quy định viết bài dành cho tác giả nằm ở `HANDOFF.md`, không để ở đây cho khỏi lệch hai chỗ.)*

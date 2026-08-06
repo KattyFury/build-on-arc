@@ -48,9 +48,9 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 ## 3. VIỆC TIẾP THEO
 
-**Bước 2 — hoàn thiện ý tưởng thành 6 câu PRD.** Việc của Claude Code: giao khối prompt trong `02-hoan-thien-y-tuong/README.md` cho user mang sang Chat, đứng chờ, nhận kết quả về lưu vào `example/docs/02-prd.md`.
+**Đang chờ user chạy Bước 2.** Prompt đã soạn xong (`02-hoan-thien-y-tuong/README.md`), đã giao cho user mang sang Chat. Nhận kết quả về thì lưu `example/docs/02-prd.md`, viết mục *Ví dụ* của Bước 2, ghi mục *Prompt này từng hụt chỗ nào*, rồi commit tách đôi.
 
-⚠️ **Trước khi giao, xem lại prompt của Bước 2 có dính lỗi số 4 không** — tức có bảo AI *dẫn* hay chỉ bảo nó hỏi. Bước 2 hiện **chưa có khối prompt riêng**, mới chỉ có 6 câu ở dạng lý thuyết → phải soạn prompt cho nó, và soạn theo đúng khung đã sửa ở Bước 1.
+Prompt Bước 2 soạn theo đúng khung đã sửa ở Bước 1 (khối *Cách làm việc* bắt AI dẫn, tự xuất case study + rút lỗi ở cuối). Thêm 2 thứ riêng của bước này: câu 4 bắt chọn ra **tính năng nào không có thì app vô nghĩa**, câu 6 bắt kể **ít nhất 4 ranh giới**. Cả hai chưa chạy thật lần nào — chạy xong nhớ xem có hụt không.
 
 Sau đó: user sẽ gửi nội dung sơ cho Bước 4, 5, 6.
 
@@ -58,7 +58,9 @@ Sau đó: user sẽ gửi nội dung sơ cho Bước 4, 5, 6.
 
 ### 4.1 Ví dụ xuyên suốt
 
-Mọi bước dùng chung dự án trong `example/`. Đã ghi trong `README.md` mục "Quy định" — sửa thì sửa cả hai chỗ cho khớp.
+**Đây là chỗ DUY NHẤT giữ quy định viết bài.** `README.md` chỉ nói cho người đọc biết dự án mẫu là gì, không chép lại mấy luật dưới đây — cố ý, để khỏi có hai bản lệch nhau.
+
+Mọi bước dùng chung dự án trong `example/`.
 
 - Mỗi bước đúng **một** mục ví dụ, tên `## Ví dụ: ...`, đứng ngay sau phần lý thuyết.
 - Nối tiếp bước trước, không dựng lại từ đầu, không đổi sản phẩm giữa chừng.
