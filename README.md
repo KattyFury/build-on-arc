@@ -51,11 +51,12 @@ Mục 4 là thứ ít series nào có. Prompt trong đây không phải viết m
 | Bước | Làm gì | Prompt | Ví dụ |
 |---|---|---|---|
 | [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ | ✅ |
-| [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ | 🚧 |
-| [`03-planning/`](03-planning/README.md) | AI hỏi ngược lại bạn về UX, logic, xử lý lỗi, edge case, bảo mật | ✅ | 🚧 |
-| `04-wireframe/` | Vẽ wireframe chốt từng màn trước khi code | 🚧 | 🚧 |
-| `05-setup/` | Setup môi trường rồi bắt đầu build | 🚧 | 🚧 |
-| [`example/`](example/) | **Dự án mẫu, build song song với series** — Tip & Lì xì nhanh trên Arc | — | — |
+| [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ | ✅ |
+| [`03-planning/`](03-planning/README.md) | AI hỏi ngược lại bạn về UX, logic, xử lý lỗi, edge case, bảo mật | ✅ | ✅ |
+| [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code | ✅ | 🚧 |
+| [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ | ✅ |
+| [`06-build/`](06-build/README.md) | Build theo 2 giai đoạn: logic/flow trước, giao diện sau | ✅ | 🚧 |
+| [`example/`](example/) | **Dự án mẫu, build song song với series** — TapTip, Tip & Lì xì nhanh trên Arc | — | — |
 
 Đi lần lượt từng bước, xong bước nào mới qua bước đó.
 

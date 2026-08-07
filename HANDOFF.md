@@ -2,7 +2,7 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-06
+> **Cập nhật:** 2026-08-07
 
 ---
 
@@ -18,16 +18,18 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 | Bước | Thư mục | Trạng thái |
 |---|---|---|
 | 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt v2 + ví dụ thật + mục "prompt từng hụt chỗ nào" |
-| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | Lý thuyết + prompt xong (soạn 08-06, CHƯA chạy thật). **Ví dụ: trống** |
-| 3. Plan chi tiết | `03-planning/` | Lý thuyết + prompt xong. **Ví dụ: trống** |
-| 4. Wireframe | `04-wireframe/` | ❌ chưa có |
-| 5. Setup môi trường | `05-setup/` | ❌ chưa có |
-| 6. (chưa đặt tên) | — | ❌ chưa có, user nói sẽ gửi nội dung |
-| Dự án mẫu | `example/` | Bước 1 xong (`example/docs/01-ideation.md`), chưa có code |
+| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ **XONG TRỌN** — prompt đã sửa theo 5 lỗi tìm được (câu 1 lẫn thông số kỹ thuật, câu 2 quên vai người gửi, câu 4 hỏi trừu tượng, câu 6 bị lạc đề, core value nhét thông số) + ví dụ thật + "prompt từng hụt chỗ nào" |
+| 3. Plan chi tiết | `03-planning/` | ✅ **XONG TRỌN** — prompt đã sửa theo 5 lỗi tìm được (đẩy trách nhiệm bên thứ ba, bỏ sót câu trong nhóm, tổ hợp rủi ro, ép đổi ý khi user đã chấp nhận rủi ro, quên tổng hợp file) + ví dụ thật + "prompt từng hụt chỗ nào" |
+| 4. Wireframe | `04-wireframe/` | ✅ Lý thuyết + prompt xong, **đã chạy thật** (`example/docs/04-wireframe.md`). README chưa viết mục Ví dụ + "prompt từng hụt chỗ nào" |
+| 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa sau khi chạy thật) + ví dụ thật + mục "prompt từng hụt chỗ nào" (`example/docs/05-setup.md`) |
+| 6. Build | `06-build/` | ✅ README xong (2 giai đoạn: logic/flow trước, giao diện sau + prompt). Chưa chạy thật — chờ code TapTip |
+| Dự án mẫu | `example/` | Bước 1-4 xong phần spec/design (docs 01-04). Chưa có code. Tên app: **TapTip**, platform: **PWA** |
 
-**Dự án mẫu: Tip & Lì xì nhanh trên Arc.** Gửi tip bất cứ lúc nào + lì xì dịp Tết, đăng nhập bằng email, ví ẩn phía sau bằng Circle Wallets dev-controlled, app trả gas thay user qua Paymaster. Yêu cầu số một là **tốc độ** — chính nó là thứ dùng để loại Privy ở câu 3.
+**Dự án mẫu: TapTip — Tip & Lì xì nhanh trên Arc.** Gửi tip bất cứ lúc nào + lì xì dịp Tết, đăng nhập bằng email + passkey, ví ẩn phía sau bằng Circle Wallets, app trả gas thay user. Yêu cầu số một là **tốc độ**.
 
-**Ví dụ EZwallet đã gỡ khỏi cả 3 bước (08-06, user chốt).** Bước 2 và 3 vẫn là placeholder 🚧, điền khi build tới.
+**Ví dụ EZwallet đã gỡ khỏi cả 3 bước (08-06, user chốt).**
+
+**Quyết định stack (08-07):** Bỏ khung "Tech Stack – Locked" copy từ CLAUDE.md của ezwallet — không áp dụng cho series này, mỗi dự án tự chọn stack. `example/` (TapTip) fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase + Circle Modular Wallets/Passkey) thay vì code từ đầu trên Cloudflare Workers/Pages — lý do: sample app đã có sẵn passkey + gasless P2P đúng spec Bước 2-3, review kỹ hơn xem chi tiết `CLAUDE.md` mục Tech Stack.
 
 ### Vòng lặp đã chạy thật 1 lần (Bước 1, 08-06)
 
@@ -48,11 +50,11 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 ## 3. VIỆC TIẾP THEO
 
-**Đang chờ user chạy Bước 2.** Prompt đã soạn xong (`02-hoan-thien-y-tuong/README.md`), đã giao cho user mang sang Chat. Nhận kết quả về thì lưu `example/docs/02-prd.md`, viết mục *Ví dụ* của Bước 2, ghi mục *Prompt này từng hụt chỗ nào*, rồi commit tách đôi.
+**08-07: Bước 1-5 đều XONG TRỌN** — lý thuyết + prompt (đã sửa từ lỗi chạy thật) + ví dụ thật + "prompt từng hụt chỗ nào" cho cả 5 bước.
 
-Prompt Bước 2 soạn theo đúng khung đã sửa ở Bước 1 (khối *Cách làm việc* bắt AI dẫn, tự xuất case study + rút lỗi ở cuối). Thêm 2 thứ riêng của bước này: câu 4 bắt chọn ra **tính năng nào không có thì app vô nghĩa**, câu 6 bắt kể **ít nhất 4 ranh giới**. Cả hai chưa chạy thật lần nào — chạy xong nhớ xem có hụt không.
+**Bước 6:** user gửi nội dung — ngắn, không theo khuôn 4 mục như 1-5 (không có "prompt từng hụt chỗ nào" vì đây là bước code thật, không phải chạy 1 prompt cố định). Nội dung chính: tách 2 giai đoạn build (Giai đoạn 1 logic/flow trước, để UI mộc, xong 1 tính năng dừng lại chờ user test rồi mới qua tính năng tiếp; Giai đoạn 2 mới áp UI theo wireframe, làm từng màn dừng lại chờ duyệt). Kèm 1 prompt để dán vào Claude Code sau khi đã ném 2 file spec (Bước 3 + Bước 4) vào folder dự án. User tự nhận "bước 6 thực ra chả có gì" — đây là bước cuối, sau đó là hướng dẫn đăng bài chia sẻ sản phẩm, và series coi như kết thúc (có thể có thêm tập bonus).
 
-Sau đó: user sẽ gửi nội dung sơ cho Bước 4, 5, 6.
+**Việc kế tiếp khi quay lại:** viết `06-*/README.md` (chưa đặt tên thư mục — có thể `06-build/`) từ nội dung user gửi, rồi bắt tay code TapTip thật: fork `circlefin/arc-p2p-payments`, ném `example/docs/03-planning.md` + `example/docs/04-wireframe.md` vào, chạy đúng quy trình 2 giai đoạn.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
@@ -73,7 +75,15 @@ Bước 1 Câu 1 ban đầu bắt ý tưởng phải giải **vấn đề thiế
 
 Cái **không** nới: vẫn phải là thứ mình hoặc người mình biết **thật sự làm ngoài đời**, không ngồi tưởng tượng ra.
 
-### 4.3 Giọng văn
+### 4.3 Note dán spec dưới mọi prompt
+
+Mọi prompt chuyển giao cần spec bước trước (Bước 2 trở đi) phải kèm câu ghi chú ngay dưới khối prompt:
+
+> Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua — Chat đã có sẵn context, dán lại là thừa.
+
+Lý do: giả định mặc định "mỗi bước một cửa sổ Chat mới" chỉ đúng với một cách dùng, không phải cách duy nhất. Không note rõ thì người dùng 1 chat xuyên suốt sẽ dán thừa, tốn token vô ích.
+
+### 4.4 Giọng văn
 
 Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên X. Câu ngắn. Không sáo. Bảng khi so sánh, blockquote cho ghi chú đáng nhớ. Mỗi bước kết bằng một câu dẫn sang bước sau.
 
@@ -86,3 +96,13 @@ Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên 
 ## 5. Git
 
 Remote `origin` = GitHub, branch `main`. Xong việc là commit + push ngay, đừng để commit nằm im ở local.
+
+## 6. Tools tham khảo – dùng ở Bước 6 (code UI thật), KHÔNG dùng ở Bước 4
+
+Bước 4 (wireframe) cố tình bỏ hết style, chỉ khung + label chức năng – mấy tool dưới đây đều thuộc chuyện style/component thật nên chỉ có ích lúc code, không có ích lúc vẽ khung.
+
+- **21st.dev** – https://21st.dev/ – marketplace React+Tailwind, prompt sẵn cho Claude Code/Cursor/v0
+- **Astryx (Meta)** – https://astryx.atmeta.com/ – design system chính thức Meta, React 19 + StyleX, 160+ component – hơi nặng đô cho app nhỏ như `example/`
+- **Magic UI** – https://magicui.design/ – component + animation React+Tailwind
+- **ui-ux-pro-max-skill** – https://github.com/nextlevelbuilder/ui-ux-pro-max-skill – AI skill sinh design system (màu, font, style) theo project, 114,271 sao (verify qua GitHub API 08-07, số thật cao hơn số đồn)
+- **taste-skill** – https://github.com/Leonxlnx/taste-skill (site: tasteskill.dev) – skill chống AI sinh UI "generic slop", 73,405 sao (verify qua GitHub API 08-07)

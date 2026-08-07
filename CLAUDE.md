@@ -138,16 +138,16 @@ When I'm in **planning phase**, don't rush to code. When I have a spec, don't re
 
 ---
 
-## Tech Stack – Locked
+## Tech Stack – chọn theo từng dự án, KHÔNG khoá cứng
 
-> Don't suggest alternatives unless I ask.
+Đây là series hướng dẫn, không phải một sản phẩm duy nhất — mỗi dự án (kể cả `example/`) chọn stack theo cái phù hợp nhất lúc đó, kể cả fork nguyên sample app của Circle rồi đổi stack theo sample đó. Đừng mặc định Cloudflare Workers/Pages chỉ vì đó là stack quen thuộc của tác giả ở dự án khác (ezwallet).
 
-- **Smart contracts**: Solidity + Foundry
-- **Backend/API**: Cloudflare Workers (TypeScript)
-- **Frontend/hosting**: Cloudflare Pages
 - **Chains**: Arc / Seismic / Monad (EVM-compatible)
 - **AI**: Anthropic API
-- **Secrets**: `.dev.vars` local + Cloudflare Dashboard Variables. **Never hardcode keys in source.**
+- Backend/frontend/hosting: quyết định theo từng dự án, ghi rõ trong `HANDOFF.md` hoặc README của dự án đó.
+- **Secrets**: không hardcode key trong source, bất kể dùng stack nào.
+
+**`example/` (TapTip) — đã chốt 2026-08-07:** fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase + Circle Modular Wallets/Passkey), vì đã có sẵn passkey + gasless P2P đúng spec, không dựng lại từ đầu.
 
 ---
 
