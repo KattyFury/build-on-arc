@@ -2,7 +2,7 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-07
+> **Cập nhật:** 2026-08-07 (giữa phiên — user phải đi công việc, đọc kỹ mục 3 trước khi làm gì tiếp)
 
 ---
 
@@ -23,7 +23,7 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 | 4. Wireframe | `04-wireframe/` | ✅ Lý thuyết + prompt xong, **đã chạy thật** (`example/docs/04-wireframe.md`). README chưa viết mục Ví dụ + "prompt từng hụt chỗ nào" |
 | 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa sau khi chạy thật) + ví dụ thật + mục "prompt từng hụt chỗ nào" (`example/docs/05-setup.md`) |
 | 6. Build | `06-build/` | ✅ README xong (2 giai đoạn: logic/flow trước, giao diện sau + prompt). Chưa chạy thật — chờ code TapTip |
-| Dự án mẫu | `example/` | Bước 1-4 xong phần spec/design (docs 01-04). Chưa có code. Tên app: **TapTip**, platform: **PWA** |
+| Dự án mẫu | `example/` | Spec/design xong (docs 01-05). Code: forked, đang setup backend — xem mục 3 |
 
 **Dự án mẫu: TapTip — Tip & Lì xì nhanh trên Arc.** Gửi tip bất cứ lúc nào + lì xì dịp Tết, đăng nhập bằng email + passkey, ví ẩn phía sau bằng Circle Wallets, app trả gas thay user. Yêu cầu số một là **tốc độ**.
 
@@ -50,11 +50,23 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 ## 3. VIỆC TIẾP THEO
 
-**08-07: Bước 1-5 đều XONG TRỌN** — lý thuyết + prompt (đã sửa từ lỗi chạy thật) + ví dụ thật + "prompt từng hụt chỗ nào" cho cả 5 bước.
+**08-07: Bước 1-6 đều có README xong** (1,2,3,5 XONG TRỌN kể cả ví dụ; 4 thiếu ví dụ; 6 chưa có ví dụ vì chưa code xong). Cả 2 commit đã push lên GitHub (`593900d`, `261ed53`).
 
-**Bước 6:** user gửi nội dung — ngắn, không theo khuôn 4 mục như 1-5 (không có "prompt từng hụt chỗ nào" vì đây là bước code thật, không phải chạy 1 prompt cố định). Nội dung chính: tách 2 giai đoạn build (Giai đoạn 1 logic/flow trước, để UI mộc, xong 1 tính năng dừng lại chờ user test rồi mới qua tính năng tiếp; Giai đoạn 2 mới áp UI theo wireframe, làm từng màn dừng lại chờ duyệt). Kèm 1 prompt để dán vào Claude Code sau khi đã ném 2 file spec (Bước 3 + Bước 4) vào folder dự án. User tự nhận "bước 6 thực ra chả có gì" — đây là bước cuối, sau đó là hướng dẫn đăng bài chia sẻ sản phẩm, và series coi như kết thúc (có thể có thêm tập bonus).
+**ĐANG DANG DỞ GIỮA CHỪNG — Bước 6, giai đoạn setup backend cho TapTip:**
 
-**Việc kế tiếp khi quay lại:** viết `06-*/README.md` (chưa đặt tên thư mục — có thể `06-build/`) từ nội dung user gửi, rồi bắt tay code TapTip thật: fork `circlefin/arc-p2p-payments`, ném `example/docs/03-planning.md` + `example/docs/04-wireframe.md` vào, chạy đúng quy trình 2 giai đoạn.
+1. ✅ Fork `circlefin/arc-p2p-payments` → `KattyFury/arc-p2p-payments` (GitHub) → copy code (bỏ `.git`) vào `example/app/`. Giữ `LICENSE` (Apache-2.0) + `ORIGINAL-README.md` để attribution.
+2. ✅ Đối chiếu code sample app với spec — đã xác định 4 chỗ lệch cần sửa ở Giai đoạn 1: (a) sample dùng tìm-người-nhận, TapTip cần **quét QR** — phải build mới hoàn toàn; (b) sample có bottom nav, wireframe TapTip **không có** bottom nav, dùng icon menu (☰); (c) chưa có nút Random (nice-to-have, làm cuối); (d) cần kiểm tra luồng Nạp có link Circle Faucet theo đúng wireframe chưa.
+3. ✅ Quyết định (hỏi user, không tự chọn): giữ **Supabase Cloud** làm backend, không đổi sang Cloudflare KV — lý do trong file, đổi KV sẽ phải viết lại auth + data layer + realtime, mất phần lớn giá trị của việc fork.
+4. ✅ Tạo Supabase project **`taptip`** (ref `kekdoqyehyozqvuhwsoh`, region ap-southeast-1) qua Management API bằng Personal Access Token user đưa (token KHÔNG lưu ở đâu trong repo, chỉ dùng 1 lần cho lệnh curl). Project status ACTIVE_HEALTHY.
+5. ✅ Ghi `example/app/.env.local` (KHÔNG commit — đã confirm `.gitignore` có `.env*.local`) với `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` của project `taptip`.
+6. ❌ **CHƯA XONG — database password** của project `taptip` đang nằm ở `C:\tmp\taptip-supabase-dbpass.txt` (file local, không phải secret của app nhưng cần để link CLI). Cần dọn/nhớ xoá file này sau khi hết cần.
+7. ❌ **CHƯA XONG — push database migrations** (15 file SQL trong `example/app/supabase/migrations/`) lên project `taptip`. Thử 2 cách đều chưa ra:
+   - `npx supabase link --project-ref kekdoqyehyozqvuhwsoh` với `SUPABASE_ACCESS_TOKEN` → lỗi `LegacyLinkApiKeysNetworkError` (CLI 2.112.0 parse ngày `+00:00` trong response API keys mới của Supabase bị lỗi regex — có vẻ là bug CLI, không phải lỗi mình gây ra).
+   - Gọi thẳng `POST /v1/projects/{ref}/database/query` qua curl → lỗi path khi build JSON body trong Git Bash trên Windows (`/tmp/q1.json` bị dịch sai đường dẫn thành `D:\tmp\q1.json`). Chưa thử lại với đường dẫn đúng (dùng scratchpad dir hoặc `C:/tmp` thay vì `/tmp`).
+   - **Hướng thử tiếp theo:** thử lại query endpoint với path đúng (vd `C:/tmp/q1.json`), hoặc downgrade/thử version khác của `supabase` CLI, hoặc cài `psql` rồi connect thẳng bằng connection string Postgres (`postgresql://postgres.kekdoqyehyozqvuhwsoh:<password>@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres`, password trong file `C:\tmp\taptip-supabase-dbpass.txt`).
+8. ❌ **CHƯA CÓ — Circle API key + Entity Secret.** User xác nhận đã có Circle Developer account (dùng chung/sẵn có từ ezwallet) nhưng chưa đưa key thật. Cần hỏi lại lúc quay lại, hoặc kiểm tra `ezwallet/.env.txt` xem có key nào dùng lại được không (nhưng key theo entity secret Circle thường gắn với 1 wallet set — cân nhắc có nên tách entity secret riêng cho TapTip hay dùng chung).
+
+**Việc kế tiếp khi quay lại (theo đúng thứ tự):** (1) push migrations lên Supabase bằng 1 trong 3 hướng ở mục 7, (2) lấy Circle API key + Entity Secret, điền nốt `.env.local`, (3) `npm install` rồi `npm run dev` để xác nhận app chạy được với backend thật, (4) mới bắt đầu code Giai đoạn 1 theo đúng 4 điểm lệch đã liệt kê ở mục 2.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
