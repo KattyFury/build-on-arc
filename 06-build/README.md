@@ -35,6 +35,7 @@ Claude Code sẽ đọc spec, liệt kê lại thứ tự tính năng sắp buil
 
 - **Kiên nhẫn đi từng tính năng một.** Đừng để nó gộp nhiều tính năng vào một lượt build vì "cho nhanh".
 - **Giai đoạn 1 xong hết mới sang Giai đoạn 2.** Logic ổn định trước thì chỉnh giao diện sau không làm gãy flow.
+- **Tiêu chí "xong" ở Giai đoạn 1: nút bấm đúng vị trí mong muốn + flow chạy đúng, thế là đủ – đừng quan tâm đẹp/xấu.** Ngứa mắt cỡ nào cũng kệ, đừng bắt AI chỉnh màu/spacing/font lúc này. Đưa nguyên spec giao diện qua Chat (hoặc công cụ design riêng) làm một lượt ở Giai đoạn 2 nhanh hơn hẳn so với vừa build logic vừa chăm chút từng màn.
 - **Build app không phải thả cho AI tự làm hết.** Có lúc phải tự tay tạo tài khoản, lấy API key, tạo database, deploy smart contract – cứ làm rồi sửa, ai cũng chật vật ở bước này.
 
 ## Kết quả cuối
