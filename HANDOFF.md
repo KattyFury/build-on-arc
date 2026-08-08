@@ -70,7 +70,13 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 Trong lúc làm Tính năng 1 còn phát hiện + sửa thêm: sign-in gốc dùng phone+SMS (đổi sang email), Supabase free tier chặn custom email template (cấu hình Gmail SMTP qua Management API để giữ đúng OTP gõ tay thay vì magic link — xem `example/docs/06-build.md`), thiếu Passkey Domain Config trên Circle Console (khác với Client Key's Allowed Domain, phải cấu hình riêng ở mục Modular Wallets → Configurator → Passkey), lỗi tự gây (`useRouter` sót lại sau khi xoá import — bài học: chạy `tsc --noEmit` NGAY sau mỗi lần sửa, không gộp lại). Rebuild lại layout sign-in/code-confirmation/passkey-setup theo đúng grid wireframe thay vì giữ style mặc định sample app.
 
-**Việc kế tiếp khi quay lại: Tính năng 2 — luồng gửi (quét QR)** theo đúng 4 điểm lệch đã liệt kê ở mục 2 — thứ tự còn lại: quét QR gửi tiền → Nạp/Rút → Lịch sử → nút Random. Backend đã sẵn sàng, không còn blocker hạ tầng nào. **Nhớ:** load skill Circle tương ứng (`circle:use-modular-wallets` đã load, có sẵn pattern `sendUserOperation` + `paymaster: true` cho gasless transfer — dùng luôn khi build gửi tiền, đừng tự viết lại) trước khi code tiếp — xem mục 4.6.
+**08-08: Tính năng 2 (quét QR gửi tiền) — code xong, CHƯA test tay bằng camera thật.** `components/send-flow.tsx` mới: popup chọn số tiền (preset lưu localStorage, xoá có confirm, thêm số tuỳ ý) → quét QR (`html5-qrcode`, camera + upload ảnh) → loading → success tự tắt sau 2s. Tái sử dụng `sendUSDC()` có sẵn trong `web3-provider.tsx` (đã đúng chuẩn skill: `sendUserOperation` + `paymaster: true` — không viết lại). Nối vào nút "Tip" ở Home.
+
+**Đơn giản hoá có chủ đích:** số tiền hiển thị thẳng bằng USDC, CHƯA làm quy đổi VNĐ như PRD nhắc tới (`example/docs/02`) — để dành Giai đoạn 2 vì cần tỷ giá thật, không hardcode.
+
+Type-check sạch, dev server compile "/dashboard" thành công không lỗi runtime (log tự bắt được vì tab đang mở fast-refresh). **Chưa tự tay bấm thử camera quét QR thật** — cần user test.
+
+**Việc kế tiếp khi quay lại:** test tay Tính năng 2 (quét QR bằng camera thật + gửi thử), rồi qua Tính năng 3 (Nạp/Rút) → 4 (Lịch sử) → 5 (Random). Nhớ mục 4.6: load skill Circle tương ứng trước khi code, đừng tự mò.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
