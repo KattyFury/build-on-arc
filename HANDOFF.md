@@ -76,7 +76,14 @@ Trong lúc làm Tính năng 1 còn phát hiện + sửa thêm: sign-in gốc dù
 
 Type-check sạch, dev server compile "/dashboard" thành công không lỗi runtime (log tự bắt được vì tab đang mở fast-refresh). **Chưa tự tay bấm thử camera quét QR thật** — cần user test.
 
-**Việc kế tiếp khi quay lại:** test tay Tính năng 2 (quét QR bằng camera thật + gửi thử), rồi qua Tính năng 3 (Nạp/Rút) → 4 (Lịch sử) → 5 (Random). Nhớ mục 4.6: load skill Circle tương ứng trước khi code, đừng tự mò.
+**08-08: Tính năng 3, 4, 5 — code xong luôn trong 1 mạch, CHƯA test tay:**
+- **Tính năng 3 (Nạp/Rút):** menu Home tách 2 nút riêng. "Nạp" tự copy địa chỉ ví + hướng dẫn 3 bước + nút mở Circle Faucet. "Rút" hiện thông báo "chưa khả dụng" + nút "Đã hiểu". Bỏ hẳn `WalletBalance` component cũ khỏi menu (trùng chức năng).
+- **Tính năng 4 (Lịch sử):** sửa `components/transactions.tsx` — đổi nhóm theo THÁNG (code gốc) sang nhóm theo **NGÀY** đúng spec, thêm màu đỏ/xanh theo chiều gửi/nhận (trước đó chỉ có dấu +/- không màu). Coi đây là yêu cầu chức năng (phân biệt luồng tiền), không phải thẩm mỹ, nên sửa dù đang ở Giai đoạn 1.
+- **Tính năng 5 (Random):** `SendFlow` thêm prop `initialAmount` — có giá trị thì nhảy thẳng vào bước quét QR, bỏ qua bước chọn số tiền. Nút "Ngẫu nhiên" ở Home tự random 0.1–5 USDC (không vượt quá balance) rồi mở `SendFlow` với amount đó.
+
+**GIAI ĐOẠN 1 CODE XONG CẢ 5 TÍNH NĂNG.** Type-check sạch sau mỗi bước, dev server compile không lỗi (kể cả tab thật đang mở tự fast-refresh qua `/dashboard`). Chỉ Tính năng 1 được verify đầy đủ qua log thật (passkey → ví → balance) — Tính năng 2-5 mới dừng ở "code chạy được, không lỗi compile/runtime khi load", CHƯA test tay từng thao tác (bấm nút, quét QR thật, nạp thật, xem lịch sử thật, random thật).
+
+**Việc kế tiếp khi quay lại:** user test tay toàn bộ 5 tính năng, báo lỗi nếu có. Sau khi user xác nhận OK hết mới coi Giai đoạn 1 thật sự xong, chuyển qua Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt cho mọi màn — xem mục 4.7). Dọn rác file tạm ở mục 11 phía trên vẫn chưa làm.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
