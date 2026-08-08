@@ -66,7 +66,11 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 10. ✅ **Client Key** tạo xong (Web, Allowed Domain `localhost`), điền `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` vào `.env.local`. `npm run dev` chạy lại, `/sign-in` trả 200 — **đủ credentials, backend hoàn chỉnh.**
 11. Dọn rác: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (recovery file entity secret CŨ, account cũ — không dùng được, xoá luôn), `C:\tmp\register-entity-secret.mjs` — chưa dọn. Recovery file MỚI (`C:\tmp\taptip-entity-secret-recovery2\`) — chưa backup ra chỗ an toàn hơn.
 
-**Việc kế tiếp khi quay lại: bắt đầu code Giai đoạn 1** theo đúng 4 điểm lệch đã liệt kê ở mục 2 — theo thứ tự: sửa Home (bỏ bottom nav, thêm QR) → luồng gửi (quét QR) → Nạp/Rút → Lịch sử → nút Random. Backend đã sẵn sàng, không còn blocker hạ tầng nào.
+**08-08: Tính năng 1 (Home) ĐÃ XONG VÀ VERIFY THẬT** — không chỉ "chắc là được", có bằng chứng từ log server: `POST /api/setup-wallets 201` (tạo ví qua passkey thành công) → `GET /dashboard 200` → `POST /api/wallet/balance 200` (Home tự fetch balance). Toàn bộ pipeline auth (email OTP) → passkey → ví → Home chạy thật end-to-end.
+
+Trong lúc làm Tính năng 1 còn phát hiện + sửa thêm: sign-in gốc dùng phone+SMS (đổi sang email), Supabase free tier chặn custom email template (cấu hình Gmail SMTP qua Management API để giữ đúng OTP gõ tay thay vì magic link — xem `example/docs/06-build.md`), thiếu Passkey Domain Config trên Circle Console (khác với Client Key's Allowed Domain, phải cấu hình riêng ở mục Modular Wallets → Configurator → Passkey), lỗi tự gây (`useRouter` sót lại sau khi xoá import — bài học: chạy `tsc --noEmit` NGAY sau mỗi lần sửa, không gộp lại). Rebuild lại layout sign-in/code-confirmation/passkey-setup theo đúng grid wireframe thay vì giữ style mặc định sample app.
+
+**Việc kế tiếp khi quay lại: Tính năng 2 — luồng gửi (quét QR)** theo đúng 4 điểm lệch đã liệt kê ở mục 2 — thứ tự còn lại: quét QR gửi tiền → Nạp/Rút → Lịch sử → nút Random. Backend đã sẵn sàng, không còn blocker hạ tầng nào. **Nhớ:** load skill Circle tương ứng (`circle:use-modular-wallets` đã load, có sẵn pattern `sendUserOperation` + `paymaster: true` cho gasless transfer — dùng luôn khi build gửi tiền, đừng tự viết lại) trước khi code tiếp — xem mục 4.6.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
@@ -104,6 +108,15 @@ Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên 
 > 🔴 **NỢ – VIỆC ĐẦU TIÊN NÊN LÀM KHI QUAY LẠI.** Đếm 08-06: **80 chỗ đang dùng em dash sai luật**, rải khắp repo (01: 21 · example/docs: 18 · README: 11 · HANDOFF: 10 · 02: 9 · example/README: 7 · 03: 3 · CLAUDE.md: 1). Phần lớn do chính mình viết vào mấy phiên gần đây, không phải bài cũ.
 >
 > ⚠️ **ĐỪNG replace-all mù.** Có chỗ phải GIỮ em dash: dòng phát biểu luật trong `CLAUDE.md` và dòng ngay trên đây — chúng phải in ra ký tự em dash làm ví dụ, thay đi là luật tự mâu thuẫn. Cách an toàn: bỏ qua `CLAUDE.md` và mục 4.3 này khi thay, quét 6 file còn lại.
+
+## 4.6 🔴 BẮT BUỘC đọc trước khi đụng Circle/Arc — đừng tự mò
+
+Trước khi viết bất kỳ code nào đụng tới Circle Wallets hoặc Arc, **load đúng skill/tài nguyên tương ứng trước, đừng tự mò qua docs search rồi thử-sai**. Bài học đau: mất cả buổi vật lộn Entity Secret + Passkey Domain + WebAuthn error vì không load skill `circle:use-modular-wallets` trước khi code — skill đó có sẵn bảng lỗi + rule "ALWAYS complete Console Setup (client key, passkey domain, client URL) before using SDK" ngay từ đầu.
+
+- **Circle Modular Wallets (Passkey, gasless)** → load skill `circle:use-modular-wallets` TRƯỚC. Có bảng lỗi đầy đủ (`NotAllowedError`, `SecurityError`, mã lỗi 155xxx, AA-series), rule bắt buộc (paymaster:true, transport URL path đúng chain, không dùng trên Ethereum mainnet/Solana/Aptos/NEAR).
+- **Circle Developer-Controlled Wallets (Entity Secret)** → load skill `circle:use-developer-controlled-wallets` TRƯỚC.
+- **Bất kỳ thứ gì khác của Circle** (USDC, Gateway, swap, bridge...) → xem danh sách skill đầy đủ tại https://docs.arc.io/ai/skills, cài qua `/plugin marketplace add circlefin/skills`.
+- **Câu hỏi chung về Arc** → Arc MCP đã connect (`docs.arc.io/mcp`), dùng `search_arc_docs`/`query_docs_filesystem_arc_docs` trước khi đoán. Index đầy đủ: https://docs.arc.io/llms.txt.
 
 ## 5. Git
 
