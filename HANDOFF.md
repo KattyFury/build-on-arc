@@ -83,7 +83,9 @@ Type-check sạch, dev server compile "/dashboard" thành công không lỗi run
 
 **GIAI ĐOẠN 1 CODE XONG CẢ 5 TÍNH NĂNG.** Type-check sạch sau mỗi bước, dev server compile không lỗi (kể cả tab thật đang mở tự fast-refresh qua `/dashboard`). Chỉ Tính năng 1 được verify đầy đủ qua log thật (passkey → ví → balance) — Tính năng 2-5 mới dừng ở "code chạy được, không lỗi compile/runtime khi load", CHƯA test tay từng thao tác (bấm nút, quét QR thật, nạp thật, xem lịch sử thật, random thật).
 
-**Việc kế tiếp khi quay lại:** user test tay toàn bộ 5 tính năng, báo lỗi nếu có. Sau khi user xác nhận OK hết mới coi Giai đoạn 1 thật sự xong, chuyển qua Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt cho mọi màn — xem mục 4.7). Dọn rác file tạm ở mục 11 phía trên vẫn chưa làm.
+**08-08: Thêm 1 tính năng mới phát sinh giữa chừng (đã hỏi user, không tự thêm lặng lẽ) — hiện tên người thay vì địa chỉ/hash trong Lịch sử.** `components/transactions.tsx` thêm `loadCounterpartyNames()`: lookup `circle_contract_address` của giao dịch → bảng `wallets` (theo `wallet_address`) → bảng `profiles` (theo `profile_id`) → lấy `name`, hiện `"Tip: <tên>"` thay vì hash nếu tìm thấy, fallback về hash cũ nếu không. Đã cập nhật `example/docs/02-hoan-thien-y-tuong.md` (mục "Cập nhật khi build") ghi nhận thay đổi spec này — **PRD giờ không còn khớp 100% với bản gốc chạy Bước 2**, đây là lần đầu spec bị sửa sau khi đã chạy thật, cần nhớ khi viết mục Ví dụ cho Bước 2 sau này. Type-check sạch, dev server compile OK. Cũng CHƯA test tay (cần 2 tài khoản tip qua lại mới thấy tên hiện lên).
+
+**Việc kế tiếp khi quay lại:** user test tay toàn bộ 5 tính năng + tính năng tên người mới thêm, báo lỗi nếu có. Sau khi user xác nhận OK hết mới coi Giai đoạn 1 thật sự xong, chuyển qua Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt cho mọi màn — xem mục 4.7). Dọn rác file tạm ở mục 11 phía trên (`C:\tmp\taptip-supabase-dbpass.txt`, recovery file cũ, `register-entity-secret.mjs`) vẫn chưa làm.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
