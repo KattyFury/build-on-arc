@@ -63,13 +63,10 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 7. ✅ `example/app/.env.local` đầy đủ Supabase + `CIRCLE_API_KEY` + `CIRCLE_ENTITY_SECRET` (KHÔNG commit, đã confirm gitignore). **Recovery file lần này: `C:\tmp\taptip-entity-secret-recovery2\recovery_file_....dat` — PHẢI backup ra chỗ khác an toàn hơn `C:\tmp` (dễ bị dọn mất), chưa làm.**
 8. ✅ `npm run dev` chạy thành công, `/sign-in` trả 200, không lỗi runtime — xác nhận app sống được với backend thật.
 9. ⚠️ `npm run build` (production) lỗi type ở `app/api/webhooks/circle/route.ts:232` — bug có sẵn của sample app gốc (Supabase query thiếu field `status` trong select nhưng code vẫn đọc), KHÔNG liên quan gì đến phần mình sửa. Chưa fix — không chặn `npm run dev`, để dành sửa khi đụng tới file đó ở Giai đoạn 1.
-10. ❌ Còn thiếu **Client Key** (loại khác API Key, tạo ở console.circle.com cùng account mới) cho `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` — chưa có thì Modular Wallets SDK phía client chưa chạy được (passkey, ký giao dịch).
-11. Dọn rác: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (recovery file của entity secret CŨ, account cũ — không dùng được, xoá luôn), `C:\tmp\register-entity-secret.mjs` — chưa dọn.
+10. ✅ **Client Key** tạo xong (Web, Allowed Domain `localhost`), điền `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` vào `.env.local`. `npm run dev` chạy lại, `/sign-in` trả 200 — **đủ credentials, backend hoàn chỉnh.**
+11. Dọn rác: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (recovery file entity secret CŨ, account cũ — không dùng được, xoá luôn), `C:\tmp\register-entity-secret.mjs` — chưa dọn. Recovery file MỚI (`C:\tmp\taptip-entity-secret-recovery2\`) — chưa backup ra chỗ an toàn hơn.
 
-**Việc kế tiếp khi quay lại (theo đúng thứ tự):**
-1. Lấy **Client Key** từ console.circle.com (account mới), điền `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` vào `.env.local`.
-2. Backup recovery file entity secret ra chỗ an toàn hơn `C:\tmp`.
-3. Bắt đầu code Giai đoạn 1 theo đúng 4 điểm lệch đã liệt kê ở mục 2 — theo đúng thứ tự đã đề xuất: sửa Home (bỏ bottom nav, thêm QR) → luồng gửi (quét QR) → Nạp/Rút → Lịch sử → nút Random.
+**Việc kế tiếp khi quay lại: bắt đầu code Giai đoạn 1** theo đúng 4 điểm lệch đã liệt kê ở mục 2 — theo thứ tự: sửa Home (bỏ bottom nav, thêm QR) → luồng gửi (quét QR) → Nạp/Rút → Lịch sử → nút Random. Backend đã sẵn sàng, không còn blocker hạ tầng nào.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
