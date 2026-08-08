@@ -52,34 +52,24 @@ Lý do tách commit: `git log` trở thành bằng chứng cho người đọc t
 
 **08-07: Bước 1-6 đều có README xong** (1,2,3,5 XONG TRỌN kể cả ví dụ; 4 thiếu ví dụ; 6 chưa có ví dụ vì chưa code xong). Cả 2 commit đã push lên GitHub (`593900d`, `261ed53`).
 
-**ĐANG DANG DỞ GIỮA CHỪNG — Bước 6, giai đoạn setup backend cho TapTip:**
+**Bước 6, setup backend cho TapTip — ĐÃ XONG hết phần hạ tầng, sẵn sàng code Giai đoạn 1:**
 
-1. ✅ Fork `circlefin/arc-p2p-payments` → `KattyFury/arc-p2p-payments` (GitHub) → copy code (bỏ `.git`) vào `example/app/`. Giữ `LICENSE` (Apache-2.0) + `ORIGINAL-README.md` để attribution.
-2. ✅ Đối chiếu code sample app với spec — đã xác định 4 chỗ lệch cần sửa ở Giai đoạn 1: (a) sample dùng tìm-người-nhận, TapTip cần **quét QR** — phải build mới hoàn toàn; (b) sample có bottom nav, wireframe TapTip **không có** bottom nav, dùng icon menu (☰); (c) chưa có nút Random (nice-to-have, làm cuối); (d) cần kiểm tra luồng Nạp có link Circle Faucet theo đúng wireframe chưa.
-3. ✅ Quyết định (hỏi user, không tự chọn): giữ **Supabase Cloud** làm backend, không đổi sang Cloudflare KV — lý do trong file, đổi KV sẽ phải viết lại auth + data layer + realtime, mất phần lớn giá trị của việc fork.
-4. ✅ Tạo Supabase project **`taptip`** (ref `kekdoqyehyozqvuhwsoh`, region ap-southeast-1) qua Management API bằng Personal Access Token user đưa (token KHÔNG lưu ở đâu trong repo, chỉ dùng 1 lần cho lệnh curl). Project status ACTIVE_HEALTHY.
-5. ✅ Ghi `example/app/.env.local` (KHÔNG commit — đã confirm `.gitignore` có `.env*.local`) với `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` của project `taptip`.
-6. ❌ **CHƯA XONG — database password** của project `taptip` đang nằm ở `C:\tmp\taptip-supabase-dbpass.txt` (file local, không phải secret của app nhưng cần để link CLI). Cần dọn/nhớ xoá file này sau khi hết cần.
-7. ❌ **CHƯA XONG — push database migrations** (15 file SQL trong `example/app/supabase/migrations/`) lên project `taptip`. Thử 2 cách đều chưa ra:
-   - `npx supabase link --project-ref kekdoqyehyozqvuhwsoh` với `SUPABASE_ACCESS_TOKEN` → lỗi `LegacyLinkApiKeysNetworkError` (CLI 2.112.0 parse ngày `+00:00` trong response API keys mới của Supabase bị lỗi regex — có vẻ là bug CLI, không phải lỗi mình gây ra).
-   - Gọi thẳng `POST /v1/projects/{ref}/database/query` qua curl → lỗi path khi build JSON body trong Git Bash trên Windows (`/tmp/q1.json` bị dịch sai đường dẫn thành `D:\tmp\q1.json`). Chưa thử lại với đường dẫn đúng (dùng scratchpad dir hoặc `C:/tmp` thay vì `/tmp`).
-   - **Hướng thử tiếp theo:** thử lại query endpoint với path đúng (vd `C:/tmp/q1.json`), hoặc downgrade/thử version khác của `supabase` CLI, hoặc cài `psql` rồi connect thẳng bằng connection string Postgres (`postgresql://postgres.kekdoqyehyozqvuhwsoh:<password>@aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres`, password trong file `C:\tmp\taptip-supabase-dbpass.txt`).
-8. ✅ Có Circle Sandbox API key rồi (user tạo tại console.circle.com, chọn đúng loại "API Key" không phải Kit Key). Chưa ghi vào `.env.local` — làm nốt khi có đủ credentials.
-9. ⚠️ **PHÁT HIỆN: sample app bị thiếu file.** `app/api/wallet-set/route.ts` import `@/lib/utils/developer-controlled-wallets-client` nhưng file này KHÔNG tồn tại trong repo gốc, và package `@circle-fin/developer-controlled-wallets` cũng thiếu trong `package.json`. Đã tự cài package (`npm install @circle-fin/developer-controlled-wallets --save`, giờ nằm trong `package.json`). File client vẫn còn thiếu — cần tự viết theo mẫu docs: `initiateDeveloperControlledWalletsClient({apiKey, entitySecret})`.
-10. ❌ **CHẶN Ở ENTITY SECRET.** Thử sinh + đăng ký Entity Secret mới bằng SDK (`generateEntitySecret()` + `registerEntitySecretCiphertext()`) → Circle báo **"The secret for this entity has already been set"**. Nghĩa là tài khoản Circle (entity) của user đã có 1 Entity Secret đăng ký từ trước (không phải từ ezwallet — đã check `.env.txt`/`.env.example`/`.env.mock` của ezwallet, không thấy `CIRCLE_ENTITY_SECRET`, ezwallet dùng Kit Key/App Kit chứ không phải Developer-Controlled Wallets nên không cần entity secret). User nói chắc chắn chưa từng tự đăng ký, nhưng Circle xác nhận đã có — có thể tự động gán lúc tạo account, hoặc từ thao tác nào đó trước đây không nhớ ra ngay. **User đang tự đi tìm lại giá trị cũ (có thể trong password manager, ghi chú, hay recovery file cũ).**
-    - Test đã chạy: `client.createWalletSet()` với entity secret MỚI tự sinh → lỗi "The provided entity secret is invalid" (xác nhận cái mới KHÔNG phải cái đang active).
-    - Entity secret mới đã sinh trong phiên này (KHÔNG dùng được, chỉ để tham khảo nếu cần reset): lưu tạm ở lịch sử phiên, chưa ghi ra file nào.
-    - **Nếu tìm lại được entity secret cũ:** dùng thẳng để init `initiateDeveloperControlledWalletsClient`, không cần đăng ký lại.
-    - **Nếu không tìm được:** phải hỏi Circle support hoặc tìm cách rotate/reset entity secret cho entity đó (chưa research cách làm — có thể qua Console UI có nút reset).
-    - Script dùng để test nằm ở `example/app/register-entity-secret.mjs` — **file này lỡ tay tạo trong `example/app/`, cần XOÁ trước khi commit** (chứa logic sinh secret, không nên nằm trong repo).
+1. ✅ Fork `circlefin/arc-p2p-payments` → `KattyFury/arc-p2p-payments` → code nằm ở `example/app/` (giữ `LICENSE` Apache-2.0 + `ORIGINAL-README.md` để attribution).
+2. ✅ Đối chiếu code sample app với spec — 4 chỗ lệch cần sửa ở Giai đoạn 1: (a) sample dùng tìm-người-nhận, TapTip cần **quét QR** — build mới hoàn toàn; (b) sample có bottom nav, wireframe TapTip **không có**, dùng icon menu (☰); (c) chưa có nút Random (nice-to-have, làm cuối); (d) kiểm tra luồng Nạp có link Circle Faucet theo đúng wireframe chưa.
+3. ✅ Backend: giữ **Supabase Cloud**, không đổi Cloudflare KV (lý do: đổi KV mất phần lớn giá trị của việc fork — viết lại auth + data layer + realtime).
+4. ✅ Supabase project **`taptip`** (ref `kekdoqyehyozqvuhwsoh`) đã tạo + **migrations đã push xong** (verify: bảng `profiles`/`wallets`/`transactions` có thật). Cách push: KHÔNG dùng được `supabase link` (bug CLI 2.112.0 parse ngày `+00:00`) — dùng thẳng Management API `POST /v1/projects/{ref}/database/query` với toàn bộ SQL nối lại, hiệu quả hơn.
+5. ✅ **Circle: đã có account MỚI (08-08)** — account cũ có Entity Secret active từ trước không rõ nguồn gốc (không phải từ ezwallet, không tìm ra recovery file cũ), nên tạo account khác cho sạch thay vì cố reset. Entity Secret mới đã sinh + đăng ký thành công qua SDK (`generateEntitySecret` + `registerEntitySecretCiphertext`).
+6. ✅ Vá lỗ hổng của sample app gốc: `app/api/wallet-set/route.ts` import `@/lib/utils/developer-controlled-wallets-client` nhưng file này KHÔNG tồn tại trong repo gốc, package `@circle-fin/developer-controlled-wallets` cũng thiếu trong `package.json`. Đã cài package + tự viết file client (`initiateDeveloperControlledWalletsClient`).
+7. ✅ `example/app/.env.local` đầy đủ Supabase + `CIRCLE_API_KEY` + `CIRCLE_ENTITY_SECRET` (KHÔNG commit, đã confirm gitignore). **Recovery file lần này: `C:\tmp\taptip-entity-secret-recovery2\recovery_file_....dat` — PHẢI backup ra chỗ khác an toàn hơn `C:\tmp` (dễ bị dọn mất), chưa làm.**
+8. ✅ `npm run dev` chạy thành công, `/sign-in` trả 200, không lỗi runtime — xác nhận app sống được với backend thật.
+9. ⚠️ `npm run build` (production) lỗi type ở `app/api/webhooks/circle/route.ts:232` — bug có sẵn của sample app gốc (Supabase query thiếu field `status` trong select nhưng code vẫn đọc), KHÔNG liên quan gì đến phần mình sửa. Chưa fix — không chặn `npm run dev`, để dành sửa khi đụng tới file đó ở Giai đoạn 1.
+10. ❌ Còn thiếu **Client Key** (loại khác API Key, tạo ở console.circle.com cùng account mới) cho `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` — chưa có thì Modular Wallets SDK phía client chưa chạy được (passkey, ký giao dịch).
+11. Dọn rác: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (recovery file của entity secret CŨ, account cũ — không dùng được, xoá luôn), `C:\tmp\register-entity-secret.mjs` — chưa dọn.
 
 **Việc kế tiếp khi quay lại (theo đúng thứ tự):**
-1. ~~Push migrations lên Supabase~~ — ✅ xong, dùng Management API `database/query`, verify bằng `information_schema.tables` thấy đủ `profiles`/`wallets`/`transactions`.
-2. **User tự tìm lại Entity Secret cũ** (đang làm) — quay lại đưa giá trị hex, hoặc báo không tìm được để tính hướng reset.
-3. Viết file thiếu `lib/utils/developer-controlled-wallets-client.ts` (export `circleDeveloperSdk` bằng `initiateDeveloperControlledWalletsClient`), điền `CIRCLE_API_KEY` + `CIRCLE_ENTITY_SECRET` vào `.env.local`.
-4. Tạo nốt **Client Key** ở console.circle.com (loại khác với API Key — dùng cho `NEXT_PUBLIC_CIRCLE_CLIENT_KEY`).
-5. `npm run dev` để xác nhận app chạy được với backend thật.
-6. Mới bắt đầu code Giai đoạn 1 theo đúng 4 điểm lệch đã liệt kê ở mục 2.
+1. Lấy **Client Key** từ console.circle.com (account mới), điền `NEXT_PUBLIC_CIRCLE_CLIENT_KEY` vào `.env.local`.
+2. Backup recovery file entity secret ra chỗ an toàn hơn `C:\tmp`.
+3. Bắt đầu code Giai đoạn 1 theo đúng 4 điểm lệch đã liệt kê ở mục 2 — theo đúng thứ tự đã đề xuất: sửa Home (bỏ bottom nav, thêm QR) → luồng gửi (quét QR) → Nạp/Rút → Lịch sử → nút Random.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
