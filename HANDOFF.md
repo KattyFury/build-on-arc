@@ -142,6 +142,14 @@ Trước khi viết bất kỳ code nào đụng tới Circle Wallets hoặc Arc
 
 Khi build `example/app` (hoặc bất kỳ dự án nào đang ở Giai đoạn 1 của Bước 6): một tính năng coi là XONG khi **nút bấm đúng vị trí mong muốn + flow chạy đúng** — hết. Không tự ý chỉnh màu, spacing, font, bo góc "cho đẹp hơn chút" giữa lúc đang làm logic. Home (Tính năng 1) đã lỡ làm hơi kỹ styling — không sai nhưng không nên lặp lại, tốn thời gian đáng lẽ dồn cho Giai đoạn 2 làm một lượt nhanh hơn nhiều (đưa nguyên spec `docs/04-wireframe.md` qua một lần, đồng bộ toàn bộ màn thay vì sửa lắt nhắt từng cái).
 
+## 4.8 🔴 Layout phải neo theo tỷ lệ màn hình, KHÔNG dùng pixel cố định
+
+Bài học đau thật (08-09, chỉnh layout Home theo grid 10 hàng): dùng `h-40`, `h-20`, `mt-10` (px cố định) tưởng đúng vị trí nhưng chỉ đúng trên đúng 1 kích thước màn hình lúc test — khách xài màn hình khác kích thước là vỡ layout ngay, và bản thân mình cũng tự nhầm vị trí vì không có cách nào verify bằng mắt (không có browser tool để chụp màn hình).
+
+**Quy tắc:** mọi khoảng cách/kích thước xuất phát từ hệ lưới N-hàng (Bước 4) phải quy đổi thành **tỷ lệ co giãn** (`flex-grow` dạng `flex-[N]`, `%`, `vh`/`vw`), không bao giờ hardcode px. Ví dụ thật đã sửa ở `example/app/components/home-screen.tsx`: toàn bộ trang dùng đúng 1 hệ `flex-[N]` cộng lại bằng tổng số hàng của hệ lưới (VD 10 hàng → tổng `flex-[N]` = 10), **kể cả các hàng "trống"/spacer cũng phải có `flex-[N]` riêng** — nếu không khối content sẽ tự nuốt hết phần dư, làm sai lệch tỷ lệ thực tế so với hệ lưới đã tính.
+
+**Chỗ hay bị bẫy thêm:** phần tử có kích thước cố định thật sự (ảnh, QR code...) đặt trong container `flex-grow` theo chiều dọc dễ làm tràn khung trên màn hình thấp, đẩy các phần tử sau nó (VD nút ở hàng cuối) lệch khỏi vị trí mong muốn. Cách sửa: cho kích thước phần tử đó co giãn theo `vw` (chiều rộng, ổn định hơn) thay vì cố định theo px dọc, và thêm `min-h-0` cho flex item chứa nó để nó thật sự co được khi cần.
+
 ## 5. Git
 
 Remote `origin` = GitHub, branch `main`. Xong việc là commit + push ngay, đừng để commit nằm im ở local.
