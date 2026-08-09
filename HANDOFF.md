@@ -104,6 +104,12 @@ User chốt chuyển bước, không test tay hết từng thao tác (chấp nh�
 
 **Bài học đã rút ra và ghi vào repo:** `06-build/README.md` (bản cho người đọc series) + `example/docs/06-build.md` (bản chi tiết kỹ thuật) — 5 thứ làm dự án chậm gấp nhiều lần.
 
+**Brief cho Claude Design (bản tự chứa, để ngoài Desktop):** `C:\Users\Dell\Desktop\TapTip-Design-Brief.md` — 196 dòng, gộp hết PRD + hệ lưới + bố cục từng màn + trạng thái code, đọc file đó là đủ không cần mở repo. Bản trong repo là `example/docs/07-design-handoff.md`.
+
+**Logo (08-09):** user tự vẽ, file gốc `C:\Users\Dell\Desktop\logo.png` (500×500) — bàn tay vàng cầm đồng USDC xanh trên nền cyan bo góc. Đã sinh đủ bộ icon PWA (`public/icon-192x192.png`, `icon-512x512.png`, `web-app-manifest-512x512.png`, `apple-touch-icon.png` 180, `favicon-96x96.png`) + `favicon.ico` (PNG-in-ICO 64×64, ghi cả `app/` lẫn root) bằng `sharp` cài tạm rồi gỡ (`npm install --no-save sharp` → `npm uninstall sharp`). Logo gốc lưu ở `public/logo.png` để sinh lại khi cần. Cũng đổi luôn tên PWA từ **"Arc Pay"** (của sample app) sang **TapTip** trong `app/manifest.ts` + `app/layout.tsx`.
+
+> ⚠️ `public/favicon.svg` vẫn là file SVG cũ của Circle sample app, chưa thay bằng logo TapTip (chỉ thay bản PNG/ICO). Không chặn gì, nhưng nên dọn lúc làm giao diện.
+
 **Việc còn nợ:**
 - Dọn rác file tạm: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (bản cũ vô dụng), `C:\tmp\register-entity-secret.mjs`; backup recovery file MỚI (`C:\tmp\taptip-entity-secret-recovery2\`) ra chỗ an toàn hơn `C:\tmp`.
 - `npm run build` (production) vẫn fail do lỗi type sẵn có của sample app ở `app/api/webhooks/circle/route.ts:232` — chưa chặn `npm run dev`, nhưng phải sửa trước khi deploy.
