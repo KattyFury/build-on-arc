@@ -112,8 +112,19 @@ User chốt chuyển bước, không test tay hết từng thao tác (chấp nh�
 
 **Việc còn nợ:**
 - Dọn rác file tạm: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (bản cũ vô dụng), `C:\tmp\register-entity-secret.mjs`; backup recovery file MỚI (`C:\tmp\taptip-entity-secret-recovery2\`) ra chỗ an toàn hơn `C:\tmp`.
-- `npm run build` (production) vẫn fail do lỗi type sẵn có của sample app ở `app/api/webhooks/circle/route.ts:232` — chưa chặn `npm run dev`, nhưng phải sửa trước khi deploy.
 - Viết mục Ví dụ + "prompt từng hụt chỗ nào" cho `06-build/README.md` từ kết quả thật (Bước 6 là bước duy nhất chưa có mục Ví dụ).
+
+## ✅ 08-09: GIAI ĐOẠN 2 HOÀN TẤT – đã code hết theo `TapTip Design Spec.dc.html`
+
+User tự viết spec thiết kế Modernist (màu, font Archivo, luật bo góc) vào file gốc repo `TapTip Design Spec.dc.html` (không phải Desktop – lưu ý cho lần sau: file design nằm trong repo, không phải ngoài Desktop). Đã áp hết vào code, đủ 9 việc trong todo list Giai đoạn 2: token màu/font, Home, sign-in/code-confirmation/passkey-setup, onboarding, send-flow 4 bước, transactions + chi tiết giao dịch, màn Splash + Add to Home Screen (route `/` – trước đó không tồn tại, `proxy.ts` ép redirect cứng sang `/sign-in`), sửa lỗi build production, verify bằng Chrome headless.
+
+**Bug thật tìm được, cùng loại "token âm thầm sai" như 3 bẫy flexbox ở Giai đoạn 1 – đọc CSS đã build ra để xác nhận, không đoán:**
+- `--radius-xl` bị định nghĩa `calc(var(--radius) + 4px)` (công thức chuẩn shadcn, vốn giả định `--radius` gốc là 8px). Sau khi đổi `--radius: 0rem` cho đúng Modernist, công thức đó cho ra **4px thay vì 12px** – mọi chỗ dùng `rounded-xl` (khung QR, mọi popup qua `dialog.tsx`) đều bị bo góc sai từ đầu buổi tới giờ mà không ai để ý vì nhìn bằng mắt khó phân biệt 4px với 12px trên ảnh chụp nhỏ. Sửa tận gốc: `--radius-xl: 12px` cố định, không tính theo `--radius` nữa.
+- Route `/` chưa từng render được `app/page.tsx` (Splash) dù file đã tạo đúng – `proxy.ts` (middleware của repo, không phải `middleware.ts` chuẩn) có rule cứng redirect `/` → `/sign-in` bất kể trạng thái đăng nhập, che mất route mới. Phát hiện bằng `curl -w "%{http_code}"` thấy 307 dù code không có gì sai.
+- `npm run build` production fail thật do thiếu field `status` trong `.select()` ở `app/api/webhooks/circle/route.ts:232` (bug có sẵn từ sample app gốc) – thêm field vào là qua, đồng thời sửa luôn bug runtime ẩn (so sánh `existing.status` với field chưa bao giờ được select nên luôn `undefined`).
+- `tailwind.config.ts` là file cấu hình kiểu Tailwind v3 sót lại từ sample app gốc, dự án đã chuyển hẳn sang Tailwind v4 (CSS-first qua `@theme` trong `globals.css`) – file đó không còn được dùng nhưng vẫn chặn build vì `import type { Config } from "tailwindcss"` không còn resolve được ở v4. Xoá hẳn (không phải sửa) vì xác nhận không nơi nào khác import nó; `components.json` trỏ `tailwind.config` về rỗng theo đúng convention shadcn cho dự án Tailwind v4.
+
+**Verify:** `npx tsc --noEmit` sạch sau mỗi file sửa (đúng kỷ luật đã rút ra ở Giai đoạn 1 – không gộp nhiều sửa rồi mới check). `npm run build` chạy production thành công, `next start` phục vụ `/` và `/sign-in` trả 200. Chrome headless xác nhận trực quan: splash hiện logo tự vẽ + chữ "TapTip", màn Add to Home Screen hiện 3 bước hướng dẫn tiếng Việt + nút "Tiếp tục" pill đỏ đúng token. `/onboarding` và luồng gửi tiền trong `send-flow.tsx` không verify được bằng Chrome headless vì cần phiên đăng nhập qua passkey (WebAuthn không giả lập được ở headless) – đã đối chiếu code với cấu trúc đã xác nhận đúng của `sign-in.tsx`/`code-confirmation.tsx` thay vì tự dựng hạ tầng auth giả cho một lần kiểm tra.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
