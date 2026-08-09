@@ -2,7 +2,24 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (deploy Cloudflare xong, còn 1 bước tay ở Circle Console – đọc mục "DEPLOY CLOUDFLARE" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (giao diện đã đổi hết sang English + sửa loạt UX, deploy lại xong – đọc mục "GIAO DIỆN ENGLISH + FIX UX" ngay dưới đây trước khi làm gì tiếp)
+
+## ✅ GIAO DIỆN ENGLISH + FIX UX (08-10)
+
+User yêu cầu đổi hết giao diện sang English (mặc định English, không còn tiếng Việt). Đã đổi toàn bộ string hiển thị ở 11 file (Home, sign-in, code-confirmation, onboarding, passkey-setup, send-flow 4 bước, transactions, chi tiết giao dịch, splash/add-to-home, manifest/layout metadata) + đổi locale ngày giờ từ `vi-VN` sang `en-US`. **Verify bằng script gác cổng, không soát mắt** (đúng luật đã chốt ở dự án khác, áp dụng luôn ở đây): grep toàn bộ `.ts`/`.tsx` tìm ký tự có dấu tiếng Việt, chạy 2 lần (lần 1 lọt sót 1 chuỗi ở `transactions.tsx` do `replace_all` không khớp hết, lần 2 sau khi sửa tay thì sạch 100%).
+
+**Cùng lúc user gửi 8 điểm fix UX, đã làm hết:**
+1. Man Add to Home Screen: sửa thành 4 bước (thêm bước "Tap the options menu" trước bước Share).
+2. Nút Continue của màn đó chuyển vào đúng hàng 9-10, cao 80% hàng (trước đó dùng pattern cũ `pb-[2vh]` không theo lưới).
+3+4. **Áp lưới 10 hàng thật sự** (không phải `flex-1` chung chung) cho `sign-in`, `code-confirmation`, `onboarding`, `passkey-setup`: chia `1 (đệm) + 5 (nội dung, tâm ~hàng 3.5) + 3 (đệm) + 1 (nút, cao 80%)`.
+5. Thêm gợi ý domain email (`@gmail.com`, `@icloud.com`) dưới ô nhập ở sign-in – hiện khi đã gõ phần trước `@` mà email chưa hợp lệ, bấm vào là tự điền.
+6. Luật độ rộng nút: nút đơn = `w-2/3 mx-auto`; nút đôi (chính/phụ) giữ tỷ lệ 1/3+2/3 đã có sẵn (code-confirmation Back/Continue, home-screen Ngẫu nhiên/Tip) – cả hai đã có margin viền qua `px-5` của layout cha từ trước, không cần thêm.
+7. **Bug thật tìm được:** mọi popup (`dialog.tsx`) rộng đúng bằng bề ngang màn hình (`w-full` trên viewport 430px, `max-w-lg`=512px không kích hoạt) → chạm sát lề trái phải. Sửa: `w-[calc(100%-40px)]` khớp quy ước margin 20px dùng khắp app.
+8. **Bug thật tìm được – số dư cập nhật chậm:** app có **2 hệ theo dõi số dư tách rời nhau** – `web3-provider.tsx` đọc balance on-chain trực tiếp qua viem và tự refresh ngay sau khi gửi, nhưng **Home screen lại hiển thị balance từ `balanceContext`/`use-wallet-balances.ts`** (đọc cache DB + subscribe Realtime), hệ này không hề được gọi refresh sau khi user tự gửi tiền – chỉ cập nhật khi webhook Circle bắn về, có độ trễ thật. Sửa: `send-flow.tsx` gọi `refreshBalances()` (từ `balanceContext`, không phải từ `web3-provider`) ngay sau khi `sendUSDC` thành công – route `/api/wallet/balance` đọc balance sống từ Circle API nên không phụ thuộc webhook.
+
+**Đã deploy lại lên Cloudflare, verify live bằng Chrome headless đọc DOM thật** (không chỉ tin status code) – `https://taptip.kattyfury1403.workers.dev/sign-in` hiện đúng "Enter your email to get started" / "Send OTP", không còn console error.
+
+**User đã tự thêm domain vào Circle Console → Passkey – việc tay đã xong, đừng nhắc lại.**
 
 ## ✅ DEPLOY CLOUDFLARE (08-10) – link thật đã chạy, còn 1 việc tay
 
@@ -18,7 +35,7 @@
 - Next.js nâng lên 16.3.0 (từ 16.1.6).
 - Bỏ hết `NEXT_PUBLIC_VERCEL_URL` (giả định Vercel) khỏi code thật đang dùng – client fetch chuyển sang path tương đối (`/api/...`), 2 chỗ server-side (`app/layout.tsx` metadataBase, `app/api/webhooks/circle/route.ts` self-call) đổi sang biến mới `NEXT_PUBLIC_SITE_URL`/`SITE_URL` (đã set = link thật ở `.env.local` và Cloudflare). Không đụng `app/auth/callback/route.ts` vì đó là code chết (nhánh Developer-Controlled Wallets, TapTip không dùng).
 - 6 secret đã đẩy lên Cloudflare Worker `taptip`: `CIRCLE_API_KEY`, `CIRCLE_ENTITY_SECRET`, `NEXT_PUBLIC_CIRCLE_CLIENT_KEY/URL`, `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY`.
-- **Việc CHƯA làm, đừng quên:** domain `taptip.kattyfury1403.workers.dev` chưa được thêm vào Circle Console → Modular Wallets → Configurator → Passkey – thiếu bước này thì passkey login sẽ lỗi trên domain thật dù code đúng. Đây là bước tay, không tự động hoá được.
+- ✅ Domain `taptip.kattyfury1403.workers.dev` đã được user tự thêm vào Circle Console → Modular Wallets → Configurator → Passkey (08-10, user xác nhận).
 - Token Cloudflare: đọc từ `D:\Files\Claude\build_on_arc\ezwallet\.env.txt` (`CF_API_TOKEN=`, `CF_ACCOUNT_ID=`) rồi export `CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID` trước khi chạy lệnh `wrangler`, xem chi tiết memory `cloudflare-api-access`.
 - **Đừng đụng WSL/Ubuntu** – thử hướng đó giữa chừng để né lỗi Windows nhưng user chặn lại, quay về sửa thẳng trên Windows native (Git Bash) là đủ, bug `__name` không liên quan gì tới WSL cả.
 
