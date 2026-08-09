@@ -36,7 +36,7 @@ Claude Code sẽ đọc spec, liệt kê lại thứ tự tính năng sắp buil
 - **Kiên nhẫn đi từng tính năng một.** Đừng để nó gộp nhiều tính năng vào một lượt build vì "cho nhanh".
 - **Giai đoạn 1 xong hết mới sang Giai đoạn 2.** Logic ổn định trước thì chỉnh giao diện sau không làm gãy flow.
 - **Tiêu chí "xong" ở Giai đoạn 1: nút bấm đúng vị trí mong muốn + flow chạy đúng, thế là đủ – đừng quan tâm đẹp/xấu.** Ngứa mắt cỡ nào cũng kệ, đừng bắt AI chỉnh màu/spacing/font lúc này. Đưa nguyên spec giao diện qua Chat (hoặc công cụ design riêng) làm một lượt ở Giai đoạn 2 nhanh hơn hẳn so với vừa build logic vừa chăm chút từng màn.
-- **Ở Giai đoạn 2, mọi vị trí/kích thước phải neo theo tỷ lệ màn hình, không phải pixel cố định.** Hardcode px (VD "cao 80px", "cách 40px") chỉ đúng trên đúng một kích thước màn hình – khách dùng máy nhỏ hơn/lớn hơn là vỡ layout ngay. Dùng đơn vị co giãn (`flex-grow`, `%`, `vh`/`vw`) cho mọi khoảng cách và kích thước lấy từ hệ lưới ở Bước 4.
+- **Ở Giai đoạn 2, mọi vị trí/kích thước phải neo theo tỷ lệ màn hình, không phải pixel cố định.** Hardcode px (VD "cao 80px", "cách 40px") chỉ đúng trên đúng một kích thước màn hình – khách dùng máy nhỏ hơn/lớn hơn là vỡ layout ngay. Dùng đơn vị co giãn (`flex-grow`, `%`, `vh`/`vw`) cho mọi khoảng cách và kích thước lấy từ hệ lưới ở Bước 4. Tailwind CSS v4 không build được class `flex-[N]` (arbitrary value phân số) – dùng `style={{ flexGrow: N }}` inline, xem `HANDOFF.md` mục 4.8.
 - **Build app không phải thả cho AI tự làm hết.** Có lúc phải tự tay tạo tài khoản, lấy API key, tạo database, deploy smart contract – cứ làm rồi sửa, ai cũng chật vật ở bước này.
 
 ## Kết quả cuối
