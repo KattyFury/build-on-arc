@@ -85,7 +85,12 @@ Type-check sạch, dev server compile "/dashboard" thành công không lỗi run
 
 **08-08: Thêm 1 tính năng mới phát sinh giữa chừng (đã hỏi user, không tự thêm lặng lẽ) — hiện tên người thay vì địa chỉ/hash trong Lịch sử.** `components/transactions.tsx` thêm `loadCounterpartyNames()`: lookup `circle_contract_address` của giao dịch → bảng `wallets` (theo `wallet_address`) → bảng `profiles` (theo `profile_id`) → lấy `name`, hiện `"Tip: <tên>"` thay vì hash nếu tìm thấy, fallback về hash cũ nếu không. Đã cập nhật `example/docs/02-hoan-thien-y-tuong.md` (mục "Cập nhật khi build") ghi nhận thay đổi spec này — **PRD giờ không còn khớp 100% với bản gốc chạy Bước 2**, đây là lần đầu spec bị sửa sau khi đã chạy thật, cần nhớ khi viết mục Ví dụ cho Bước 2 sau này. Type-check sạch, dev server compile OK. Cũng CHƯA test tay (cần 2 tài khoản tip qua lại mới thấy tên hiện lên).
 
-**Việc kế tiếp khi quay lại:** user test tay toàn bộ 5 tính năng + tính năng tên người mới thêm, báo lỗi nếu có. Sau khi user xác nhận OK hết mới coi Giai đoạn 1 thật sự xong, chuyển qua Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt cho mọi màn — xem mục 4.7). Dọn rác file tạm ở mục 11 phía trên (`C:\tmp\taptip-supabase-dbpass.txt`, recovery file cũ, `register-entity-secret.mjs`) vẫn chưa làm.
+**08-08: User đổi hướng — hoàn thiện lẹ để chuyển qua Giai đoạn 2, bớt test kỹ trên PC.** Lý do hợp lý: đây là app mobile, camera QR test trên PC vốn không tối ưu (thiếu/không quen webcam), tốt hơn nên test thật trên điện thoại sau khi có UI thật. Đã làm:
+- Tắt (disable) nút "Ngẫu nhiên" theo yêu cầu — user tự set logic lại sau khi xong giao diện, không cần mình động vào nữa trong Giai đoạn 1.
+- Sửa race condition camera QR (lỗi `HTML Element with id=taptip-qr-region not found`): `startScanner()` giờ đợi 1 frame nếu DOM chưa kịp commit trước khi khởi tạo `Html5Qrcode`; đổi `console.error` → `console.warn` cho case permission-denied/không có camera (đã xử lý bằng fallback nhập ảnh, không phải crash bất ngờ).
+- **Mẹo test camera thật không cần deploy:** điện thoại chung WiFi với PC, mở `http://192.168.110.39:3000` (Network URL dev server tự log ra) — camera thật hoạt động, khỏi cần đụng Cloudflare.
+
+**Việc kế tiếp khi quay lại:** test tay Home + Tip (quét QR, ưu tiên test qua điện thoại) + Nạp/Rút + Lịch sử (kể cả tên người mới thêm — cần 2 tài khoản tip qua lại). Random đang tắt, bỏ qua không cần test. Sau khi user xác nhận OK mới coi Giai đoạn 1 xong, chuyển Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt — mục 4.7). Dọn rác file tạm ở mục 11 (`C:\tmp\taptip-supabase-dbpass.txt`, recovery file cũ, `register-entity-secret.mjs`) vẫn chưa làm.
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
