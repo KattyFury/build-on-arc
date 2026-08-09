@@ -2,7 +2,25 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-07 (giữa phiên — user phải đi công việc, đọc kỹ mục 3 trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (deploy Cloudflare xong, còn 1 bước tay ở Circle Console – đọc mục "DEPLOY CLOUDFLARE" ngay dưới đây trước khi làm gì tiếp)
+
+## ✅ DEPLOY CLOUDFLARE (08-10) – link thật đã chạy, còn 1 việc tay
+
+**Link thật:** https://taptip.kattyfury1403.workers.dev – đã verify bằng Chrome headless đọc được nội dung thật (không chỉ tin status code), `/sign-in` hiện đúng "Nhập email để bắt đầu" + nút "Gửi mã OTP" pill đỏ đúng token.
+
+**Bug đã gặp và sửa xong trên đường deploy:**
+- Màn trắng, console lỗi `Uncaught ReferenceError: __name is not defined` – do `next-themes` convert script thành string, esbuild của Wrangler bật `keep-names` mặc định làm hàm `__name` sai scope lúc eval runtime. **Sửa: thêm `"keep_names": false` vào `wrangler.jsonc`** (đã làm, đã build lại + deploy lại + verify lại). Xem https://opennext.js.org/cloudflare/howtos/keep_names.
+- **Bài học verify:** `curl -w "%{http_code}"` trả 200 KHÔNG có nghĩa là trang chạy đúng – `(auth-pages)/layout.tsx` là client component chờ `getUser()` xong mới render, curl không chạy JS nên không thấy lỗi. Phải dùng Chrome headless đọc DOM/console thật (`--dump-dom` + `--enable-logging=stderr --v=1` để bắt console error) mới chắc chắn.
+- Thử dùng WSL/Ubuntu để né lỗi build trên Windows giữa chừng – **sai hướng, đừng làm lại**, bug `__name` không liên quan gì tới WSL, sửa thẳng trên Windows native (Git Bash) là đủ.
+
+**Việc setup Cloudflare đã xong, không cần làm lại:**
+- Đổi `proxy.ts` → `middleware.ts` (Next 16's `proxy.ts` bắt buộc chạy Node.js runtime, `@opennextjs/cloudflare` hiện chưa hỗ trợ – xem opennextjs/opennextjs-cloudflare#962). `middleware.ts` cũ (Edge runtime) vẫn được Next 16 hỗ trợ, chỉ deprecated chứ chưa gỡ.
+- Next.js nâng lên 16.3.0 (từ 16.1.6).
+- Bỏ hết `NEXT_PUBLIC_VERCEL_URL` (giả định Vercel) khỏi code thật đang dùng – client fetch chuyển sang path tương đối (`/api/...`), 2 chỗ server-side (`app/layout.tsx` metadataBase, `app/api/webhooks/circle/route.ts` self-call) đổi sang biến mới `NEXT_PUBLIC_SITE_URL`/`SITE_URL` (đã set = link thật ở `.env.local` và Cloudflare). Không đụng `app/auth/callback/route.ts` vì đó là code chết (nhánh Developer-Controlled Wallets, TapTip không dùng).
+- 6 secret đã đẩy lên Cloudflare Worker `taptip`: `CIRCLE_API_KEY`, `CIRCLE_ENTITY_SECRET`, `NEXT_PUBLIC_CIRCLE_CLIENT_KEY/URL`, `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY`.
+- **Việc CHƯA làm, đừng quên:** domain `taptip.kattyfury1403.workers.dev` chưa được thêm vào Circle Console → Modular Wallets → Configurator → Passkey – thiếu bước này thì passkey login sẽ lỗi trên domain thật dù code đúng. Đây là bước tay, không tự động hoá được.
+- Token Cloudflare: đọc từ `D:\Files\Claude\build_on_arc\ezwallet\.env.txt` (`CF_API_TOKEN=`, `CF_ACCOUNT_ID=`) rồi export `CLOUDFLARE_API_TOKEN`/`CLOUDFLARE_ACCOUNT_ID` trước khi chạy lệnh `wrangler`, xem chi tiết memory `cloudflare-api-access`.
+- **Đừng đụng WSL/Ubuntu** – thử hướng đó giữa chừng để né lỗi Windows nhưng user chặn lại, quay về sửa thẳng trên Windows native (Git Bash) là đủ, bug `__name` không liên quan gì tới WSL cả.
 
 ---
 
