@@ -21,6 +21,8 @@ User yêu cầu đổi hết giao diện sang English (mặc định English, kh
 
 **User đã tự thêm domain vào Circle Console → Passkey – việc tay đã xong, đừng nhắc lại.**
 
+**Đã commit + push:** `fb0ad63` (gộp cả code English/UX fix lẫn HANDOFF.md, không tách commit vì đây không phải nội dung hướng dẫn theo bước – xem mục 4.1). Repo sạch, không còn gì chưa lên GitHub tính đến đây.
+
 ## ✅ DEPLOY CLOUDFLARE (08-10) – link thật đã chạy, còn 1 việc tay
 
 **Link thật:** https://taptip.kattyfury1403.workers.dev – đã verify bằng Chrome headless đọc được nội dung thật (không chỉ tin status code), `/sign-in` hiện đúng "Nhập email để bắt đầu" + nút "Gửi mã OTP" pill đỏ đúng token.
