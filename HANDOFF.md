@@ -146,9 +146,33 @@ Khi build `example/app` (hoặc bất kỳ dự án nào đang ở Giai đoạn 
 
 Bài học đau thật (08-09, chỉnh layout Home theo grid 10 hàng): dùng `h-40`, `h-20`, `mt-10` (px cố định) tưởng đúng vị trí nhưng chỉ đúng trên đúng 1 kích thước màn hình lúc test — khách xài màn hình khác kích thước là vỡ layout ngay, và bản thân mình cũng tự nhầm vị trí vì không có cách nào verify bằng mắt (không có browser tool để chụp màn hình).
 
-**Quy tắc:** mọi khoảng cách/kích thước xuất phát từ hệ lưới N-hàng (Bước 4) phải quy đổi thành **tỷ lệ co giãn** (`flex-grow`, `%`, `vh`/`vw`), không bao giờ hardcode px. Ví dụ thật đã sửa ở `example/app/components/home-screen.tsx`: toàn bộ trang dùng đúng 1 hệ flex-grow cộng lại bằng tổng số hàng của hệ lưới (VD 10 hàng → tổng flex-grow = 10), **kể cả các hàng "trống"/spacer cũng phải có flex-grow riêng** — nếu không khối content sẽ tự nuốt hết phần dư, làm sai lệch tỷ lệ thực tế so với hệ lưới đã tính.
+**Quy tắc:** mọi khoảng cách/kích thước xuất phát từ hệ lưới N-hàng (Bước 4) phải quy đổi thành **tỷ lệ co giãn** (`flex`, `%`, `vh`/`vw`), không bao giờ hardcode px. Ví dụ thật đã sửa ở `example/app/components/home-screen.tsx`: toàn bộ trang dùng đúng 1 hệ flex cộng lại bằng tổng số hàng của hệ lưới (VD 10 hàng → tổng = 10), **kể cả các hàng "trống"/spacer cũng phải có flex riêng** — nếu không khối content sẽ tự nuốt hết phần dư, làm sai lệch tỷ lệ thực tế so với hệ lưới đã tính.
 
-**Chỗ hay bị bẫy thêm:** phần tử có kích thước cố định thật sự (ảnh, QR code...) đặt trong container `flex-grow` theo chiều dọc dễ làm tràn khung trên màn hình thấp, đẩy các phần tử sau nó (VD nút ở hàng cuối) lệch khỏi vị trí mong muốn. Cách sửa: cho kích thước phần tử đó co giãn theo `vw` (chiều rộng, ổn định hơn) thay vì cố định theo px dọc, và thêm `min-height:0` cho flex item chứa nó để nó thật sự co được khi cần.
+### 3 cái bẫy đã thật sự làm hỏng layout (đều tốn nhiều vòng sửa mới ra)
+
+1. **`flexGrow` một mình KHÔNG chia theo tỷ lệ tuyệt đối.** Nó chỉ chia phần *dư* sau khi trừ kích thước nội dung, nên hàng nào nội dung to (QR) tự chiếm nhiều hơn phần của nó → lệch cả lưới. **Bắt buộc dùng `style={{ flex: "N 1 0" }}`** (flexBasis = 0) thì mỗi hàng mới đúng `N/tổng` chiều cao.
+2. **Padding trên hàng bị CỘNG THÊM ngoài phần chia tỷ lệ.** Padding là kích thước tối thiểu không co được, nên `py-[1vh]` trên hàng nút làm hàng đó phình từ 83px lên 98px (= 83 + 16.6px padding), đẩy toàn bộ hàng khác co lại ~2%. **Tuyệt đối không đặt padding trên phần tử hàng** — muốn khoảng thở thì cho phần tử con cao theo `%` (VD nút `h-[80%]` + hàng `items-center`).
+3. **Phần tử kích thước cố định (ảnh, QR) làm tràn hàng.** Cách sửa: cho nó `height: 100%` + `aspectRatio: "1"` để lấp đúng chiều cao hàng, và `minHeight: 0` cho hàng chứa nó để hàng thật sự co được.
+
+### 🔬 Cách TỰ VERIFY layout — đừng bao giờ đoán bằng mắt nữa
+
+Máy này **có Chrome** (`C:\Program Files\Google\Chrome\Application\chrome.exe`), chạy headless được. Đây là thứ đáng lẽ phải dùng ngay từ đầu thay vì sửa mù rồi bắt user chụp màn hình:
+
+```bash
+# 1. Chụp ảnh và TỰ XEM bằng tool Read (Read đọc được file .png)
+chrome.exe --headless=new --disable-gpu --hide-scrollbars \
+  --window-size=900,932 --screenshot="C:/tmp/shot.png" \
+  --virtual-time-budget=8000 "http://localhost:3000/<route>"
+
+# 2. Đo CHÍNH XÁC bằng số: tạo route tạm render component kèm 1 client
+#    component chạy getBoundingClientRect() cho từng con của container,
+#    quy ra đơn vị "hàng", in vào <pre id="measurements">, rồi:
+chrome.exe --headless=new --disable-gpu --window-size=900,932 \
+  --virtual-time-budget=8000 --dump-dom "http://localhost:3000/<route>" > C:/tmp/dom.html
+# rồi dùng node đọc nội dung thẻ <pre id="measurements"> ra
+```
+
+Mẹo: route tạm nên vẽ luôn lưới N hàng (`position:absolute; top:i*10%` + `borderTop`) để so trực tiếp với ảnh user gửi. Component `HomeScreen` đã có sẵn thuộc tính `data-home-root` trên container để script đo bám vào. Xoá route tạm sau khi verify xong. **Lưu ý:** máy KHÔNG có `python3`, dùng `node -e` để parse HTML.
 
 > 🔴 **QUAN TRỌNG — Tailwind v4 không build class `flex-[N]`.** Repo này dùng `tailwindcss@4.2.1`. Đã tự kiểm chứng bằng cách đọc thẳng file CSS đã build (`.next/dev/static/chunks/app_globals_css_*.single.css`): class kiểu `flex-[1.5]`, `flex-[3]` (arbitrary value trên utility `flex`) **không sinh ra rule CSS nào cả** — các arbitrary value khác như `w-[50vw]`, `max-w-[260px]` vẫn build bình thường, chỉ riêng `flex-[N]` bị bỏ qua. Hậu quả: đặt tỷ lệ đúng trên giấy nhưng layout không nhích một chút nào, dễ làm tưởng lầm là do tính sai công thức (đã tốn nhiều vòng sửa mới tìm ra). **Giải pháp:** dùng `style={{ flexGrow: N }}` inline thay vì class Tailwind cho mọi giá trị flex-grow phân số. Muốn biết chắc 1 class Tailwind có thật hay không, đừng đoán qua giao diện — `curl` trang, tìm file `.next/dev/static/chunks/*.css`, `grep` thẳng tên class trong đó.
 
