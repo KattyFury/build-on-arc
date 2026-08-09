@@ -90,7 +90,24 @@ Type-check sạch, dev server compile "/dashboard" thành công không lỗi run
 - Sửa race condition camera QR (lỗi `HTML Element with id=taptip-qr-region not found`): `startScanner()` giờ đợi 1 frame nếu DOM chưa kịp commit trước khi khởi tạo `Html5Qrcode`; đổi `console.error` → `console.warn` cho case permission-denied/không có camera (đã xử lý bằng fallback nhập ảnh, không phải crash bất ngờ).
 - **Mẹo test camera thật không cần deploy:** điện thoại chung WiFi với PC, mở `http://192.168.110.39:3000` (Network URL dev server tự log ra) — camera thật hoạt động, khỏi cần đụng Cloudflare.
 
-**Việc kế tiếp khi quay lại:** test tay Home + Tip (quét QR, ưu tiên test qua điện thoại) + Nạp/Rút + Lịch sử (kể cả tên người mới thêm — cần 2 tài khoản tip qua lại). Random đang tắt, bỏ qua không cần test. Sau khi user xác nhận OK mới coi Giai đoạn 1 xong, chuyển Giai đoạn 2 (giao diện, đưa nguyên `docs/04-wireframe.md` áp đồng loạt — mục 4.7). Dọn rác file tạm ở mục 11 (`C:\tmp\taptip-supabase-dbpass.txt`, recovery file cũ, `register-entity-secret.mjs`) vẫn chưa làm.
+## ✅ 08-09: GIAI ĐOẠN 1 CHỐT — đã chuyển sang GIAI ĐOẠN 2 (giao diện)
+
+User chốt chuyển bước, không test tay hết từng thao tác (chấp nhận, vì sẽ test thật trên điện thoại sau khi có UI thật).
+
+**Layout Home đã khớp lưới 10 hàng CHÍNH XÁC** (đo bằng `getBoundingClientRect` qua Chrome headless, không đoán): balance `0→1`, gap `1→1.5`, QR `1.5→4.5`, gap `4.5→4.75`, chú thích `4.75→5.75`, gap `5.75→8`, nút `8→9` (tâm 8.50), menu `9→10`. Ba cái bẫy tìm ra trên đường: Tailwind v4 không build `flex-[N]` · `flexGrow` một mình chỉ chia phần dư · padding trên hàng bị cộng thêm ngoài tỷ lệ (chi tiết mục 4.8).
+
+**Khung quét QR** sửa xong: `flex-1` → `aspect-square` (hết dải đen letterbox), CSS ép video `object-fit:cover`, `qrbox` đổi từ 250px cố định sang 70% cạnh ngắn.
+
+**Đã dọn 5 component mồ côi do thay đổi của mình gây ra:** `wallet-tab.tsx` (màn gửi cũ, thay bằng `send-flow.tsx`) + 3 file chỉ phục vụ nó (`recipient-search.input`, `transaction-result-dialog`, `virtual-keyboard`) + `wallet-balance.tsx`. Type-check sạch, app chạy bình thường sau khi xoá.
+
+**Gói bàn giao Giai đoạn 2:** [`example/docs/07-design-handoff.md`](example/docs/07-design-handoff.md) — liệt kê 8 màn cần làm giao diện kèm trạng thái từng màn, 3 luật kỹ thuật bắt buộc giữ (lưới tỷ lệ / `flex: "N 1 0"` / không padding trên hàng), cách tự verify bằng Chrome headless, lưu ý nội dung (còn sót tiếng Anh ở onboarding + lịch sử + chi tiết giao dịch), và danh sách code dư từ sample app.
+
+**Bài học đã rút ra và ghi vào repo:** `06-build/README.md` (bản cho người đọc series) + `example/docs/06-build.md` (bản chi tiết kỹ thuật) — 5 thứ làm dự án chậm gấp nhiều lần.
+
+**Việc còn nợ:**
+- Dọn rác file tạm: `C:\tmp\taptip-supabase-dbpass.txt`, `C:\tmp\taptip-entity-secret-recovery\` (bản cũ vô dụng), `C:\tmp\register-entity-secret.mjs`; backup recovery file MỚI (`C:\tmp\taptip-entity-secret-recovery2\`) ra chỗ an toàn hơn `C:\tmp`.
+- `npm run build` (production) vẫn fail do lỗi type sẵn có của sample app ở `app/api/webhooks/circle/route.ts:232` — chưa chặn `npm run dev`, nhưng phải sửa trước khi deploy.
+- Viết mục Ví dụ + "prompt từng hụt chỗ nào" cho `06-build/README.md` từ kết quả thật (Bước 6 là bước duy nhất chưa có mục Ví dụ).
 
 ## 4. QUY ĐỊNH VIẾT BÀI
 
