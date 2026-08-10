@@ -2,7 +2,25 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (fix Resend API key sai làm mọi email OTP fail + canh giữa danh sách Add to Home + text-align Field – đọc mục "BUG RESEND KEY + CANH GIỮA" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-11 (fix bug nặng nhất từ trước giờ: PATCH Supabase từng xoá mất template email khiến OTP gửi magic link thay vì mã số – đọc mục "BUG MAGIC LINK THAY VÌ OTP" ngay dưới đây trước khi làm gì tiếp)
+
+## 🔴 BUG MAGIC LINK THAY VÌ OTP (08-11)
+
+**Hậu quả trực tiếp của bug PATCH-xoá-sạch đã ghi ở mục dưới:** lúc sửa `smtp_pass` bằng PATCH chỉ gửi 1 field, Supabase không chỉ xoá `smtp_host/port/user/email` mà còn **xoá luôn `mailer_templates_magic_link_content`** (template email tuỳ chỉnh chứa `{{ .Token }}` cấu hình từ Bước 6) – email OTP tự động rơi về template mặc định của Supabase, vốn chỉ có nút bấm "Sign in" trỏ `{{ .ConfirmationURL }}`, không hề in mã số. Đây chính là lý do màn code-confirmation (nhập 6 số) không nhận được mã – **toàn bộ luồng đăng nhập email bị hỏng từ lúc đó, không phải do chạy local.**
+
+**Đã khôi phục:** `PATCH .../config/auth` với `mailer_subjects_magic_link` + `mailer_templates_magic_link_content` in `{{ .Token }}` rõ ràng (không còn link bấm). Verify bằng cách gọi thẳng `POST /auth/v1/otp` qua API – thành công (không phải chỉ tin build/log).
+
+**Bài học nhắc lại lần 2 (đã note ở mục dưới nhưng vẫn dính):** PATCH endpoint `config/auth` của Supabase Management API **không merge từng phần** – mỗi lần PATCH phải tự biết field nào cùng "cụm" với field mình sửa rồi gửi đủ cả cụm, nếu không cụm còn lại tự về `null`/mặc định. Đã tự kiểm tra lại toàn bộ SMTP + mailer_template sau lần PATCH thứ 2 để chắc không bị xoá tiếp – cả hai còn nguyên.
+
+**User tự tạo key Resend "Sending access" mới** (đúng khuyến nghị ở mục dưới) – đã swap vào `smtp_pass`, key sending CŨ (`re_QgAaW3c1...`, bị invalid) không còn dùng. `.env.local` đã cập nhật.
+
+**Rate limit email tăng tiếp 30 → 100/giờ** vì lúc debug tốn nhiều lượt gửi test (`diag-test-taptip*@resend.dev`) suýt dính rate limit thật giữa chừng.
+
+**2 fix UI nhỏ theo phản hồi màn "Enter the code sent to":**
+- Dòng email hiển thị dưới tiêu đề đang thừa hưởng `text-title` (to ngang header) vì `title` nhận cả cụm `<>...<br/><span>{email}</span></>` – thêm `text-lead` riêng cho span email, không đè `text-title` nữa.
+- Ô nhập 6 số OTP (`components/ui/input-otp.tsx`) vẫn ở size cũ trước khi `Field` được tăng (`4.3cqh`/`min 34px`, font `text-body`) – đồng bộ lên khớp `Field` mới: `6cqh`/`min 48px`, font `text-lead`.
+
+Đã build + deploy lại lên Cloudflare, verify OTP send thật qua API thành công.
 
 ## 🔴 BUG RESEND KEY + CANH GIỮA (08-10)
 
