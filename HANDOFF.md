@@ -2,7 +2,21 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (tăng icon nút Quay lại + ô nhập liệu dùng chung, sau phản hồi màn sign-in – đọc mục "ICON BACK + FIELD TO HƠN" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (fix Resend API key sai làm mọi email OTP fail + canh giữa danh sách Add to Home + text-align Field – đọc mục "BUG RESEND KEY + CANH GIỮA" ngay dưới đây trước khi làm gì tiếp)
+
+## 🔴 BUG RESEND KEY + CANH GIỮA (08-10)
+
+**Bug nghiêm trọng đã sửa: mọi email OTP fail 100%, không do chạy local.** User hỏi "Error sending magic link email có phải do chạy local" – **không phải**, việc gửi mail xảy ra hoàn toàn ở server Supabase, độc lập máy client. Chẩn đoán bằng cách gọi thẳng `POST /auth/v1/otp` qua API, tái hiện lỗi `500 unexpected_failure`, rồi test trực tiếp `RESEND_API_KEY_SENDING` với chính API Resend → trả về **`"API key is invalid"`** – key gửi mail bị hỏng/vô hiệu ngay từ đầu (không rõ lý do, có thể user đưa nhầm hoặc key bị revoke phía Resend). Test `RESEND_API_KEY_ADMIN` thì gửi được bình thường.
+
+**Sửa tạm:** đổi `smtp_pass` trong Supabase Auth config sang dùng `RESEND_API_KEY_ADMIN` (đã xác nhận hoạt động) thay vì key sending hỏng. **Nợ kỹ thuật:** đang dùng key Full-access cho việc gửi mail hàng ngày, không đúng nguyên tắc least-privilege – nên tạo key "Sending access" MỚI trên Resend dashboard rồi thay lại khi rảnh.
+
+**Bug thật thứ 2 phát hiện giữa chừng: PATCH config Auth của Supabase KHÔNG merge từng phần cho khối SMTP.** Gọi `PATCH .../config/auth` chỉ với `{"smtp_pass": "..."}` (tưởng chỉ đổi 1 field) đã xoá sạch luôn `smtp_host`/`smtp_port`/`smtp_user`/`smtp_admin_email` về `null`! Phải gửi lại TOÀN BỘ field liên quan SMTP trong 1 lần PATCH mới khôi phục đúng. Bài học: PATCH endpoint này không an toàn để sửa "một field", luôn gửi đủ cụm liên quan.
+
+**2 fix UI theo phản hồi user, đã đo bằng `getBoundingClientRect()` thật trước khi sửa:**
+- Danh sách 4 bước ở màn "Add to Home Screen": đo được box đã canh giữa tuyệt đối (margin trái phải bằng nhau 55px/55px) nhưng do box rộng full 320px nên chữ (left-align) bắt đầu quá xa tâm màn hình, nhìn lệch trái dù box thì giữa. Sửa: `app/page.tsx`, đổi `<ol>` từ `w-full` sang `w-fit` – box tự co theo dòng dài nhất, `items-center` của `Screen` tự canh giữa. Đo lại: box co còn 227.6px, margin vẫn bằng nhau tuyệt đối (101.2px/101.2px), chữ dồn gần tâm hơn hẳn.
+- Ô nhập liệu `Field` (dùng chung sign-in + onboarding): chữ đặt giữa ô trông kỳ, đổi `text-center` → `text-left`.
+
+Đã build + deploy lại lên Cloudflare, verify OTP send thành công thật qua API + verify UI bằng screenshot.
 
 ## ✅ ICON BACK + FIELD TO HƠN (08-10)
 
