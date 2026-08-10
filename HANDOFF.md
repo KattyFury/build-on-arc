@@ -2,7 +2,15 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (dời nội dung màn Screen dùng chung xuống vạch hàng 3.0 + tăng font toàn app – đọc mục "VỊ TRÍ NỘI DUNG + FONT SIZE" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (tăng icon nút Quay lại + ô nhập liệu dùng chung, sau phản hồi màn sign-in – đọc mục "ICON BACK + FIELD TO HƠN" ngay dưới đây trước khi làm gì tiếp)
+
+## ✅ ICON BACK + FIELD TO HƠN (08-10)
+
+User phản hồi trên màn "Enter your email to get started": icon nút Quay lại nhỏ, ô nhập email nhỏ. Cả hai đều sửa tại `components/screen.tsx` nên tự động áp dụng đồng bộ cho mọi màn dùng chung (`Field` cũng dùng ở `onboarding`, `BackIcon` dùng ở mọi `BackAction`):
+- `BackIcon`: `w-[2cqh] h-[2cqh]` → `w-[3cqh] h-[3cqh]` (tăng 50%).
+- `Field`: `h-[4.3cqh] min-h-[36px]` → `h-[6cqh] min-h-[48px]`; `px-3` → `px-4`; font đổi hẳn từ `text-body` sang `text-lead` (to hơn mức tăng chung đã làm trước đó, vì user gọi riêng ô nhập liệu ra là còn nhỏ).
+
+Đã build + deploy lại lên Cloudflare, verify bằng screenshot thật.
 
 ## ✅ VỊ TRÍ NỘI DUNG + FONT SIZE (08-10)
 
