@@ -2,7 +2,22 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-11 (fix bug nặng nhất từ trước giờ: PATCH Supabase từng xoá mất template email khiến OTP gửi magic link thay vì mã số – đọc mục "BUG MAGIC LINK THAY VÌ OTP" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-11 (user nghỉ, repo sạch, mọi thứ đã push – đọc mục "TRẠNG THÁI NGHỈ 08-11" ngay dưới đây trước khi làm gì tiếp)
+
+## 🟢 TRẠNG THÁI NGHỈ 08-11 – đọc trước khi làm gì tiếp
+
+**Repo sạch, `git status` không còn gì.** Link thật đang chạy đúng: https://taptip.kattyfury1403.workers.dev
+
+**Luồng đăng nhập email đã thông suốt lại sau bug nặng nhất session này** (xem mục "BUG MAGIC LINK THAY VÌ OTP" ngay dưới) – OTP gửi đúng mã 6 số, verify thật qua API.
+
+**Dev server đang chạy sẵn** trên máy Dell (`localhost:3000`, PID có thể đổi mỗi lần restart) – nếu tắt rồi mở lại phiên mới thì nhớ `npm run dev` lại trong `example/app`, đã 3 lần user hỏi "sao không chạy local" vì bị tắt sau mỗi lần build production (Next 16 khoá không cho `dev` và `build` chạy cùng lúc trên 1 project).
+
+**3 việc còn treo, chưa ai làm, không khẩn:**
+1. Key Resend `RESEND_API_KEY_ADMIN` (Full access) đang KHÔNG dùng cho SMTP nữa (đã đổi sang key Sending access riêng) – an toàn, không phải nợ nữa.
+2. `public/logo.png` (logo tay vẽ cũ) không còn code nào tham chiếu – an toàn xoá, để user tự quyết.
+3. Guide series (ngoài phần code TapTip): Bước 4 thiếu mục Ví dụ, Bước 6 Giai đoạn 3 (phần viết cho người đọc, khác với code) vẫn "đang chạy" theo bảng trạng thái mục 1 – chưa có ai viết.
+
+**Nếu quay lại làm tiếp:** đọc thẳng mục "BUG MAGIC LINK THAY VÌ OTP" để hiểu bài học PATCH Supabase (không merge từng phần, luôn gửi đủ cụm field liên quan) trước khi đụng vào `config/auth` lần nữa.
 
 ## 🔴 BUG MAGIC LINK THAY VÌ OTP (08-11)
 
