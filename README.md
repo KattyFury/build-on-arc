@@ -30,6 +30,7 @@ Vẫn làm tay được, không sao: mở thư mục của bước, copy khối 
 |---|---|---|
 | 1 → 4 | **Claude Chat** (web) | Hỏi đáp qua lại và vẽ spec thì Chat nhanh hơn hẳn |
 | 5 trở đi | **Claude Code** | Đụng file thật, chạy lệnh thật |
+| Riêng phần giao diện ở Bước 6 | **Claude Design** rồi mới về Code | Chốt hình hài ở chỗ lặp rẻ trước, đưa sang Code dựng một lần |
 
 Claude Code làm người dẫn đường xuyên suốt: nó đưa bạn prompt của bước đang tới, bạn mang sang Chat nói chuyện cho xong, rồi mang **kết quả chốt** về cho Code lưu vào `docs/` trong dự án của bạn.
 
@@ -55,7 +56,7 @@ Mục 4 là thứ ít series nào có. Prompt trong đây không phải viết m
 | [`03-planning/`](03-planning/README.md) | AI hỏi ngược lại bạn về UX, logic, xử lý lỗi, edge case, bảo mật | ✅ | ✅ |
 | [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code | ✅ | 🚧 |
 | [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ | ✅ |
-| [`06-build/`](06-build/README.md) | Build theo 2 giai đoạn: logic/flow trước, giao diện sau | ✅ | 🚧 |
+| [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng | ✅ | ✅ |
 | [`example/`](example/) | **Dự án mẫu, build song song với series** — TapTip, Tip & Lì xì nhanh trên Arc | — | — |
 
 Đi lần lượt từng bước, xong bước nào mới qua bước đó.
