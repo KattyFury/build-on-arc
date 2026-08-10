@@ -2,7 +2,15 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (sửa bug Skip passkey lặp vô hạn + thay bộ logo/icon chính thức – đọc mục "SKIP PASSKEY + LOGO CHÍNH THỨC" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (dời nội dung màn Screen dùng chung xuống vạch hàng 3.0 + tăng font toàn app – đọc mục "VỊ TRÍ NỘI DUNG + FONT SIZE" ngay dưới đây trước khi làm gì tiếp)
+
+## ✅ VỊ TRÍ NỘI DUNG + FONT SIZE (08-10)
+
+**User yêu cầu dời nội dung màn "Add TapTip to your Home Screen" xuống vị trí hàng 3/10, và xác nhận áp dụng luôn cho mọi màn khác dùng chung `Screen`.** Sửa tại nguồn: `components/screen.tsx` – vùng nội dung (2.5→8.0) có thêm spacer cao `3.2cqh` trước `{children}` (cộng với `gap-[1.8cqh]` có sẵn = đúng 5cqh = 0.5 hàng), đẩy nội dung thật sự bắt đầu ở vạch hàng 3.0 thay vì 2.5 – ảnh hưởng toàn bộ màn dùng `Screen` (sign-in, code-confirmation, onboarding, passkey-setup, add-to-home). **Verify bằng đo `getBoundingClientRect()` thật** (dựng ref tạm trong `Screen`, đo xong xoá), kết quả `firstContentChild top row = 3.00` – đúng chính xác ngay lần đầu, không cần chỉnh lại.
+
+**Tăng font toàn app cho dễ đọc với người lớn tuổi** (`app/globals.css`, token dùng chung): `--text-lead` (chữ nút) 21px→24px, `--text-body` (nội dung) 17px→19px, `--text-small` (ghi chú/nhãn nhỏ) 14px→16px. `--text-title`/`--text-figure` giữ nguyên (đã đủ to).
+
+Đã build + deploy lại lên Cloudflare, verify bằng screenshot thật.
 
 ## ✅ SKIP PASSKEY + LOGO CHÍNH THỨC (08-10)
 
