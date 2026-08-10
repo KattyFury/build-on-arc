@@ -2,7 +2,35 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-10 (giao diện đã đổi hết sang English + sửa loạt UX, deploy lại xong – đọc mục "GIAO DIỆN ENGLISH + FIX UX" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-10 (sửa bug Skip passkey lặp vô hạn + thay bộ logo/icon chính thức – đọc mục "SKIP PASSKEY + LOGO CHÍNH THỨC" ngay dưới đây trước khi làm gì tiếp)
+
+## ✅ SKIP PASSKEY + LOGO CHÍNH THỨC (08-10)
+
+**Bug thật: "Skip for now" ở màn passkey-setup lặp vô hạn.** Bản redesign GĐ3 có sẵn nút Skip nhưng chỉ `router.push('/dashboard')` – trong khi `dashboard/page.tsx` tự redirect về `/dashboard/setup-wallet` nếu chưa có `wallet_setup_complete=true` trong `user_metadata`, và `setup-wallet` lại render chính `<PasskeySetup>` → bấm Skip lại → lặp lại từ đầu. **Sửa:** `skipPasskey()` trong `components/passkey-setup.tsx` gọi `supabase.auth.updateUser({ data: { wallet_setup_complete: true } })` trước khi chuyển trang – dùng đúng field mà luồng thật (`app/api/setup-wallets/route.ts`) đã dùng, không bịa field mới. Không có ví thật thì Home tự hiện placeholder "Creating wallet..." (đã có sẵn logic này từ trước).
+
+**Bộ logo/icon chính thức thay cho bản hand-drawn tạm:** user để 3 file gốc ở `D:\Files\Claude\build_on_arc\build-on-arc\items\` (`logo.svg` vuông, `logo-full.svg` có chữ, `PFP.png` cho mạng xã hội – không đụng file này, không phải asset của app). Đã dùng `logo.svg` sinh lại: `public/favicon.svg` (thay bản base64 JPEG cũ sót từ template gốc), `public/icon-192x192.png`, `public/icon-512x512.png`, `app/apple-icon.png` (180×180, file mới, quy ước Next.js tự nhận). `logo-full.svg` đã có sẵn ở `public/` từ bản redesign GĐ3 (khớp byte, không cần sửa) – dùng ở màn Splash.
+
+**Bug thật khi sinh `favicon.ico`:** tool `sharp` sinh PNG qua `.flatten()` (nén nền trắng) làm mất kênh alpha, trong khi Turbopack build-time image processing của Next.js bắt buộc PNG nhúng trong `.ico` phải là RGBA – báo lỗi `The PNG is not in RGBA format!`, build production fail hẳn (không phải chỉ warning). Sửa: thêm `.ensureAlpha()` sau `.flatten()` để ép lại kênh alpha trước khi encode PNG.
+
+**Rác chưa dọn (không xoá tự ý, chỉ ghi lại):** `public/logo.png` (bản hand-drawn cũ) không còn được code nào tham chiếu (Splash đã đổi sang `logo-full.svg`) – an toàn để xoá nhưng để user tự quyết.
+
+Đã build + deploy lại lên Cloudflare, verify 4 file icon trả 200 trên link thật.
+
+## ✅ HẠ TẦNG EMAIL + PASSKEY (08-10, sau khi deploy)
+
+**Passkey lỗi "Invalid credentials" trên link thật:** nguyên nhân là Client Key trong Circle Console vẫn khai Allowed Domain = `localhost` (từ lúc setup ban đầu, xem mục 3 bên dưới) – **khác** với Passkey Domain (Modular Wallets → Configurator → Passkey) mà user đã thêm domain thật vào trước đó. Hai cài đặt này tách biệt hoàn toàn dù cùng nằm trong Circle Console, dễ nhầm là một. User đã tự vào sửa Allowed Domain của Client Key.
+
+**Đổi hạ tầng gửi email OTP: Gmail cá nhân → Resend + domain riêng.** Lý do: mail OTP gửi từ `kattyfury1403@gmail.com` (Gmail cá nhân, cấu hình từ lúc setup Bước 6) nhìn không chuyên nghiệp, dễ bị nghi ngờ phishing. Đã làm (qua API, user chỉ cần tự tạo tài khoản Resend + lấy API key):
+- Tạo domain `taptip.0xhieu.xyz` trên Resend (dùng subdomain riêng của domain cá nhân `0xhieu.xyz`, KHÔNG dùng domain gốc – cô lập uy tín gửi mail, khỏi ảnh hưởng domain chính nếu mail test bị đánh spam).
+- Thêm 3 DNS record (1 DKIM TXT, 1 SPF MX, 1 SPF TXT) vào Cloudflare zone `0xhieu.xyz` qua API – verify xong gần như ngay lập tức.
+- Đổi SMTP config của Supabase (qua Management API) từ Gmail sang `smtp.resend.com`, from address `noreply@taptip.0xhieu.xyz`.
+- **2 API key Resend, quyền khác nhau – đừng lẫn:** `RESEND_API_KEY_SENDING` (chỉ gửi mail, dùng làm mật khẩu SMTP) vs `RESEND_API_KEY_ADMIN` (Full access, dùng một lần để tạo/verify domain qua API – không phải bí mật runtime của app).
+
+**Tiện thể sửa luôn rate limit email của Supabase:** `rate_limit_email_sent` đang mặc định = 2 (email/giờ) – **tách biệt với SMTP**, áp dụng dù dùng SMTP riêng hay không, nhiều người tưởng gắn SMTP là hết giới hạn nhưng đây là 2 lớp khác nhau. Đã sửa lên 30 qua Supabase Management API.
+
+**Secrets mới nằm ở `.env.local`, không phải toàn bộ đều là runtime secret của app:**
+- `RESEND_API_KEY_SENDING`, `RESEND_API_KEY_ADMIN` – Resend.
+- `SUPABASE_ACCESS_TOKEN` – token quyền ADMIN toàn project Supabase (Management API), KHÔNG phải biến app đọc lúc chạy, chỉ lưu lại để dùng cho lần sau khi cần sửa config qua API thay vì bắt user vào dashboard.
 
 ## ✅ GIAO DIỆN ENGLISH + FIX UX (08-10)
 
