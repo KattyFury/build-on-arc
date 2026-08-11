@@ -149,6 +149,8 @@ When I'm in **planning phase**, don't rush to code. When I have a spec, don't re
 
 **`example/` (TapTip) — đã chốt 2026-08-07:** fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase + Circle Modular Wallets/Passkey), vì đã có sẵn passkey + gasless P2P đúng spec, không dựng lại từ đầu.
 
+**Trước khi research Arc/Circle lại từ đầu (tốn token):** đọc `ARC-RESOURCES.md` — link docs chính thức, network params Arc Testnet, cách cài App Kit SDK. Chỉ gọi MCP `arc-docs`/`circle` khi file đó chưa đủ chi tiết.
+
 ---
 
 ## Absolute DON'Ts
