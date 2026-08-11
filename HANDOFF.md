@@ -2,9 +2,17 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-11 (user nghỉ, repo sạch, mọi thứ đã push – đọc mục "TRẠNG THÁI NGHỈ 08-11" ngay dưới đây trước khi làm gì tiếp)
+> **Cập nhật:** 2026-08-11 (8 fix UI Home + Add to Home Screen đã push, còn 1 bug đang chờ user quyết hướng sửa – đọc mục "08-11: 8 FIX UI + 2 BUG ĐANG ĐIỀU TRA" ngay dưới)
 
-## 🟢 TRẠNG THÁI NGHỈ 08-11 – đọc trước khi làm gì tiếp
+## 🟡 08-11: 8 FIX UI + 2 BUG ĐANG ĐIỀU TRA – đọc trước khi làm gì tiếp
+
+**8 fix UI đã code + verify bằng route preview tạm (Chrome headless, đã xoá sau khi chụp) + push (`9c1bbb8`):** bỏ "your" ở tiêu đề Add to Home Screen, tách riêng bước iOS (Safari)/Android (Chrome) theo user agent, Balance đổi format `Balance: $XXXX` 4 chữ số độ rộng cố định (số 0 dẫn đầu vô hình chứ không ẩn hẳn – tránh cụm nhảy vị trí khi số dư đổi), câu chú thích QR tách 2 dòng, icon Random to bằng icon Back, nút Tip đổi icon sang `Icon.Tip` (nguồn `D:\Files\Claude\icons\tip.svg`, đã xoá `Icon.Send` cũ vì hết chỗ dùng), mảng tròn trang trí góc trái-dưới chuyển vào trong hàng 10 + `overflow-hidden` + đổi đơn vị px cứng sang cqh (hết lấn hàng 9), vùng bấm icon Menu tăng bằng kỹ thuật padding + margin âm, popup Menu redesign toàn bộ (đổi tên thành "Menu", thêm Account + Address rút gọn kèm nút copy, Deposit/Withdraw chung hàng, Tip History riêng, Sign out chữ đỏ `text-destructive`, nút Close đổi từ chữ sang icon X góc phải-trên – bấm ra ngoài popup vốn đã tự đóng sẵn qua Radix, không cần sửa gì thêm).
+
+**🔴 Bug "Balance luôn hiện 0" – ĐÃ CHẨN ĐOÁN, CHƯA SỬA (chờ user chọn hướng).** Kiểm tra thật bằng Supabase Management API + gọi thẳng `/api/wallet/balance`: DB có balance thật (không phải 0), gọi API cũng trả về số thật (80 USDC lúc kiểm tra) – nghĩa là pipeline balance ở tầng server/DB hoàn toàn khoẻ. Đọc code phát hiện nguyên nhân kiến trúc: số dư hiển thị trên Home lấy từ `useWalletBalances()` (`hooks/use-wallet-balances.ts`), hook này chỉ fetch khi `isConnected === true` từ `Web3Context` (`components/web3-provider.tsx`) – mà `isConnected` chỉ bật lên sau khi TOÀN BỘ pipeline WebAuthn/passkey phía client (load credential từ DB → `toWebAuthnAccount` → `toCircleSmartAccount` → `createBundlerClient`) chạy xong không lỗi. Bất kỳ lỗi nào trong chuỗi đó (mạng chập chờn, race condition, lỗi SDK...) chỉ bị `console.error` nuốt mất, không hiện gì cho user, và số dư kẹt vĩnh viễn ở giá trị mặc định 0 – không có cơ chế dự phòng nào dùng thẳng `primaryWallet.wallet_address` (địa chỉ ví đã biết sẵn từ server, không phụ thuộc WebAuthn) để fetch balance độc lập. **Chưa sửa vì đây là thay đổi kiến trúc (đổi cách `use-wallet-balances.ts` lấy địa chỉ ví, không chỉ đổi giao diện) – cần hỏi user trước khi động vào theo đúng luật ở `CLAUDE.md`.**
+
+**✅ Câu hỏi "sao Lịch sử có giao dịch dù ví mới tạo" – ĐÃ TRẢ LỜI, không phải bug.** Query thẳng DB: chỉ có đúng 1 ví trong bảng `wallets`, tạo lúc **2026-08-08** (không phải mới), có 6 giao dịch từ 08-08 đến 08-11 hôm nay. Lý do: Circle Modular Wallets/passkey trả về ĐÚNG MỘT địa chỉ ví cố định gắn với passkey đó (deterministic) – đăng nhập lại bằng cùng passkey/tài khoản test từ các phiên trước sẽ luôn ra lại ví cũ đó, không phải ví mới. Đây là ví test đã dùng xuyên suốt từ lúc build Tính năng 1-5 (08-08), không phải hiện tượng lạ.
+
+## 🟢 TRẠNG THÁI NGHỈ 08-11 (trước đó) – đọc trước khi làm gì tiếp
 
 **Repo sạch, `git status` không còn gì.** Link thật đang chạy đúng: https://taptip.kattyfury1403.workers.dev
 
