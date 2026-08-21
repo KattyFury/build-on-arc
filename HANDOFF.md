@@ -2,7 +2,7 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-21 (thêm Vòng 2 "chốt stack cho từng luồng" vào Bước 3 – prompt CHƯA chạy thật, đang nợ ví dụ. Trước đó: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
+> **Cập nhật:** 2026-08-21 (thêm Vòng 2 "chốt stack cho từng luồng" vào Bước 3, đã chạy khô + sửa 6 chỗ hụt; còn nợ một lượt chạy THẬT. Trước đó: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
 
 ## 🚧 08-21: THÊM VÒNG 2 VÀO BƯỚC 3 – CHỐT STACK CHO TỪNG LUỒNG
 
@@ -10,7 +10,11 @@ Thesis của user: bắt AI liệt kê stack dùng cho mỗi luồng, vì sao ch
 
 Đã làm: `03-planning/README.md` tách thành **Vòng 1** (phỏng vấn ngược, y như cũ) + **Vòng 2** (chốt stack) – lý thuyết, prompt Solution Architect, bảng 4 dấu hiệu câu trả lời dỏm. Cập nhật bảng ở `README.md`.
 
-🔴 **NỢ:** prompt Vòng 2 **CHƯA CHẠY THẬT** (user chốt: viết trước, đánh dấu 🚧). TapTip đã chốt stack từ 08-07 (fork `arc-p2p-payments`) nên không có luồng thật để chạy lại. Muốn đóng nợ: mang prompt Vòng 2 sang Chat chạy với spec TapTip ở `example/docs/03-planning.md`, xem nó có ra đúng quyết định fork không hoặc lòi chỗ hụt, rồi điền mục "Vòng 2 chưa có ví dụ" + thêm dòng vào "Prompt này từng hụt chỗ nào".
+**Đã chạy khô ngay sau đó (08-21):** đem prompt Vòng 2 chạy lại với spec TapTip, Claude Code đóng cả hai vai (vừa hỏi vừa trả lời). Kết quả: ghép từng mảnh thì ra trúng stack thật (Next.js + Supabase + Circle Modular Wallets + html5-qrcode + qrcode.react + viem, khớp `example/app/package.json`), NHƯNG không đường nào ra được quyết định thật là fork nguyên `arc-p2p-payments` – vì prompt hỏi sample app theo từng luồng nên chỉ ra mảnh lẻ. Lòi ra **6 chỗ hụt**, đã sửa hết vào prompt và ghi thành bảng "Vòng 2 – 6 chỗ" trong `03-planning/README.md`: (1) không chốt danh sách luồng trước, (2) khung dùng chung bị quyết lén trong luồng đầu, (3) hỏi sample app theo luồng thay vì hỏi cái bao nhiều luồng, (4) ép đủ 2 phương án cho mọi luồng đẻ ra rác, (5) không có ô "bản đầu chưa làm", (6) quên hỏi ràng buộc môi trường (HTTPS/domain phải khai báo/quyền thiết bị).
+
+Bằng chứng "cái giá của fork" dùng trong bài, đã verify: `example/app/package.json` có `openai`, `pdf-parse`, `mammoth`, `millify`, cả `viem` lẫn `web3` – grep `app/ components/ lib/` không file nào import chúng.
+
+🔴 **NỢ CÒN LẠI:** vẫn chưa có lượt chạy THẬT (người thật ngồi trả lời trong Chat, không biết trước đáp án). Mục ví dụ vẫn để 🚧, ghi rõ trong README là "chạy khô". Chạy thật xong thì đổi tiêu đề mục đó và bổ sung chỗ hụt mới nếu có.
 
 ---
 
@@ -165,7 +169,7 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 |---|---|---|
 | 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt v2 + ví dụ thật + mục "prompt từng hụt chỗ nào" |
 | 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ **XONG TRỌN** — prompt đã sửa theo 5 lỗi tìm được (câu 1 lẫn thông số kỹ thuật, câu 2 quên vai người gửi, câu 4 hỏi trừu tượng, câu 6 bị lạc đề, core value nhét thông số) + ví dụ thật + "prompt từng hụt chỗ nào" |
-| 3. Plan chi tiết | `03-planning/` | ✅ Vòng 1 **XONG TRỌN**; ⚠️ Vòng 2 (chốt stack, thêm 08-21) có lý thuyết + prompt, **chưa chạy thật** – thiếu ví dụ + "prompt từng hụt chỗ nào". Vòng 1: prompt đã sửa theo 5 lỗi tìm được (đẩy trách nhiệm bên thứ ba, bỏ sót câu trong nhóm, tổ hợp rủi ro, ép đổi ý khi user đã chấp nhận rủi ro, quên tổng hợp file) + ví dụ thật + "prompt từng hụt chỗ nào" |
+| 3. Plan chi tiết | `03-planning/` | ✅ Vòng 1 **XONG TRỌN**; ⚠️ Vòng 2 (chốt stack, thêm 08-21) có lý thuyết + prompt đã sửa theo 6 chỗ hụt tìm ra lúc **chạy khô**, còn thiếu lượt chạy THẬT + ví dụ thật. Vòng 1: prompt đã sửa theo 5 lỗi tìm được (đẩy trách nhiệm bên thứ ba, bỏ sót câu trong nhóm, tổ hợp rủi ro, ép đổi ý khi user đã chấp nhận rủi ro, quên tổng hợp file) + ví dụ thật + "prompt từng hụt chỗ nào" |
 | 4. Wireframe | `04-wireframe/` | ✅ Lý thuyết + prompt xong, **đã chạy thật** (`example/docs/04-wireframe.md`). README chưa viết mục Ví dụ + "prompt từng hụt chỗ nào" |
 | 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa sau khi chạy thật) + ví dụ thật + mục "prompt từng hụt chỗ nào" (`example/docs/05-setup.md`) |
 | 6. Build | `06-build/` | ✅ README xong (3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng, kèm prompt từng nhịp). GĐ1 + GĐ2 đã chạy thật trên TapTip, ví dụ đã điền. GĐ3 đang chạy |

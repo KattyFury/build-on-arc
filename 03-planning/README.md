@@ -74,28 +74,37 @@ Hỏi một lần được thêm hai cái nữa:
 Copy đoạn dưới, dán vào Chat – tốt nhất là cùng cửa sổ vừa chạy vòng 1:
 
 ```
-Đóng vai Solution Architect. Mình vừa chốt xong logic sản phẩm, giờ cần chốt stack cho từng luồng.
+Đóng vai Solution Architect. Mình vừa chốt xong logic sản phẩm, giờ cần chốt stack.
 
-Cách làm việc: bạn dẫn, mình theo. Đi TỪNG LUỒNG một theo thứ tự người dùng gặp chúng, hỏi xong luồng này đợi mình chốt rồi mới sang luồng sau. Đừng xổ hết một lượt.
+Cách làm việc: bạn dẫn, mình theo.
+
+BƯỚC 0 – trước khi bàn tech: đọc plan của mình rồi liệt kê ra danh sách các luồng bạn thấy, theo thứ tự người dùng gặp chúng. Đợi mình chốt hoặc bổ sung xong mới đi tiếp. Đừng tự đi thẳng vào luồng đầu tiên.
+
+BƯỚC 1 – chốt phần KHUNG DÙNG CHUNG trước: app chạy bằng gì, host ở đâu, dữ liệu người dùng lưu ở đâu. Mấy thứ này không thuộc luồng nào nhưng luồng nào cũng dính, và sau này đổi là đau nhất – nên soi riêng, đừng để nó lọt vào giữa lúc đang bàn luồng đầu tiên.
+
+BƯỚC 2 – đi TỪNG LUỒNG một, hỏi xong luồng này đợi mình chốt rồi mới sang luồng sau. Đừng xổ hết một lượt.
 
 Ràng buộc của mình, tính vào mọi lựa chọn chứ đừng bỏ qua:
 - Mình không có nền lập trình, code là AI viết. Cái gì cần tự debug sâu bằng tay thì coi như mình không làm được.
-- Chain: [Arc testnet / điền chain của bạn].
+- Chain: [Arc testnet / điền chain của bạn]. Giai đoạn: [chạy testnet trước / lên mainnet luôn].
 - Ngân sách: [free tier thôi / mình trả được X$ một tháng].
 - Mình làm một mình, không có team.
 
-Với MỖI luồng, trả lời đủ 4 phần:
-1. Tech chọn cho luồng này. Ghi tên gói/dịch vụ cụ thể, không nói chung chung kiểu "một database".
-2. Vì sao chọn nó. Lý do phải gắn với ĐÚNG luồng này và ràng buộc của mình ở trên. Không nhận lý do kiểu "phổ biến", "chuẩn ngành", "cộng đồng lớn".
-3. Ít nhất 2 thứ khác cũng làm được việc này, kèm lý do loại từng cái. Loại vì gì thì nói thẳng cái đó, đừng bịa phương án dở tệ ra cho có.
+Với khung chung và với MỖI luồng, trả lời đủ 4 phần:
+1. Tech chọn. Ghi tên gói/dịch vụ cụ thể, không nói chung chung kiểu "một database".
+2. Vì sao chọn nó. Lý do phải gắn với ĐÚNG chỗ này và ràng buộc của mình ở trên. Không nhận lý do kiểu "phổ biến", "chuẩn ngành", "cộng đồng lớn".
+3. Ít nhất 2 thứ khác cũng làm được việc này, kèm lý do loại từng cái. Loại vì gì thì nói thẳng cái đó, đừng bịa phương án dở tệ ra cho có. Nếu thật sự chỉ có 1 lựa chọn khả dụng, hoặc chỗ này không cần tech gì (chỉ là một cái link, một màn hình tĩnh), thì nói thẳng như vậy – đừng nặn cho đủ số.
 4. Quyết định này về sau đổi dễ hay khó: đổi lúc nào cũng được, hay đổi là phải làm lại phần lớn? Khó đổi thì nói rõ khó ở chỗ nào.
 
-Ba việc bắt buộc làm trong lúc đi:
-- Luồng nào đã có sẵn sample app hoặc template chính chủ dùng lại được thì nói ngay, kèm link. Fork về sửa thường rẻ hơn tự dựng, mình muốn biết để tự cân.
+Mình có quyền nói "luồng này bản đầu chưa làm". Nghe vậy thì ghi lại là CHƯA CHỌN rồi đi tiếp – đừng chọn sẵn tech cho thứ mình chưa định làm.
+
+Bốn việc bắt buộc làm trong lúc đi:
+- Có sample app hoặc template chính chủ nào bao được NHIỀU luồng cùng lúc không? Có thì đặt thẳng lên bàn cân: fork nguyên nó vs tự ghép từng mảnh – kèm link, và kèm cái mình MẤT khi fork (kéo theo cả đống thư viện không dùng tới, dính cấu trúc của người ta, phải đọc code lạ). Đừng chỉ gợi ý mảnh lẻ cho từng luồng.
 - Cái nào tốn tiền thì nói rõ: free tới mức nào, quá mức đó thì bao nhiêu, có bắt gắn thẻ ngay không.
 - Cái nào KHÔNG chạy được trên chain mình chọn, hoặc chạy được nhưng thiếu tính năng, phải cảnh báo ngay lúc đề xuất – đừng để mình cài xong mới biết.
+- Cái nào đòi điều kiện môi trường mới chạy được – bắt buộc HTTPS, phải khai báo trước domain trên console của nhà cung cấp, phải xin quyền thiết bị (camera, thông báo), không chạy được trên localhost – nói ngay lúc đề xuất, kèm chỗ phải vào khai báo.
 
-Đi hết các luồng rồi thì tổng hợp thành một file duy nhất: bảng stack theo luồng, danh sách thứ cần cài, thứ cần đăng ký tài khoản, và một mục riêng liệt kê những quyết định khó đổi.
+Đi hết rồi thì tổng hợp thành một file duy nhất: bảng stack theo luồng, danh sách thứ cần cài, thứ cần đăng ký tài khoản, mục những chỗ phải khai báo/cấu hình trước khi chạy được, và mục riêng liệt kê các quyết định khó đổi.
 
 Đây là plan sản phẩm của mình:
 ```
@@ -104,7 +113,7 @@ Ba việc bắt buộc làm trong lúc đi:
 
 ### Đọc câu trả lời sao cho ăn tiền
 
-Bốn dấu hiệu thấy là hỏi lại ngay:
+Năm dấu hiệu thấy là hỏi lại ngay:
 
 | Thấy gì | Nghĩa là | Hỏi lại |
 |---|---|---|
@@ -112,6 +121,7 @@ Bốn dấu hiệu thấy là hỏi lại ngay:
 | Lý do chọn là "phổ biến", "chuẩn ngành", "cộng đồng lớn" | Chưa xét gì tới app của mình | "Lý do đó đúng với luồng nào của mình? Nói theo luồng cụ thể" |
 | Một luồng gọi tên tận 4-5 thư viện | Đang gom đồ nghề quen tay | "Bỏ bớt cái nào mà luồng vẫn chạy được?" |
 | Không thứ nào bị đánh dấu là khó đổi | Nó chưa nghĩ tới chuyện phải đổi | "3 tháng nữa có người dùng thật, đổi cái nào là phải làm lại?" |
+| Luồng nào cũng đúng 2 phương án thay thế, đều tăm tắp | Đang nặn cho đủ số chứ không cân thật | "Luồng nào thật ra chỉ có 1 lựa chọn? Nói thẳng đi" |
 
 Còn một câu đáng hỏi cuối buổi, không nhét vào prompt vì tuỳ người: **"Nếu bạn là người phải bảo trì app này một mình trong 1 năm, bạn có chọn y hệt không?"** Câu này hay lòi ra chỗ nó chọn cho nhanh chứ không chọn cho bền.
 
@@ -135,13 +145,20 @@ Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
 > Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý — "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" — nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
 
-### Vòng 2 chưa có ví dụ
+### Vòng 2: chạy khô, chưa có ví dụ thật
 
-🚧 TapTip chốt stack xong trước khi vòng 2 được viết ra (fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) thay vì tự dựng trên Cloudflare Workers), nên prompt vòng 2 chưa đem chạy thật lần nào. Luật của repo là chưa chạy thật thì chưa được kể như ví dụ – nên chỗ này để trống có chủ đích, chạy xong sẽ điền.
+🚧 TapTip chốt stack từ trước khi vòng 2 được viết ra, nên không còn tình huống thật để chạy lại. Thứ đã làm là **chạy khô**: đem đúng prompt trên chạy lại với spec TapTip, Claude Code đóng cả hai vai – vừa hỏi vừa trả lời. Chạy khô không thay được một lượt chạy thật (người đóng vai đã biết trước đáp án), nên chỗ này vẫn để 🚧. Nhưng nó đủ để lòi ra 6 chỗ hụt, đã sửa vào prompt và ghi ở mục dưới.
+
+Hai thứ lượt chạy khô cho thấy:
+
+- **Ghép từng mảnh thì ra trúng stack thật.** Next.js + Supabase + Circle Modular Wallets + `html5-qrcode` + `qrcode.react` + `viem` – đúng thứ `example/app/package.json` đang chạy.
+- **Nhưng không bao giờ ra được quyết định thật.** TapTip không ghép từng mảnh, nó **fork nguyên** [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments). Bản prompt đầu hỏi "luồng nào có sample app dùng lại được", tức là hỏi theo từng luồng – nên câu trả lời nào cũng là mảnh lẻ, không cách nào thành "có nguyên một app mẫu bao được 4/6 luồng, fork đi".
+
+> Cái giá của fork thì đo được ngay trong repo: `example/app/package.json` đang kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Đó là đồ của app mẫu gốc để lại. Fork rẻ hơn tự dựng thật, nhưng không phải free, nên prompt giờ bắt nói luôn cái mất.
 
 ## Prompt này từng hụt chỗ nào
 
-Dưới đây là 5 chỗ hụt của **prompt vòng 1**, tìm ra lúc chạy thật với TapTip. Prompt vòng 2 chưa chạy thật nên chưa có dòng nào ở đây.
+### Vòng 1 – 5 chỗ, tìm ra lúc chạy thật với TapTip
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -150,5 +167,16 @@ Dưới đây là 5 chỗ hụt của **prompt vòng 1**, tìm ra lúc chạy th
 | 3 | Hai quyết định riêng lẻ hợp lý cộng lại thành rủi ro lớn hơn, không ai chỉ ra | Bắt chỉ rõ tổ hợp rủi ro cuối mỗi nhóm, không chỉ đánh giá từng quyết định độc lập |
 | 4 | AI có xu hướng thuyết phục đổi ý khi user nói "chấp nhận rủi ro, không care" | Ghi rõ đây là câu trả lời hợp lệ và đủ — việc của AI là đảm bảo user *thấy* rủi ro, không phải ép tránh rủi ro |
 | 5 | Xong nhiều nhóm rồi không ai chủ động tổng hợp thành file, hỏi đáp nằm rải trong chat | Thêm bước cuối: chủ động hỏi Chat tổng hợp thành 1 file duy nhất |
+
+### Vòng 2 – 6 chỗ, tìm ra lúc chạy khô
+
+| # | Hụt gì | Sửa thế nào |
+|---|---|---|
+| 1 | Bảo "đi từng luồng một" nhưng không bắt chốt danh sách luồng trước. Chạy khô: AI tự gom "đăng nhập + tạo ví" làm một luồng và bỏ luôn luồng quy đổi VNĐ có trong PRD | Thêm BƯỚC 0: liệt kê luồng, đợi mình chốt/bổ sung rồi mới bàn tech |
+| 2 | Khung dùng chung (app chạy bằng gì, host ở đâu, data để đâu) không thuộc luồng nào, nên bị quyết lén trong lúc bàn luồng đầu tiên – mấy luồng sau mặc nhiên kế thừa. Đúng loại quyết định khó đổi nhất lại là loại duy nhất không bị soi | Thêm BƯỚC 1: chốt khung chung riêng, cũng đủ 4 phần như một luồng |
+| 3 | Hỏi "luồng nào có sample app dùng lại được" tức là hỏi theo từng luồng → chỉ ra được mảnh lẻ, không bao giờ ra được "fork nguyên app mẫu" (đúng thứ TapTip đã làm) | Hỏi thẳng: có sample app nào bao được NHIỀU luồng cùng lúc không, rồi đặt lên bàn cân fork nguyên vs tự ghép – kèm cái mình MẤT khi fork |
+| 4 | Ép đủ 2 phương án thay thế cho mọi luồng đẻ ra rác. Luồng Nạp/rút trên testnet chỉ là một link tới Circle Faucet, không có tech nào để chọn, AI vẫn nặn ra "tự build faucet riêng" | Cho phép nói thẳng "chỉ có 1 lựa chọn" hoặc "chỗ này không cần tech gì" |
+| 5 | Không có chỗ đánh dấu "bản đầu chưa làm". Quy đổi VNĐ nằm trong PRD nhưng TapTip cố ý hoãn – prompt không cho nói vậy nên AI vẫn chọn sẵn nguồn tỷ giá | Cho phép trả lời "luồng này bản đầu chưa làm" → ghi CHƯA CHỌN, không chọn tech |
+| 6 | Hỏi tiền, hỏi chain, quên môi trường chạy: cái nào đòi HTTPS, đòi khai báo domain trước, đòi quyền thiết bị. Đây đúng là chỗ ngốn thời gian nhất lúc TapTip build thật (Passkey Domain Config trên Circle Console là mục riêng, khác Allowed Domain của Client Key) | Thêm việc bắt buộc thứ tư: cảnh báo điều kiện môi trường ngay lúc đề xuất, kèm chỗ phải vào khai báo. Ràng buộc thêm dòng giai đoạn testnet/mainnet |
 
 Xong bước này mới qua Bước 4, vẽ wireframe để chốt mỗi màn hình trông ra sao trước khi cho AI code.
