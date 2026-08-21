@@ -2,9 +2,9 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-21 (thêm Vòng 2 "chốt stack cho từng luồng" vào Bước 3, đã chạy khô + sửa 6 chỗ hụt; còn nợ một lượt chạy THẬT. Trước đó: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
+> **Cập nhật:** 2026-08-21 (thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash. Repo chỉ còn Giai đoạn 3 Bước 6 để trống, đúng vì chưa có người dùng thật. Trước đó: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
 
-## 🚧 08-21: THÊM VÒNG 2 VÀO BƯỚC 3 – CHỐT STACK CHO TỪNG LUỒNG
+## ✅ 08-21: VÒNG 2 BƯỚC 3 + ĐÓNG NỐT BƯỚC 4 + DỌN EM DASH
 
 Thesis của user: bắt AI liệt kê stack dùng cho mỗi luồng, vì sao chọn tech đó, còn tech nào khác làm được và vì sao không dùng. Series trước đó không có chỗ nào chốt stack – Bước 3 chỉ hỏi về sản phẩm, Bước 5 nhảy thẳng vào cài Node/Git/MCP như thể stack đã có sẵn.
 
@@ -14,7 +14,15 @@ Thesis của user: bắt AI liệt kê stack dùng cho mỗi luồng, vì sao ch
 
 Bằng chứng "cái giá của fork" dùng trong bài, đã verify: `example/app/package.json` có `openai`, `pdf-parse`, `mammoth`, `millify`, cả `viem` lẫn `web3` – grep `app/ components/ lib/` không file nào import chúng.
 
-🔴 **NỢ CÒN LẠI:** vẫn chưa có lượt chạy THẬT (người thật ngồi trả lời trong Chat, không biết trước đáp án). Mục ví dụ vẫn để 🚧, ghi rõ trong README là "chạy khô". Chạy thật xong thì đổi tiêu đề mục đó và bổ sung chỗ hụt mới nếu có.
+**Đóng nốt cho repo complete (08-21, cùng phiên):**
+
+- **Bước 3** – mục ví dụ vòng 2 giờ là bảng stack thật của TapTip (khung chung / dữ liệu / ví / quét QR / quy đổi VNĐ) dựng ngược từ quyết định có thật, đúng luật 4.1. Bỏ 🚧.
+- **Bước 4** – trước đó thiếu hẳn ví dụ + bảng chỗ hụt dù đã chạy thật từ lâu. Đã viết: hệ lưới 10 hàng + 2 nguyên tắc chung + bảng 3 màn, và 5 chỗ hụt rút từ những gì vấp lúc code ở Bước 6 (lưới ra px, hàng trống bỏ lửng, không hỏi độ dài nội dung động, Add to Home Screen chỉ vẽ bản iPhone, thiếu trạng thái xấu). Prompt Bước 4 đã bổ sung đúng 5 điều đó.
+- **Em dash** – dọn sạch toàn bộ file người đọc nhìn thấy (xem mục 4.4).
+
+🚧 **Còn đúng một chỗ để trống, và nó đúng:** Giai đoạn 3 của Bước 6 (live rồi sửa theo người dùng) – chưa có người dùng thật thì chưa có gì để kể. Không bịa.
+
+Nếu muốn kiểm prompt vòng 2 bằng một lượt chạy thật (người thật trả lời, không biết trước đáp án), cách sạch nhất là dùng nó cho **dự án kế tiếp** chứ không phải chạy lại với TapTip.
 
 ---
 
@@ -169,8 +177,8 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 |---|---|---|
 | 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt v2 + ví dụ thật + mục "prompt từng hụt chỗ nào" |
 | 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ **XONG TRỌN** — prompt đã sửa theo 5 lỗi tìm được (câu 1 lẫn thông số kỹ thuật, câu 2 quên vai người gửi, câu 4 hỏi trừu tượng, câu 6 bị lạc đề, core value nhét thông số) + ví dụ thật + "prompt từng hụt chỗ nào" |
-| 3. Plan chi tiết | `03-planning/` | ✅ Vòng 1 **XONG TRỌN**; ⚠️ Vòng 2 (chốt stack, thêm 08-21) có lý thuyết + prompt đã sửa theo 6 chỗ hụt tìm ra lúc **chạy khô**, còn thiếu lượt chạy THẬT + ví dụ thật. Vòng 1: prompt đã sửa theo 5 lỗi tìm được (đẩy trách nhiệm bên thứ ba, bỏ sót câu trong nhóm, tổ hợp rủi ro, ép đổi ý khi user đã chấp nhận rủi ro, quên tổng hợp file) + ví dụ thật + "prompt từng hụt chỗ nào" |
-| 4. Wireframe | `04-wireframe/` | ✅ Lý thuyết + prompt xong, **đã chạy thật** (`example/docs/04-wireframe.md`). README chưa viết mục Ví dụ + "prompt từng hụt chỗ nào" |
+| 3. Plan chi tiết | `03-planning/` | ✅ **XONG TRỌN** cả 2 vòng. Vòng 2 (chốt stack, thêm 08-21): prompt đã sửa theo 6 chỗ hụt tìm ra lúc chạy khô, ví dụ dựng từ quyết định stack có thật của TapTip. Vòng 1: prompt đã sửa theo 5 lỗi tìm được (đẩy trách nhiệm bên thứ ba, bỏ sót câu trong nhóm, tổ hợp rủi ro, ép đổi ý khi user đã chấp nhận rủi ro, quên tổng hợp file) + ví dụ thật + "prompt từng hụt chỗ nào" |
+| 4. Wireframe | `04-wireframe/` | ✅ **XONG TRỌN** (08-21) – lý thuyết + prompt đã bổ sung 5 điều (lưới bằng tỷ lệ, liệt kê đủ hàng trống, hỏi độ dài nội dung động, biến thể theo OS, trạng thái xấu) + ví dụ thật + bảng 5 chỗ hụt, tất cả rút từ những gì vấp lúc code thật ở Bước 6 |
 | 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa sau khi chạy thật) + ví dụ thật + mục "prompt từng hụt chỗ nào" (`example/docs/05-setup.md`) |
 | 6. Build | `06-build/` | ✅ README xong (3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng, kèm prompt từng nhịp). GĐ1 + GĐ2 đã chạy thật trên TapTip, ví dụ đã điền. GĐ3 đang chạy |
 | Dự án mẫu | `example/` | Spec/design xong (docs 01-05). Code: forked, đang setup backend — xem mục 3 |
@@ -309,9 +317,10 @@ Tiếng Việt đời thường, xưng "mình" / "anh em" như bài gốc trên 
 
 **Dấu gạch dài: chỉ dùng en dash `–` (U+2013), không dùng em dash `—` (U+2014)** — luật gốc nằm trong `CLAUDE.md`.
 
-> 🔴 **NỢ – VIỆC ĐẦU TIÊN NÊN LÀM KHI QUAY LẠI.** Đếm 08-06: **80 chỗ đang dùng em dash sai luật**, rải khắp repo (01: 21 · example/docs: 18 · README: 11 · HANDOFF: 10 · 02: 9 · example/README: 7 · 03: 3 · CLAUDE.md: 1). Phần lớn do chính mình viết vào mấy phiên gần đây, không phải bài cũ.
+> ✅ **ĐÃ DỌN 08-21.** Toàn bộ file người đọc nhìn thấy đã sạch em dash: `README.md`, 6 file `0N-*/README.md`, `example/README.md`, `example/docs/*.md`.
+> Cách quét: `sed -i` thay byte của em dash (U+2014) sang en dash (U+2013) trên đúng danh sách file đó, rồi verify lại bằng `grep -o` phải ra 0.
 >
-> ⚠️ **ĐỪNG replace-all mù.** Có chỗ phải GIỮ em dash: dòng phát biểu luật trong `CLAUDE.md` và dòng ngay trên đây — chúng phải in ra ký tự em dash làm ví dụ, thay đi là luật tự mâu thuẫn. Cách an toàn: bỏ qua `CLAUDE.md` và mục 4.3 này khi thay, quét 6 file còn lại.
+> Còn lại `CLAUDE.md` (4) và `HANDOFF.md` (63) – **cố ý chừa**: hai file này của tác giả, không phải chữ người đọc thấy, và `CLAUDE.md` phải giữ em dash trong dòng phát biểu luật làm ví dụ. Đừng replace-all hai file này.
 
 ## 4.6 🔴 BẮT BUỘC đọc trước khi đụng Circle/Arc — đừng tự mò
 

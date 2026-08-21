@@ -175,7 +175,7 @@ Dự án mẫu [`example/`](../example/) – TapTip, fork từ [`circlefin/arc-p
 
 Đúng như cảnh báo ở 2.3: bản dựng lại **pass hết kiểm tra tự động** (typecheck sạch, build thành công 24 route) mà vẫn có 3 lỗi chỉ lòi ra khi chụp ảnh và đo thật – trong đó có lỗi nút bấm hiện ra thành **ô rỗng không có chữ**. Số đo và cách tìm ra ghi ở mục 7 của file trên.
 
-> 🚧 **Giai đoạn 3 đang chạy.**
+> 🚧 **Giai đoạn 3 đang chạy.** Phần này chỉ viết được sau khi app có người dùng thật – có người dùng thì mới có cái để sửa theo.
 
 ---
 

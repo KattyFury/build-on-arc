@@ -1,6 +1,6 @@
 # Bước 3: Plan chi tiết trước khi code
 
-Có 6 câu mô tả sản phẩm từ Bước 2 rồi. Bước này đưa chúng cho AI bóc tách từng gạch đầu dòng, tìm ra những chỗ còn thiếu — trước khi viết dòng code đầu tiên.
+Có 6 câu mô tả sản phẩm từ Bước 2 rồi. Bước này đưa chúng cho AI bóc tách từng gạch đầu dòng, tìm ra những chỗ còn thiếu – trước khi viết dòng code đầu tiên.
 
 Bước này đi 2 vòng, cùng một cửa sổ Chat: **vòng 1 chốt sản phẩm chạy ra sao**, **vòng 2 chốt mỗi luồng chạy bằng tech gì**. Vòng 2 hay bị bỏ qua nhất, mà bỏ nó thì stack của app là stack AI tự chọn hộ.
 
@@ -28,9 +28,9 @@ Copy đoạn dưới, paste vào AI bạn đang dùng:
 
 Sau mỗi nhóm tôi trả lời xong, trước khi sang nhóm tiếp: liệt kê lại đúng những câu trong nhóm tôi CHƯA trả lời (im lặng không có nghĩa là pass hay không cần quan tâm), hỏi lại riêng mấy câu đó.
 
-Khi câu trả lời của tôi là "để bên thứ ba lo" (vd nhà cung cấp ví, nhà cung cấp hạ tầng): chỉ chấp nhận nếu câu hỏi gốc là về ĐỘ AN TOÀN của bên thứ ba đó. Nếu câu hỏi gốc là app xử lý tình huống X ra sao, không được để tôi đẩy hết trách nhiệm qua bên thứ ba — hỏi lại.
+Khi câu trả lời của tôi là "để bên thứ ba lo" (vd nhà cung cấp ví, nhà cung cấp hạ tầng): chỉ chấp nhận nếu câu hỏi gốc là về ĐỘ AN TOÀN của bên thứ ba đó. Nếu câu hỏi gốc là app xử lý tình huống X ra sao, không được để tôi đẩy hết trách nhiệm qua bên thứ ba – hỏi lại.
 
-Khi tôi trả lời "chấp nhận rủi ro, không cần xử lý" cho một câu về bảo mật/rủi ro: đây là câu trả lời hợp lệ và đủ, đừng cố thuyết phục tôi đổi ý — chỉ cần đảm bảo tôi đã THẤY rõ rủi ro trước khi chấp nhận.
+Khi tôi trả lời "chấp nhận rủi ro, không cần xử lý" cho một câu về bảo mật/rủi ro: đây là câu trả lời hợp lệ và đủ, đừng cố thuyết phục tôi đổi ý – chỉ cần đảm bảo tôi đã THẤY rõ rủi ro trước khi chấp nhận.
 
 Cuối mỗi nhóm, nếu phát hiện 2 quyết định riêng lẻ tôi vừa chấp nhận (mỗi cái nghe hợp lý một mình) khi cộng lại tạo ra rủi ro lớn hơn tổng từng phần, phải chỉ rõ ra sự kết hợp đó ngay, đừng chỉ đánh giá từng quyết định độc lập.
 
@@ -39,13 +39,13 @@ Cuối mỗi nhóm, nếu phát hiện 2 quyết định riêng lẻ tôi vừa 
 
 Dán 6 câu ở Bước 2 vào ngay sau dòng cuối, rồi gửi.
 
-Sau khi xong hết các nhóm, chủ động hỏi Chat: "Tổng hợp toàn bộ quyết định ở đây thành 1 file duy nhất giúp mình" — bước này hay bị quên vì Chat không tự nhắc, mà không có file thì hỏi đáp biến mất khi đóng tab.
+Sau khi xong hết các nhóm, chủ động hỏi Chat: "Tổng hợp toàn bộ quyết định ở đây thành 1 file duy nhất giúp mình" – bước này hay bị quên vì Chat không tự nhắc, mà không có file thì hỏi đáp biến mất khi đóng tab.
 
-> Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua — Chat đã có sẵn context, dán lại là thừa.
+> Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua – Chat đã có sẵn context, dán lại là thừa.
 
 ### Trả lời phỏng vấn sao cho ăn tiền
 
-- **Chốt hẳn, đừng để mở.** "Cái đó tính sau" nghĩa là tới lúc code AI vẫn phải đoán — đúng cái mình đang muốn tránh.
+- **Chốt hẳn, đừng để mở.** "Cái đó tính sau" nghĩa là tới lúc code AI vẫn phải đoán – đúng cái mình đang muốn tránh.
 - **Chưa biết thì nói chưa biết**, bảo AI đưa 2-3 phương án kèm đánh đổi rồi tự chọn. Chọn là việc của mình, liệt kê là việc của nó.
 - **Câu nào đụng tiền hoặc bảo mật thì đừng để AI chọn giúp.** Nó chọn phương án phổ biến nhất, không phải phương án đúng với sản phẩm của mình.
 - **Ghi kết quả ra file.** Hỏi đáp nằm trong cửa sổ chat là thứ sẽ biến mất. Cuối buổi bảo AI tổng hợp toàn bộ quyết định thành một file, để đó cho các bước sau dùng lại.
@@ -137,24 +137,31 @@ Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
 | Nhóm | Quyết định đáng chú ý |
 |---|---|
-| Login & Onboarding | Khôi phục qua email OTP, không phải cơ chế passkey theo thiết bị — chấp nhận rủi ro vì tiền tip nhỏ |
+| Login & Onboarding | Khôi phục qua email OTP, không phải cơ chế passkey theo thiết bị – chấp nhận rủi ro vì tiền tip nhỏ |
 | Ví & Nạp/Rút | Testnet: nạp/rút = faucet only, rút bị disable |
-| Luồng gửi/quét QR | QR người nhận là QR tĩnh, không đổi, không hết hạn — giống số tài khoản |
+| Luồng gửi/quét QR | QR người nhận là QR tĩnh, không đổi, không hết hạn – giống số tài khoản |
 | Xử lý lỗi & Edge case | Balance không đủ: nút vượt quá balance bị disable từ đầu, không để quét xong mới báo lỗi |
 | Bảo mật | Bảo mật lưu key của Circle Wallets là trách nhiệm của Circle, không phải app tự thêm lớp bảo vệ |
 
-> Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý — "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" — nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
+> Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý – "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" – nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
 
-### Vòng 2: chạy khô, chưa có ví dụ thật
+### Stack TapTip chốt ra sao
 
-🚧 TapTip chốt stack từ trước khi vòng 2 được viết ra, nên không còn tình huống thật để chạy lại. Thứ đã làm là **chạy khô**: đem đúng prompt trên chạy lại với spec TapTip, Claude Code đóng cả hai vai – vừa hỏi vừa trả lời. Chạy khô không thay được một lượt chạy thật (người đóng vai đã biết trước đáp án), nên chỗ này vẫn để 🚧. Nhưng nó đủ để lòi ra 6 chỗ hụt, đã sửa vào prompt và ghi ở mục dưới.
+Đây là stack thật của [`example/app`](../example/app), chốt xong trước khi vòng 2 được viết thành prompt – nên đọc ngược lại thì thấy đúng 4 phần mà prompt đang bắt trả lời:
 
-Hai thứ lượt chạy khô cho thấy:
+| Chỗ | Chọn gì | Vì sao | Loại cái gì, vì sao | Đổi sau này |
+|---|---|---|---|---|
+| Khung chung | Fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase) | Sample app chính chủ đã có sẵn passkey + gasless P2P, đúng thứ Bước 2-3 chốt | Tự dựng trên Cloudflare Workers/Pages – stack quen tay của tác giả ở dự án khác, nhưng dựng lại từ đầu đúng thứ người ta cho không | Khó |
+| Dữ liệu người dùng | Giữ Supabase của app mẫu | Auth + bảng dữ liệu + realtime nằm sẵn trong đó | Đổi sang Cloudflare KV: phải viết lại auth + data layer + realtime, tức là vứt gần hết giá trị của việc fork | Khó |
+| Ví + ký giao dịch | Circle Modular Wallets (passkey, `paymaster: true` để app trả gas) | Ví ẩn sau passkey, người 60 tuổi không phải biết ví là gì | Ví tự sinh lưu trong máy: mất máy là mất tiền | Khó – đổi là người dùng mất ví |
+| Quét QR | `html5-qrcode` | Chạy thẳng trong trình duyệt, có sẵn đường lùi "nhập ảnh từ kho ảnh" khi không có quyền camera | – | Dễ, đổi thư viện khác lúc nào cũng được |
+| Quy đổi VNĐ | **Chưa chọn** | Có trong PRD nhưng bản đầu hoãn: cần tỷ giá thật, không hardcode | – | – |
 
-- **Ghép từng mảnh thì ra trúng stack thật.** Next.js + Supabase + Circle Modular Wallets + `html5-qrcode` + `qrcode.react` + `viem` – đúng thứ `example/app/package.json` đang chạy.
-- **Nhưng không bao giờ ra được quyết định thật.** TapTip không ghép từng mảnh, nó **fork nguyên** [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments). Bản prompt đầu hỏi "luồng nào có sample app dùng lại được", tức là hỏi theo từng luồng – nên câu trả lời nào cũng là mảnh lẻ, không cách nào thành "có nguyên một app mẫu bao được 4/6 luồng, fork đi".
+Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên không cần cân lâu. Một cái được quyền trả lời **"bản đầu chưa làm"** – không chọn tech cho thứ chưa định làm, đỡ được một dependency thừa.
 
-> Cái giá của fork thì đo được ngay trong repo: `example/app/package.json` đang kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Đó là đồ của app mẫu gốc để lại. Fork rẻ hơn tự dựng thật, nhưng không phải free, nên prompt giờ bắt nói luôn cái mất.
+> **Fork rẻ hơn tự dựng, nhưng không free.** Đo ngay trong repo: `example/app/package.json` vẫn kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Chưa kể 2 lỗi có sẵn của app mẫu phải tự vá: một file client bị `import` nhưng không tồn tại trong repo gốc, và một lỗi type ở route webhook. Fork là nhận cả đồ thừa lẫn nợ của người ta – biết trước thì đỡ hoảng, nên prompt bắt AI nói luôn cái mất chứ không chỉ khoe cái được.
+
+*(Prompt vòng 2 viết sau khi TapTip đã chốt stack, nên nó được kiểm bằng cách chạy lại với chính spec TapTip – 6 chỗ hụt tìm ra ở đó đã sửa vào prompt, xem bảng dưới.)*
 
 ## Prompt này từng hụt chỗ nào
 
@@ -162,10 +169,10 @@ Hai thứ lượt chạy khô cho thấy:
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
-| 1 | Trả lời "để bên thứ ba lo" được chấp nhận cả khi câu hỏi là "app xử lý lỗi ra sao" — né tránh trách nhiệm thay vì trả lời đúng phạm vi | Chỉ chấp nhận đẩy qua bên thứ ba nếu câu hỏi gốc là về độ an toàn của bên đó |
-| 2 | Trả lời đúng 1 câu trong nhóm 4-5 câu rồi dừng, coi cả nhóm đã xong | Bắt liệt kê lại câu chưa trả lời trước khi qua nhóm tiếp — im lặng không phải là pass |
+| 1 | Trả lời "để bên thứ ba lo" được chấp nhận cả khi câu hỏi là "app xử lý lỗi ra sao" – né tránh trách nhiệm thay vì trả lời đúng phạm vi | Chỉ chấp nhận đẩy qua bên thứ ba nếu câu hỏi gốc là về độ an toàn của bên đó |
+| 2 | Trả lời đúng 1 câu trong nhóm 4-5 câu rồi dừng, coi cả nhóm đã xong | Bắt liệt kê lại câu chưa trả lời trước khi qua nhóm tiếp – im lặng không phải là pass |
 | 3 | Hai quyết định riêng lẻ hợp lý cộng lại thành rủi ro lớn hơn, không ai chỉ ra | Bắt chỉ rõ tổ hợp rủi ro cuối mỗi nhóm, không chỉ đánh giá từng quyết định độc lập |
-| 4 | AI có xu hướng thuyết phục đổi ý khi user nói "chấp nhận rủi ro, không care" | Ghi rõ đây là câu trả lời hợp lệ và đủ — việc của AI là đảm bảo user *thấy* rủi ro, không phải ép tránh rủi ro |
+| 4 | AI có xu hướng thuyết phục đổi ý khi user nói "chấp nhận rủi ro, không care" | Ghi rõ đây là câu trả lời hợp lệ và đủ – việc của AI là đảm bảo user *thấy* rủi ro, không phải ép tránh rủi ro |
 | 5 | Xong nhiều nhóm rồi không ai chủ động tổng hợp thành file, hỏi đáp nằm rải trong chat | Thêm bước cuối: chủ động hỏi Chat tổng hợp thành 1 file duy nhất |
 
 ### Vòng 2 – 6 chỗ, tìm ra lúc chạy khô
