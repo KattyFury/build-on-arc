@@ -53,7 +53,7 @@ Mục 4 là thứ ít series nào có. Prompt trong đây không phải viết m
 |---|---|---|---|
 | [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ | ✅ |
 | [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ | ✅ |
-| [`03-planning/`](03-planning/README.md) | AI hỏi ngược lại bạn về UX, logic, xử lý lỗi, edge case, bảo mật | ✅ | ✅ |
+| [`03-planning/`](03-planning/README.md) | 2 vòng: AI hỏi ngược bạn về UX/logic/lỗi/bảo mật, rồi chốt stack cho từng luồng | ✅ | ✅ vòng 1 |
 | [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code | ✅ | 🚧 |
 | [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ | ✅ |
 | [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng | ✅ | ✅ |

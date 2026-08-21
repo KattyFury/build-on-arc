@@ -2,6 +2,8 @@
 
 Có 6 câu mô tả sản phẩm từ Bước 2 rồi. Bước này đưa chúng cho AI bóc tách từng gạch đầu dòng, tìm ra những chỗ còn thiếu — trước khi viết dòng code đầu tiên.
 
+Bước này đi 2 vòng, cùng một cửa sổ Chat: **vòng 1 chốt sản phẩm chạy ra sao**, **vòng 2 chốt mỗi luồng chạy bằng tech gì**. Vòng 2 hay bị bỏ qua nhất, mà bỏ nó thì stack của app là stack AI tự chọn hộ.
+
 ## Vì sao cần bước này
 
 Đừng quăng một cái idea sơ sài rồi bảo AI tự chạy. Token hết nhanh khủng khiếp, mà thứ ra đời là dự án của AI chứ chẳng phải của mình. Ngồi plan kỹ trước được 4 cái:
@@ -17,7 +19,7 @@ Không phải viết một bài văn dài dòng. Là ngồi **trả lời phỏn
 
 Mấu chốt nằm ở câu cuối của prompt: **hỏi một nhóm mỗi lần, chờ trả lời xong mới sang nhóm tiếp**. Bỏ câu đó ra thì AI xổ 30 câu hỏi một lượt, đọc xong không trả lời tử tế được câu nào.
 
-## Prompt
+## Vòng 1: prompt phỏng vấn ngược
 
 Copy đoạn dưới, paste vào AI bạn đang dùng:
 
@@ -41,12 +43,81 @@ Sau khi xong hết các nhóm, chủ động hỏi Chat: "Tổng hợp toàn b�
 
 > Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua — Chat đã có sẵn context, dán lại là thừa.
 
-## Trả lời sao cho ăn tiền
+### Trả lời phỏng vấn sao cho ăn tiền
 
 - **Chốt hẳn, đừng để mở.** "Cái đó tính sau" nghĩa là tới lúc code AI vẫn phải đoán — đúng cái mình đang muốn tránh.
 - **Chưa biết thì nói chưa biết**, bảo AI đưa 2-3 phương án kèm đánh đổi rồi tự chọn. Chọn là việc của mình, liệt kê là việc của nó.
 - **Câu nào đụng tiền hoặc bảo mật thì đừng để AI chọn giúp.** Nó chọn phương án phổ biến nhất, không phải phương án đúng với sản phẩm của mình.
 - **Ghi kết quả ra file.** Hỏi đáp nằm trong cửa sổ chat là thứ sẽ biến mất. Cuối buổi bảo AI tổng hợp toàn bộ quyết định thành một file, để đó cho các bước sau dùng lại.
+
+## Vòng 2: chốt stack cho từng luồng
+
+Xong vòng trên là biết app có những luồng nào, mỗi luồng xử lý ra sao. Còn thiếu đúng một câu: **mỗi luồng đó chạy bằng cái gì.**
+
+Chỗ này gần như ai cũng bỏ qua. Mở Claude Code lên, gõ "build cho mình app tip trên Arc", AI tự chọn framework, tự chọn database, tự chọn thư viện – cài xong mình mới biết mình đang xài cái gì. Nó không chọn bậy đâu, nó chọn thứ nó **quen tay nhất**, tức là thứ phổ biến nhất trên internet. Hai thứ đó không phải lúc nào cũng trùng nhau, mà lúc lòi ra lệch thì đã code cả tuần trên cái stack đó rồi.
+
+Cách chặn: bắt nó khai ra trước khi gõ dòng code đầu tiên. Đúng ba câu, hỏi cho từng luồng một:
+
+1. **Luồng này chạy bằng tech gì?**
+2. **Vì sao chọn cái đó?**
+3. **Còn những thứ nào khác cũng làm được việc này, và vì sao không dùng chúng?**
+
+Câu 3 mới là câu ăn tiền. Câu 1 với câu 2 thì AI nào cũng trả lời trơn tru – nó luôn có sẵn một lý do nghe rất hợp lý cho thứ nó vừa chọn. Câu 3 bắt nó bày ra cái nó **đã loại**, đọc chỗ đó mới thấy: có thứ bị loại vì lý do không đúng với mình (loại vì "khó cho người mới" trong khi mình có tự code đâu), có thứ bị loại vì nó không biết, và có khi thứ nó loại lại đúng là thứ mình cần.
+
+Hỏi một lần được thêm hai cái nữa:
+
+- **Mình hiểu app mình gồm những mảnh gì.** Sau này hỏng chỗ nào còn biết đường mở đúng chỗ đó ra hỏi, thay vì quăng nguyên repo cho AI đọc lại từ đầu.
+- **Biết chỗ nào khó đổi.** Đổi màu nút thì lúc nào đổi cũng được. Đổi database hay đổi nhà cung cấp ví sau khi đã có người dùng thật thì gần như làm lại từ đầu. Chốt sớm được đúng mấy chỗ khó đổi là đủ nguyên bước này có lời.
+
+### Prompt
+
+Copy đoạn dưới, dán vào Chat – tốt nhất là cùng cửa sổ vừa chạy vòng 1:
+
+```
+Đóng vai Solution Architect. Mình vừa chốt xong logic sản phẩm, giờ cần chốt stack cho từng luồng.
+
+Cách làm việc: bạn dẫn, mình theo. Đi TỪNG LUỒNG một theo thứ tự người dùng gặp chúng, hỏi xong luồng này đợi mình chốt rồi mới sang luồng sau. Đừng xổ hết một lượt.
+
+Ràng buộc của mình, tính vào mọi lựa chọn chứ đừng bỏ qua:
+- Mình không có nền lập trình, code là AI viết. Cái gì cần tự debug sâu bằng tay thì coi như mình không làm được.
+- Chain: [Arc testnet / điền chain của bạn].
+- Ngân sách: [free tier thôi / mình trả được X$ một tháng].
+- Mình làm một mình, không có team.
+
+Với MỖI luồng, trả lời đủ 4 phần:
+1. Tech chọn cho luồng này. Ghi tên gói/dịch vụ cụ thể, không nói chung chung kiểu "một database".
+2. Vì sao chọn nó. Lý do phải gắn với ĐÚNG luồng này và ràng buộc của mình ở trên. Không nhận lý do kiểu "phổ biến", "chuẩn ngành", "cộng đồng lớn".
+3. Ít nhất 2 thứ khác cũng làm được việc này, kèm lý do loại từng cái. Loại vì gì thì nói thẳng cái đó, đừng bịa phương án dở tệ ra cho có.
+4. Quyết định này về sau đổi dễ hay khó: đổi lúc nào cũng được, hay đổi là phải làm lại phần lớn? Khó đổi thì nói rõ khó ở chỗ nào.
+
+Ba việc bắt buộc làm trong lúc đi:
+- Luồng nào đã có sẵn sample app hoặc template chính chủ dùng lại được thì nói ngay, kèm link. Fork về sửa thường rẻ hơn tự dựng, mình muốn biết để tự cân.
+- Cái nào tốn tiền thì nói rõ: free tới mức nào, quá mức đó thì bao nhiêu, có bắt gắn thẻ ngay không.
+- Cái nào KHÔNG chạy được trên chain mình chọn, hoặc chạy được nhưng thiếu tính năng, phải cảnh báo ngay lúc đề xuất – đừng để mình cài xong mới biết.
+
+Đi hết các luồng rồi thì tổng hợp thành một file duy nhất: bảng stack theo luồng, danh sách thứ cần cài, thứ cần đăng ký tài khoản, và một mục riêng liệt kê những quyết định khó đổi.
+
+Đây là plan sản phẩm của mình:
+```
+
+> Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua – Chat đã có sẵn context, dán lại là thừa.
+
+### Đọc câu trả lời sao cho ăn tiền
+
+Bốn dấu hiệu thấy là hỏi lại ngay:
+
+| Thấy gì | Nghĩa là | Hỏi lại |
+|---|---|---|
+| Mấy phương án bị loại toàn thứ dở thấy rõ | Nó dựng bù nhìn cho cái nó đã chọn sẵn | "Kể 2 thứ người ta thật sự đang dùng cho việc này, rồi hẵng loại" |
+| Lý do chọn là "phổ biến", "chuẩn ngành", "cộng đồng lớn" | Chưa xét gì tới app của mình | "Lý do đó đúng với luồng nào của mình? Nói theo luồng cụ thể" |
+| Một luồng gọi tên tận 4-5 thư viện | Đang gom đồ nghề quen tay | "Bỏ bớt cái nào mà luồng vẫn chạy được?" |
+| Không thứ nào bị đánh dấu là khó đổi | Nó chưa nghĩ tới chuyện phải đổi | "3 tháng nữa có người dùng thật, đổi cái nào là phải làm lại?" |
+
+Còn một câu đáng hỏi cuối buổi, không nhét vào prompt vì tuỳ người: **"Nếu bạn là người phải bảo trì app này một mình trong 1 năm, bạn có chọn y hệt không?"** Câu này hay lòi ra chỗ nó chọn cho nhanh chứ không chọn cho bền.
+
+> Chốt stack không phải là khoá cứng vĩnh viễn. Nó có nghĩa từ đây trở đi, đổi stack là **quyết định của mình** và có ghi lý do – chứ không phải AI lẳng lặng đổi giữa chừng, mình biết sau cùng.
+
+File tổng hợp của vòng này để cạnh file vòng 1. Bước 5 sẽ mở đúng nó ra để biết phải cài gì.
 
 ## Ví dụ: Product Discovery của TapTip
 
@@ -64,7 +135,13 @@ Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
 > Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý — "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" — nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
 
+### Vòng 2 chưa có ví dụ
+
+🚧 TapTip chốt stack xong trước khi vòng 2 được viết ra (fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) thay vì tự dựng trên Cloudflare Workers), nên prompt vòng 2 chưa đem chạy thật lần nào. Luật của repo là chưa chạy thật thì chưa được kể như ví dụ – nên chỗ này để trống có chủ đích, chạy xong sẽ điền.
+
 ## Prompt này từng hụt chỗ nào
+
+Dưới đây là 5 chỗ hụt của **prompt vòng 1**, tìm ra lúc chạy thật với TapTip. Prompt vòng 2 chưa chạy thật nên chưa có dòng nào ở đây.
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
