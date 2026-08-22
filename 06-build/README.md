@@ -131,21 +131,21 @@ Lặp tới khi **không ai còn chê được gì nữa** thì mới coi là xo
 - **Kiên nhẫn đi từng tính năng một.** Đừng để nó gộp nhiều tính năng vào một lượt build vì "cho nhanh".
 - **Xong hẳn giai đoạn này mới sang giai đoạn kia.** Logic ổn định trước thì chỉnh giao diện sau không làm gãy flow.
 - **Đừng chỉnh giao diện bằng mồm ở Giai đoạn 1.** Ngứa mắt thì ghi lại, để dành xử một lượt ở Giai đoạn 2.
-- **Ở Giai đoạn 2, mọi vị trí/kích thước phải neo theo tỷ lệ màn hình, không phải pixel cố định.** Hardcode px (VD "cao 80px", "cách 40px") chỉ đúng trên đúng một kích thước màn hình – khách dùng máy nhỏ hơn/lớn hơn là vỡ layout ngay. Dùng đơn vị co giãn (`flex-grow`, `%`, `vh`/`vw`, `cqh`) cho mọi khoảng cách lấy từ hệ lưới ở Bước 4. Tailwind CSS v4 không build được class `flex-[N]` (arbitrary value phân số) – dùng `style={{ flex: "N 1 0" }}` inline, xem `HANDOFF.md` mục 4.8.
+- **Ở Giai đoạn 2, mọi vị trí/kích thước phải neo theo tỷ lệ màn hình, không phải pixel cố định.** Hardcode px (VD "cao 80px", "cách 40px") chỉ đúng trên đúng một kích thước màn hình – khách dùng máy nhỏ hơn/lớn hơn là vỡ layout ngay. Dùng đơn vị co giãn (`flex-grow`, `%`, `vh`/`vw`, `cqh`) cho mọi khoảng cách lấy từ hệ lưới ở Bước 4. Tailwind CSS v4 không build được class `flex-[N]` (arbitrary value phân số) – dùng `style={{ flex: "N 1 0" }}` inline.
 - **Bắt AI tự kiểm tra bằng số đo, đừng để nó (và bạn) đoán bằng mắt.** Xem mục 2 phần dưới.
 - **Build app không phải thả cho AI tự làm hết.** Có lúc phải tự tay tạo tài khoản, lấy API key, tạo database, deploy smart contract – cứ làm rồi sửa, ai cũng chật vật ở bước này.
 
 ## 5 thứ làm bạn chậm gấp nhiều lần
 
-TapTip (dự án từng build song song với series, giờ ở [`KattyFury/taptip`](https://github.com/KattyFury/taptip)) chỉ có 5 tính năng, lại fork sẵn code nền của Circle – vậy mà mất nhiều buổi. Không phải vì khó, mà vì 5 cái bẫy dưới đây. Tránh được là nhanh hơn hẳn:
+Rút từ quá trình build thật của [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) – ví crypto cho người dùng phổ thông, chạy thật trên Arc Testnet. Không phải vì dự án khó, mà vì 5 cái bẫy dưới đây lặp đi lặp lại. Tránh được là nhanh hơn hẳn:
 
-1. **Không đọc docs/skill của SDK trước khi code.** Lao vào code rồi mới tra khi gặp lỗi – mất cả buổi cho mấy lỗi mà trang đầu tài liệu đã ghi rõ cách tránh. Đụng SDK lạ thì đọc 5 phút trước, tiết kiệm 5 tiếng sau.
-2. **Sửa giao diện mà không nhìn thấy được kết quả.** Sửa layout cả chục vòng theo kiểu đoán, mỗi lần lại phải chụp màn hình gửi cho AI. Bảo AI dựng cách tự kiểm tra trước (chụp màn hình tự động, đo toạ độ từng phần tử) rồi hãy sửa – tìm ra nguyên nhân trong một lần.
-3. **Tin rằng code AI viết ra là có tác dụng.** Có lúc AI viết class CSS mà framework không hề dịch ra – sửa mãi layout không nhích một milimet, cứ tưởng do tính sai. Layout không đổi sau khi sửa thì nghi ngờ "code có chạy không" trước, đừng nghi công thức.
-4. **Gộp nhiều sửa đổi rồi mới kiểm tra một lượt.** Xoá dòng import mà quên dòng đang dùng nó → app crash. Bắt AI chạy kiểm tra lỗi + tải lại app ngay sau mỗi lần sửa, đừng để dồn.
-5. **Né giới hạn kỹ thuật bằng cách đổi trải nghiệm người dùng.** Gặp giới hạn của gói miễn phí, AI đề xuất đổi luôn cách đăng nhập cho nhanh – may mà bắt lại kịp. Giới hạn kỹ thuật không phải lý do để đổi thứ người dùng của bạn sẽ chạm vào mỗi ngày; tìm cách giữ đúng trải nghiệm trước.
+1. **Không đọc chữ ký hàm thật của SDK trước khi gọi.** Một màn quan trọng (câu hỏi bảo mật) hiện RỖNG TRẮNG, chặn cả luồng tạo ví – dò nguyên nhân bằng cách đoán rồi thử-sai trên production tốn nhiều lượt vẫn sai. Root cause thật: gọi hàm SDK theo kiểu object trong khi hàm đó nhận **tham số vị trí** – đọc thẳng file `.d.ts` trong `node_modules` (30 giây) ra ngay, nhưng chỉ đọc SAU khi đã đoán mò nhiều vòng. Đụng SDK lạ, cư xử lạ: đọc chữ ký hàm thật trước, đừng đoán từ triệu chứng.
+2. **Sửa giao diện mà không nhìn thấy được kết quả.** Bắt AI dựng cách tự kiểm tra trước khi sửa: chụp màn hình headless ở nhiều kích thước máy (390px và 375px – đo cả hai, vì lỗi tràn chữ chỉ lộ ra ở máy hẹp hơn), đo toạ độ từng khối bằng script chứ không đoán bằng mắt.
+3. **Sửa code mà quên sửa test trong cùng lúc.** Một lần sửa thuật toán gợi ý số tiền nhưng quên đồng bộ file test tương ứng – bộ test báo đỏ suốt **9 ngày** dù app chạy đúng, vì nhìn quen thấy đỏ riết rồi bỏ qua, test mất hẳn tác dụng cảnh báo. Sửa logic ở đâu, sửa test ngay trong cùng một lượt, đừng tách ra "làm sau".
+4. **Đổ lỗi cho code của mình trước khi đo.** Ba lần trong một phiên tưởng lỗi do code, hoá ra không phải: chữ tiếng Việt mất dấu khi gửi qua Telegram (do cách gọi lệnh dòng lệnh trên Windows mã hoá sai, không phải server); một tính năng đổi tiền báo lỗi "không tìm được đường" (do hạ tầng bên thứ ba hết thanh khoản test, không phải code); một lỗi tràn giao diện tưởng mới xuất hiện (kiểm bằng cách lùi lại phiên bản code cũ thì hoá ra đã tràn từ trước). Đo trước, đổ lỗi sau.
+5. **Gặp giới hạn kỹ thuật thật thì né bằng cách đọc kỹ hơn, không phải đổi ẩu.** RPC công cộng giới hạn số lượng request rất chặt – phản xạ đầu là retry liên tục khi gặp lỗi, mà retry dày lại tự đâm vào chính giới hạn đó, thành vòng lặp tự giết mình. Sửa đúng: gộp nhiều lệnh đọc thành một request (Multicall), giãn cách giữa các lần thử lại, và khi chưa chắc số liệu thì hiện dấu `…` chứ không vẽ số `0` giả – vẽ `0` sai với một app tiền bạc là làm người dùng tưởng mất tiền thật.
 
-Chi tiết từng lỗi (kèm nguyên nhân kỹ thuật thật) nằm ở [`docs/06-build.md`](https://github.com/KattyFury/taptip/blob/main/docs/06-build.md).
+Chi tiết từng lỗi (kèm nguyên nhân kỹ thuật thật) nằm ở [`HANDOFF.md`](https://github.com/KattyFury/ezwallet/blob/main/HANDOFF.md) của repo đó, đặc biệt mục "Gotchas" và "Bài học chính".
 
 ## Kết quả cuối
 
@@ -161,21 +161,17 @@ Một website để người khác vào trải nghiệm thật, đã qua tay ng�
 
 ## Ví dụ
 
-TapTip, fork từ [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) – đi đúng 3 giai đoạn trên. Dự án này từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip).
+[`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) không được build theo đúng trình tự 3 giai đoạn của bước này (dự án có trước series), nên Giai đoạn 1 và 2 không tách bạch rõ ràng thành hai đợt riêng như prompt trên mô tả – logic và giao diện phát triển đan xen qua nhiều buổi. Đây là điều nên nói thẳng, không giả vờ khớp hoàn toàn: **làm đúng 3 giai đoạn tách bạch vẫn là cách nhanh hơn** cách EZwallet đã đi, không phải ngược lại.
 
-**Giai đoạn 1** xong toàn bộ 5 tính năng với UI mộc: [`docs/06-build.md`](https://github.com/KattyFury/taptip/blob/main/docs/06-build.md).
+Bù lại, EZwallet đã đi xa hơn hẳn tới **Giai đoạn 3** – phần mà một dự án mới build song song với series chưa kịp chạm tới, vì nó đòi hỏi người dùng thật. Ba câu chuyện thật, đúng tinh thần "ghi lại mọi lời chê, sửa dần, lặp tới khi không ai chê được nữa":
 
-**Giai đoạn 2** đi đủ 3 nhịp:
+**1. Thuật toán gợi ý số tiền – sửa 3 lần mới đúng.** Bản đầu làm tròn theo luỹ thừa 10 (0,5 → 5 → 50...), tưởng hợp lý trên giấy. Người dùng thật gõ 14,55 thì bị gợi ý nhảy hẳn sang "10 · 15 · 20" – bước nhảy quá thô ngay tại các mốc chục. Sửa lần 2 vẫn còn kẽ hở ở mốc 10 (9,99 bước 0,5 mà 10,0 nhảy thẳng lên bước 5). Lần 3 mới đúng: chỉ một bậc nhảy duy nhất, tại đúng một mốc. Bài học: **thấy đúng trên giấy không có nghĩa đúng khi người thật gõ số thật** – phải chờ phản hồi rồi sửa, không phải cố đoán đúng ngay từ đầu.
 
-| Nhịp | Kết quả thật |
-|---|---|
-| 2.1 Đóng gói spec hiện trạng | [`docs/08-design-spec-hien-trang.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-design-spec-hien-trang.md) – Claude Code tự đọc code viết ra |
-| 2.2 Chỉnh ở Claude Design | Đổi hẳn bảng màu (xám/đỏ → trắng/vàng `#FFCC00`/xanh `#0B53BF`), đổi font (Archivo → Nunito + Comfortaa riêng cho con số), dời lại vị trí một số khối |
-| 2.3 Xuất gói cho Code dựng lại | Gói [`design_handoff_taptip/`](https://github.com/KattyFury/taptip/tree/main/design_handoff_taptip) (mô tả + bản dựng tĩnh 15 màn + asset) → kết quả build ở [`docs/08-redesign-handoff.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-redesign-handoff.md) |
+**2. Cỡ icon – chốt sau khi lệch về cả hai phía.** Icon 48px + chữ 17px → người dùng chê "nhỏ quá". Chỉnh lên icon 64px + chữ 30px → chê tiếp "to quá". Chốt ở giữa (56px + 21px) mới vừa. Bài học: phản hồi đầu tiên không phải là điểm chốt, mà là một hướng để dò – đẩy quá tay theo một lời chê dễ tạo ra lời chê ngược lại.
 
-Đúng như cảnh báo ở 2.3: bản dựng lại **pass hết kiểm tra tự động** (typecheck sạch, build thành công 24 route) mà vẫn có 3 lỗi chỉ lòi ra khi chụp ảnh và đo thật – trong đó có lỗi nút bấm hiện ra thành **ô rỗng không có chữ**. Số đo và cách tìm ra ghi ở mục 7 của file trên.
+**3. Thông báo nhận tiền đến rất chậm – bug nghiêm trọng hơn vẻ ngoài.** Người dùng báo "thông báo tới rất lâu". Truy ra: hàm tên là "poll" (ngụ ý hỏi lặp lại) nhưng thực chất chỉ gọi đúng một lần lúc mở màn – đứng yên ở một màn thì tiền về cũng không ai hỏi lại. Vì đây là app cho người lớn tuổi xử lý tiền bạc, im lặng ở đúng màn hình tiền là lỗi nặng ngang một crash, không phải lỗi vặt bỏ qua được. Sửa: hỏi lặp lại theo nhịp khác nhau tuỳ màn (đang đứng chờ nhận tiền thì hỏi dày hơn), và hỏi ngay khi người dùng quay lại mở app.
 
-**Giai đoạn 3 tạm gác** cùng lúc dự án được tách repo – app cần người dùng thật mới có cái để sửa theo, phần này để dành cho lúc quay lại `KattyFury/taptip`.
+> Cả ba đều bắt đầu từ đúng bước 3 và 4 của Giai đoạn 3: đưa cho người thật dùng, và ghi lại lời chê dù có vẻ nhỏ. Không có bước đó thì cả ba lỗi này vẫn nằm im, "chạy được" trên giấy nhưng sai khi chạm vào người dùng thật.
 
 ---
 

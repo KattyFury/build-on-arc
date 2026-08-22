@@ -59,21 +59,23 @@ XONG THÌ TỰ ĐỘNG LÀM 2 VIỆC NÀY, ĐỪNG ĐỢI MÌNH NHẮC:
 [DÁN KẾT QUẢ BƯỚC 1 VÀO ĐÂY]
 ```
 
-## Ví dụ: PRD của TapTip
+## Ví dụ: PRD của EZwallet
 
-Đây là kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/02-hoan-thien-y-tuong.md`](https://github.com/KattyFury/taptip/blob/main/docs/02-hoan-thien-y-tuong.md).
+Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Cũng như Bước 1, dự án này ra đời trước series nên phần dưới dựng ngược từ [`README.md`](https://github.com/KattyFury/ezwallet/blob/main/README.md) thật của repo – tình cờ README đó đã viết gần đúng khuôn 6 câu, vì cùng một cách nghĩ.
 
-**App:** Lì xì và tip nhanh chóng cho bất kỳ ai, chỉ bằng cách log in bằng email.
+**App:** A crypto wallet simple enough for my mom to use.
 
-**Ai dùng:** Cả người gửi lẫn người nhận có thể là người lớn tuổi, ít rành công nghệ (mẹ/bà, khoảng 60 tuổi) – phải tự thao tác được ngay từ lần đầu, không cần ai chỉ.
+**Ai dùng:** Người dùng phổ thông, không rành crypto – ví dụ cụ thể xuyên suốt là "mẹ mình", một người thật chứ không phải "target audience" chung chung.
 
-**Mang lại điều gì:** So với chuyển khoản ngân hàng (xác thực mỗi giao dịch), app chỉ xác thực một lần lúc mở app (passkey), sau đó gửi không cần duyệt lại – vì số tiền nhỏ.
+**Giải quyết vấn đề gì:** Hầu hết ví crypto dựng cho người đã hiểu crypto. Seed phrase, token gas riêng, địa chỉ hex, chọn mạng – mỗi thứ là một bức tường với người mới, và là lý do chặn hẳn với người lớn tuổi.
 
-**Tính năng core (thiếu thì app vô nghĩa):** đăng nhập email + passkey, nạp/rút, màn hình chính (Balance + QR code của mình + Nạp/Rút/Lịch sử), chọn số tiền có sẵn hoặc nhập số khác, quét QR người nhận gửi ngay không cần xác nhận thêm, chỉ hỗ trợ USDC quy đổi VNĐ. Nice-to-have: nút Random rút túi mù.
+**Tính năng core:** đăng nhập email + PIN (không seed phrase), gửi kèm lời nhắn, nhận bằng QR, lịch sử + biên lai. **Nice-to-have thêm dần sau:** swap bằng thanh trượt %, danh bạ (đặt tên cho địa chỉ), kho QR lưu sẵn, hiển thị đa tiền tệ (USDC/EURC/VNĐ).
 
-**Ranh giới:** không hoàn tiền sau khi gửi, không token khác ngoài USDC, không chat kèm tin nhắn, không giới hạn số tiền mỗi lần gửi.
+**Người dùng sẽ sử dụng ra sao:** Mở app → tạo ví bằng email (nhận mã, đặt PIN 6 số) → Nạp tiền test qua Circle faucet (Menu → Deposit tự copy địa chỉ + mở link faucet) → gửi cho người khác hoặc quét QR của họ.
 
-**Core value:** Tip tiền và lì xì nhanh như trao tay.
+**Ranh giới:** chỉ chạy Testnet, chưa lên mainnet, mặc định tiếng Anh (tiếng Việt dịch xong hoàn chỉnh nhưng không tự bật theo máy), không hỗ trợ đăng nhập Google, QR chỉ đọc được QR ví crypto chứ không phải QR đời thường (mã vạch sản phẩm, QR ngân hàng...), chưa qua audit bảo mật.
+
+**Core value:** *"EZwallet was built on a simple belief: everyone should be able to own their own money, without needing to become a crypto expert."* Bỏ hết tên sản phẩm, câu này vẫn đứng vững như một niềm tin độc lập – đúng bài kiểm tra core value của bước này, dù câu này được viết ra trước khi series có bài kiểm tra đó.
 
 ## Prompt này từng hụt chỗ nào
 

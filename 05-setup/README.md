@@ -54,11 +54,13 @@ cd "đường-dẫn-tới-project"
 claude
 ```
 
-## Ví dụ: TapTip
+## Ví dụ: EZwallet
 
-Máy build TapTip đã từng build dự án khác trước đó (ezwallet), nên Node.js, Git, Claude Code, tài khoản GitHub đều có sẵn – không chạy prompt từ Bước 1 của mục này. Thay vào đó verify từng phần: `node --version`, `git --version`, `claude --version` đều ra kết quả, `claude mcp list` xác nhận Arc MCP đã connect. Verify Arc MCP còn sống bằng cách hỏi thật một câu ("USDC as gas token trên Arc") – trả về đúng nội dung từ docs.arc.io, không phải câu trả lời bịa.
+Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Setup của dự án này diễn ra trước cả series nên không chạy đúng prompt trên, nhưng kết quả cuối thì trùng khớp: Node.js, Git, tài khoản GitHub, tài khoản Circle Console đều có sẵn trước khi code dòng đầu tiên.
 
-Chi tiết đầy đủ: [`docs/05-setup.md`](https://github.com/KattyFury/taptip/blob/main/docs/05-setup.md) (repo `KattyFury/taptip`).
+Có một chỗ setup của EZwallet đi xa hơn nội dung bước này hay nhắc tới, đáng ghi lại làm kinh nghiệm: **Circle Web SDK (login, PIN, swap) không chạy được trên `localhost`** – muốn test các luồng đó phải deploy thật. Giải pháp không phải deploy liên tục để test, mà dựng một **chế độ mock** riêng (`npm run mock`): vào thẳng giao diện với ví giả + số dư giả, bỏ qua đăng nhập/PIN, giả lập gửi/swap thành công – đủ để chỉnh UI/flow nhanh ở máy, chỉ khi nào cần test thật cơ chế ký/tiền mới đẩy lên deploy.
+
+Setup 2 tiến trình chạy song song cũng là kinh nghiệm đáng mang qua dự án khác: 1 terminal chạy proxy API cục bộ giả lập backend thật (để không phải deploy mới test được gọi API), 1 terminal chạy dev server frontend – việc tách 2 tiến trình giúp test API riêng khỏi UI mà không cần đợi build.
 
 ### Prompt này từng hụt chỗ nào
 

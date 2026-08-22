@@ -129,37 +129,33 @@ Còn một câu đáng hỏi cuối buổi, không nhét vào prompt vì tuỳ n
 
 File tổng hợp của vòng này để cạnh file vòng 1. Bước 5 sẽ mở đúng nó ra để biết phải cài gì.
 
-## Ví dụ: Product Discovery của TapTip
+## Ví dụ: Product Discovery của EZwallet
 
-Đây là kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/03-planning.md`](https://github.com/KattyFury/taptip/blob/main/docs/03-planning.md).
+Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Chưa từng chạy đúng prompt "Product Discovery" ở trên (dự án có trước series), nên phần dưới dựng ngược từ quyết định thật trong [`HANDOFF.md`](https://github.com/KattyFury/ezwallet/blob/main/HANDOFF.md) của repo đó – không phải bản ghi một buổi hỏi đáp.
 
-Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
+Chia làm 5 nhóm, mỗi nhóm vài quyết định đáng chú ý:
 
 | Nhóm | Quyết định đáng chú ý |
 |---|---|
-| Login & Onboarding | Khôi phục qua email OTP, không phải cơ chế passkey theo thiết bị – chấp nhận rủi ro vì tiền tip nhỏ |
-| Ví & Nạp/Rút | Testnet: nạp/rút = faucet only, rút bị disable |
-| Luồng gửi/quét QR | QR người nhận là QR tĩnh, không đổi, không hết hạn – giống số tài khoản |
-| Xử lý lỗi & Edge case | Balance không đủ: nút vượt quá balance bị disable từ đầu, không để quét xong mới báo lỗi |
-| Bảo mật | Bảo mật lưu key của Circle Wallets là trách nhiệm của Circle, không phải app tự thêm lớp bảo vệ |
+| Login & Onboarding | Email + PIN qua Circle MPC, không seed phrase. Đăng nhập Google **đã code xong nhưng ẩn khỏi UI** – Circle chỉ cấp PIN cho đúng luồng email thuần, SSO/OTP không có PIN, bật lên là mất luôn UX cốt lõi |
+| Ví & số dư | Luôn chừa `1 USDC` làm đệm phí gas, số khả dụng trừ sẵn phần đó chứ không để user tự tính |
+| Luồng gửi/quét QR | QR nhận tiền **khoá cứng vào một mạng Arc**, nhưng địa chỉ dạng chữ (nút copy) thì để trần không khoá – cố ý lệch nhau: QR là đường bấm-một-phát-là-gửi nên phải chặn, chữ là lối thoát để nạp từ sàn khác |
+| Xử lý lỗi & Edge case | RPC lỗi/chậm → hiện `…` chứ không vẽ số `0`, tránh làm người dùng tưởng mất tiền. Gửi cho chính mình bị chặn ở cả 3 đường vào form gửi (dán địa chỉ, quét QR, chọn từ danh bạ) |
+| Bảo mật | Khoá ví do Circle giữ (MPC) – trách nhiệm của Circle, không phải app tự thêm lớp bảo vệ, giống cách TapTip trả lời cho Circle Wallets |
 
-> Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý – "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" – nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
+> Chỗ đáng học nhất không rơi vào nhóm Bảo mật mà vào chính cách nhóm đó **thay đổi theo thời gian** – khác hẳn kiểu "chấp nhận rủi ro rồi để yên" của TapTip. Bản đầu, việc đồng bộ danh bạ giữa các máy chỉ cần biết `userToken` của user – biết email là xin được, không cần chứng minh gì thêm. Không đợi ai báo lỗi, tự phát hiện lỗ hổng rồi vá thật: đổi sang bắt ký một nonce dùng-một-lần bằng đúng cây PIN đang có (không thêm thao tác nào cho user), suy ra địa chỉ từ chữ ký thay vì tin client tự khai. Bài học: "chốt bảo mật" không có nghĩa là xong vĩnh viễn – nhìn lại và tự vá được là một kết quả hợp lệ khác, không kém giá trị so với việc thấy rủi ro và chấp nhận nó.
 
-### Stack TapTip chốt ra sao
+### Stack EZwallet chốt ra sao
 
-Đây là stack thật của [`taptip/app`](https://github.com/KattyFury/taptip/tree/main/app), chốt xong trước khi vòng 2 được viết thành prompt – nên đọc ngược lại thì thấy đúng 4 phần mà prompt đang bắt trả lời:
+Vì dự án không chạy qua đúng prompt Vòng 2, bảng dưới thưa hơn bảng của TapTip ở cột "Loại cái gì" – đúng thứ mà việc **không hỏi rõ** để lại: chỉ có lý do chọn, thiếu hẳn lý do loại phương án khác, vì lúc build không ai ép phải trả lời câu đó.
 
 | Chỗ | Chọn gì | Vì sao | Loại cái gì, vì sao | Đổi sau này |
 |---|---|---|---|---|
-| Khung chung | Fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase) | Sample app chính chủ đã có sẵn passkey + gasless P2P, đúng thứ Bước 2-3 chốt | Tự dựng trên Cloudflare Workers/Pages – stack quen tay của tác giả ở dự án khác, nhưng dựng lại từ đầu đúng thứ người ta cho không | Khó |
-| Dữ liệu người dùng | Giữ Supabase của app mẫu | Auth + bảng dữ liệu + realtime nằm sẵn trong đó | Đổi sang Cloudflare KV: phải viết lại auth + data layer + realtime, tức là vứt gần hết giá trị của việc fork | Khó |
-| Ví + ký giao dịch | Circle Modular Wallets (passkey, `paymaster: true` để app trả gas) | Ví ẩn sau passkey, người 60 tuổi không phải biết ví là gì | Ví tự sinh lưu trong máy: mất máy là mất tiền | Khó – đổi là người dùng mất ví |
-| Quét QR | `html5-qrcode` | Chạy thẳng trong trình duyệt, có sẵn đường lùi "nhập ảnh từ kho ảnh" khi không có quyền camera | – | Dễ, đổi thư viện khác lúc nào cũng được |
-| Quy đổi VNĐ | **Chưa chọn** | Có trong PRD nhưng bản đầu hoãn: cần tỷ giá thật, không hardcode | – | – |
+| Custody ví | Circle **User-Controlled** Wallets (MPC, ký bằng PIN qua `@circle-fin/w3s-pw-web-sdk`) | User tự giữ PIN – không seed phrase để chép tay hay làm mất | Developer-Controlled (server giữ toàn bộ khoá thay user – hướng TapTip chọn): EZwallet cố ý để user tự chịu trách nhiệm PIN thay vì app ôm hết | Khó – đổi custody model gần như làm lại ví của toàn bộ người dùng đang có |
+| Backend | Cloudflare Pages + Pages Functions, proxy Circle API để giữ key phía server | Không cần dựng riêng một server chạy 24/7, rẻ và đơn giản cho một người tự vận hành | *(không tìm thấy lý do loại phương án khác được ghi lại – chỉ có lý do chọn)* | Trung bình |
+| Xác thực đồng bộ dữ liệu | Bản đầu: chỉ cần biết `userToken` → **đã đổi** sang chữ ký PIN + nonce dùng một lần | Bản đầu quá lỏng, tự phát hiện lỗ hổng rồi vá (xem callout Bảo mật ở trên) | – | **Đã đổi thật một lần rồi** – bằng chứng sống cho câu "chốt stack không phải khoá cứng vĩnh viễn" |
 
-Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên không cần cân lâu. Một cái được quyền trả lời **"bản đầu chưa làm"** – không chọn tech cho thứ chưa định làm, đỡ được một dependency thừa.
-
-> **Fork rẻ hơn tự dựng, nhưng không free.** Đo được ngay trong repo `taptip`: `app/package.json` vẫn kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Chưa kể 2 lỗi có sẵn của app mẫu phải tự vá: một file client bị `import` nhưng không tồn tại trong repo gốc, và một lỗi type ở route webhook. Fork là nhận cả đồ thừa lẫn nợ của người ta – biết trước thì đỡ hoảng, nên prompt bắt AI nói luôn cái mất chứ không chỉ khoe cái được.
+> **Một stack không phải lúc nào cũng cân đủ 4 phần ngay từ đầu, và điều đó không sao.** So với bảng của TapTip (đủ cả "chọn/vì sao/loại gì/đổi dễ-khó" cho từng dòng), bảng này thiếu hẳn cột "loại gì" ở 2/3 dòng – không phải vì EZwallet không có phương án khác để cân, mà vì lúc build không ai hỏi thẳng câu đó. Đây chính xác là giá trị của Vòng 2: ép trả lời một câu mà nếu không ép thì rất dễ bỏ qua, dù dự án vẫn chạy tốt mà không có câu trả lời đó.
 
 *(Prompt vòng 2 viết sau khi TapTip đã chốt stack, nên nó được kiểm bằng cách chạy lại với chính spec TapTip, và sau đó với một ý tưởng khác đang thử thật trên testnet – tổng 7 chỗ hụt tìm ra ở hai lượt đó đã sửa vào prompt, xem bảng dưới.)*
 

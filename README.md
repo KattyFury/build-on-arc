@@ -64,6 +64,6 @@ Mục 4 là thứ ít series nào có, và có ở **mọi** bước. Prompt tro
 
 Repo này **thuần hướng dẫn** – không giữ code dự án mẫu song song bên trong. Từng thử cách đó với TapTip (Tip & Lì xì nhanh trên Arc, build song song với series), nhưng việc vừa viết guide vừa vá bug/deploy một app thật khiến công việc chính bị xao nhãng – nên đã tách TapTip ra [`KattyFury/taptip`](https://github.com/KattyFury/taptip), quay lại sau.
 
-Mục "Ví dụ" ở một số bước vẫn còn vì dẫn chứng những quyết định có thật từ TapTip lúc nó còn là dự án mẫu ở đây – link trỏ sang repo mới. Prompt vẫn phải chạy thử thật trước khi đăng (không nhất thiết build trong repo này), và chỗ hụt tìm ra được ghi vào mục "Prompt này từng hụt chỗ nào" của từng bước.
+Mục "Ví dụ" ở mỗi bước giờ dẫn chứng từ [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) – ví crypto cho người dùng phổ thông của tác giả, chạy thật trên Arc Testnet tại [ezwallet.cash](https://ezwallet.cash). Dự án này có trước cả series nên không đi qua đúng trình tự từng bước – các ví dụ **dựng ngược** từ quyết định có thật trong `HANDOFF.md`/`README.md` của repo đó, không phải chép lại một buổi chạy prompt thật. Chỗ nào không có đủ dữ liệu thật để dựng ngược thì nói thẳng là thiếu, không nặn cho đủ. Prompt vẫn phải chạy thử thật trước khi đăng (không nhất thiết build trong repo này), và chỗ hụt tìm ra được ghi vào mục "Prompt này từng hụt chỗ nào" của từng bước.
 
 *(Quy định viết bài dành cho tác giả nằm ở `HANDOFF.md`, không để ở đây cho khỏi lệch hai chỗ.)*

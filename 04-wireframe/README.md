@@ -39,24 +39,22 @@ Mấu chốt nằm ở câu "hỏi platform và đề xuất hệ lưới, chờ
 - **Không biết đẹp/hợp lý là gì thì tham khảo web2** – app cùng nhóm chức năng (app chuyển tiền thì xem app ngân hàng) đã được hàng triệu người dùng thử rồi.
 - **Hệ lưới là tỷ lệ, không phải pixel cố định.** Con số kiểu "mỗi hàng ~81.2px" chỉ để hình dung trên MỘT kích thước màn hình cụ thể lúc vẽ khung – khi code thật phải chuyển thành tỷ lệ co giãn (`flex-grow`, `%`, `vh`/`vw`), không hardcode px. Máy khách xài màn hình nhỏ hơn/lớn hơn mà thiết kế cứng theo px thì layout vỡ ngay. Nếu code bằng Tailwind CSS v4, dùng `style={{ flexGrow: N }}` inline thay vì class `flex-[N]` – bản v4 không build class đó thành CSS thật.
 
-## Ví dụ: Wireframe TapTip
+## Ví dụ: Wireframe EZwallet
 
-Kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/04-wireframe.md`](https://github.com/KattyFury/taptip/blob/main/docs/04-wireframe.md).
+Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Không chạy đúng prompt trên (dự án có trước series), nhưng độc lập chốt ra **đúng cùng một hệ lưới 10 hàng** – dấu hiệu tốt cho thấy đây không phải luật riêng của một app, mà là cách hợp lý để bố cục màn hình mobile chữ to cho người lớn tuổi.
 
-Chốt trước khi vẽ: platform **PWA**, khung 375×812, **chia dọc 10 hàng**. Xong rồi rút ra 2 nguyên tắc áp cho mọi màn – đây mới là thứ giữ cả bộ màn hình đồng nhất, chứ không phải từng màn vẽ đẹp riêng:
+- Nội dung chính của mỗi màn nằm trong vùng linh hoạt ở giữa
+- Nút hành động luôn nằm ở **hàng 9**: một nút rộng 3/4 màn, hoặc cặp nút chia đôi – **hàng 10 chỉ dành riêng cho thanh điều hướng 4 tab chính**, không lẫn với nút hành động của từng màn
 
-- Nội dung chính luôn căn giữa vùng **hàng 1-6**
-- Nút hành động luôn nằm ở **hàng 9**: hoặc 1 nút full-width, hoặc cặp "Quay lại" (1/3 trái) + nút chính (2/3 phải)
-
-| Màn | Hàng 1-6 | Hàng 9 | Hàng 10 |
+| Màn | Nội dung | Hàng 9 | Hàng 10 |
 |---|---|---|---|
-| Đăng nhập | Input email → 6 ô nhập OTP | Quay lại 1/3 + Tiếp tục 2/3 | trống |
-| Thiết lập Passkey | Icon FaceID + mô tả | Quay lại 1/3 + Bật passkey 2/3 | "Bỏ qua, dùng email/OTP" |
-| Home | Balance (hàng 1) · QR to (2-5) · chú thích "Cho người khác quét để nhận tip" (6) | Tip ngẫu nhiên 1/3 + Tip 2/3 | Icon menu ☰ |
+| Home (Gửi) | Số dư (1-2) · danh sách token (3-5.5) · thông báo (7-8) | 3 action-card: Dán · Quét QR · Danh bạ | Thanh điều hướng 4 tab |
+| Swap | 3 khối chia đều: You pay/You receive · thanh trượt % + gợi ý số chẵn | Nút Swap (rộng 3/4 màn, đồng tâm với action-card ở Home) | (đã gộp vào Service Hub, hàng 10 đổi thành chữ "Exit") |
+| Màn phụ (Ngôn ngữ, Bảo mật, Giới thiệu...) | Hàng 1 = tiêu đề, nội dung hàng 2 trở xuống | Nút "Quay lại" hoặc cặp Quay lại/Xác nhận | Trống – màn phụ không có thanh điều hướng |
 
-Home cố tình **không có bottom nav** – mọi thứ phụ đẩy hết vào popup của icon ☰, để hàng 2-5 dành trọn cho QR. App này mở ra là để chìa QR cho người ta quét, không phải để lướt.
+Bốn màn chính (Gửi/Nhận/Lịch sử/Menu) giữ nguyên hàng 10 cho thanh điều hướng xuyên suốt cả app; mọi màn phụ mở ra từ đó thì hàng 10 bỏ trống, nút hành động dồn hết vào hàng 9 – đúng nguyên tắc "nút hành động luôn ở một chỗ cố định" mà bước này dạy, chỉ khác điểm neo cụ thể so với TapTip.
 
-> Chỗ đáng học nhất là con số **"mỗi hàng ~81.2px"** trong bản wireframe. Nó đúng trên đúng một cái màn hình 812px, và tới lúc code thật thì `h-40`, `mt-10` làm vỡ layout ngay trên máy khác kích thước. Hệ lưới là **tỷ lệ**, px chỉ để hình dung. Bản prompt giờ bắt phát biểu hệ lưới bằng tỷ lệ ngay từ đầu, đỡ được nguyên một vòng sửa ở Bước 6.
+> Chỗ đáng học nhất không phải hệ lưới (đã đúng ngay từ đầu, độc lập với series) mà là hai lỗi layout thật xảy ra SAU khi hệ lưới đã chốt, đúng kiểu lỗi mà bước này cố tránh: (1) một màn quên khai `grid-template-columns: minmax(0,1fr)` cho container – một chuỗi chữ không xuống dòng đủ dài là kéo phình cả cột, lệch nguyên màn hình; (2) một lưới 2 cột ép ô vuông cứng bằng `aspectRatio:1` mà không tính chữ dài tràn ra ngoài trên màn hẹp – bỏ ép vuông, để `gridAutoRows:'1fr'` cho các ô tự cao bằng nhau mới hết tràn. Cả hai đều là lỗi *sau khi có wireframe đúng*, vì wireframe không thể lường trước từng dòng CSS – nhưng "vẽ đủ N hàng, hàng nào cũng phải khai rõ" (luật bước này) là đúng thứ giảm được loại lỗi thứ hai.
 
 ## Prompt này từng hụt chỗ nào
 
