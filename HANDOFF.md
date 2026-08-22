@@ -2,7 +2,24 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-21 (thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash. Repo chỉ còn Giai đoạn 3 Bước 6 để trống, đúng vì chưa có người dùng thật. Trước đó: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
+> **Cập nhật:** 2026-08-21 (sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với 1 dự án khác (LuckyStaker) – xem mục ngay dưới. Trước đó cùng ngày: thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash. Repo chỉ còn Giai đoạn 3 Bước 6 để trống, đúng vì chưa có người dùng thật. Trước đó nữa: 08-11, 8 fix UI Home + fix bug balance=0, đã push, repo sạch)
+
+## ✅ 08-21 (tiếp): SỬA BƯỚC 1 + VÒNG 2 BƯỚC 3 THEO LỖI THẬT VỚI LUCKYSTAKER
+
+User thử áp prompt Bước 1 (Lên ý tưởng) và Vòng 2 Bước 3 (chốt stack) cho một dự án testnet khác – **LuckyStaker** (no-loss lottery: gửi USDC vào pool không mất gốc, mỗi tuần xổ toàn bộ lãi cho một người trúng, rút được bất cứ lúc nào). Không phải ví dụ chính thức của series (`example/` vẫn là TapTip xuyên suốt, đúng luật 4.1 CLAUDE.md) – đây là dùng để **soi lỗi prompt**, tương tự cách Vòng 2 Bước 3 từng được "chạy khô" với TapTip.
+
+**4 lỗi user chỉ thẳng, đã sửa vào `01-ideation/README.md` và `03-planning/README.md`:**
+
+1. **Câu 0 Bước 1 đọc như danh sách đóng.** LuckyStaker không khớp thẳng cái nào trong 4 hướng Arc (P2P/eCommerce/FX/Agentic) – mình (Claude Code) đối xử với nó như một vấn đề cần pivot ý tưởng. User chỉnh: **4 hướng chỉ là gợi ý có điểm bắt đầu, không phải rào chắn** – ý tưởng đã có rồi thì không khớp cũng không sao, không loại. Đã ghi rõ vào cả phần lý thuyết lẫn khối prompt.
+2. **Câu 3 Bước 1 chỉ nói hỏi docs.arc.io, không phân biệt câu hỏi thuộc Arc hay không.** LuckyStaker cần tra cả thứ ngoài phạm vi Arc (tokenomics/roadmap token khác) lẫn cơ chế Arc thật. Đã tách rõ: câu hỏi thuộc cơ chế Arc → docs.arc.io; câu hỏi ngoài Arc → tự search web riêng, đừng ép docs.arc.io trả lời bừa.
+3. **Câu 3 Bước 1 bị thiết kế như một cửa làm-một-lần-rồi-xong.** Thực tế feasibility là việc liên tục xuyên suốt Bước 1-3 – ý tưởng càng đi sâu càng lộ thêm cơ chế Arc cụ thể cần verify riêng, mỗi lần chốt dùng cơ chế mới thì tra ngay, không dồn lại. Đã ghi rõ Câu 3 chỉ là cửa **tối thiểu** trước khi qua Bước 2.
+4. **Ràng buộc "Ngân sách" trong prompt Vòng 2 Bước 3 hỏi cứng cho mọi dự án** – vô nghĩa với app demo/hackathon chạy testnet (chính Claude Code tự dính lỗi này khi đóng vai Solution Architect hỏi user về ngân sách cho một app testnet). Đã đổi thành có điều kiện: bỏ qua nếu đang test/demo trên testnet, chỉ hỏi khi tính lên production.
+
+**Đã cập nhật bảng "Prompt này từng hụt chỗ nào":** `01-ideation/README.md` từ 5 lên 9 dòng (thêm #6-9), `03-planning/README.md` mục Vòng 2 từ 6 lên 7 dòng (thêm #7). Không viết "Ví dụ 2" cho LuckyStaker ở đâu cả – giữ đúng luật "một ví dụ xuyên suốt" của CLAUDE.md, chỉ dùng nó để tìm lỗi prompt.
+
+🔴 **Bài học riêng cho Claude Code (mình):** lúc chạy thử Vòng 2 với user, mình trượt khỏi vai trò prompt yêu cầu – prompt nói "AI đề xuất, user chốt" (đưa tech + lý do + phương án khác + dễ/khó đổi), mình lại quay sang hỏi user chọn thư viện/kiến trúc như thể user là dev. User phải chỉnh: "tao bảo mày xem như tờ giấy trắng, dắt tao qua các bước... mày lại hỏi các câu off vậy?". Đây là đúng loại lỗi mà chính Bước 1 gặp ở lượt chạy đầu (lỗi #4 trong bảng của Bước 1) – AI ngồi phỏng vấn ngược thay vì dẫn/đề xuất.
+
+---
 
 ## ✅ 08-21: VÒNG 2 BƯỚC 3 + ĐÓNG NỐT BƯỚC 4 + DỌN EM DASH
 

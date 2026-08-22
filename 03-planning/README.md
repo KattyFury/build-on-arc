@@ -87,7 +87,7 @@ BƯỚC 2 – đi TỪNG LUỒNG một, hỏi xong luồng này đợi mình ch�
 Ràng buộc của mình, tính vào mọi lựa chọn chứ đừng bỏ qua:
 - Mình không có nền lập trình, code là AI viết. Cái gì cần tự debug sâu bằng tay thì coi như mình không làm được.
 - Chain: [Arc testnet / điền chain của bạn]. Giai đoạn: [chạy testnet trước / lên mainnet luôn].
-- Ngân sách: [free tier thôi / mình trả được X$ một tháng].
+- Ngân sách: [đang test/demo trên testnet thì mặc định free tier, khỏi hỏi câu này / lên production thật rồi thì free tier thôi hay mình trả được X$ một tháng].
 - Mình làm một mình, không có team.
 
 Với khung chung và với MỖI luồng, trả lời đủ 4 phần:
@@ -161,7 +161,7 @@ Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên k
 
 > **Fork rẻ hơn tự dựng, nhưng không free.** Đo ngay trong repo: `example/app/package.json` vẫn kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Chưa kể 2 lỗi có sẵn của app mẫu phải tự vá: một file client bị `import` nhưng không tồn tại trong repo gốc, và một lỗi type ở route webhook. Fork là nhận cả đồ thừa lẫn nợ của người ta – biết trước thì đỡ hoảng, nên prompt bắt AI nói luôn cái mất chứ không chỉ khoe cái được.
 
-*(Prompt vòng 2 viết sau khi TapTip đã chốt stack, nên nó được kiểm bằng cách chạy lại với chính spec TapTip – 6 chỗ hụt tìm ra ở đó đã sửa vào prompt, xem bảng dưới.)*
+*(Prompt vòng 2 viết sau khi TapTip đã chốt stack, nên nó được kiểm bằng cách chạy lại với chính spec TapTip, và sau đó với một ý tưởng khác đang thử thật trên testnet – tổng 7 chỗ hụt tìm ra ở hai lượt đó đã sửa vào prompt, xem bảng dưới.)*
 
 ## Prompt này từng hụt chỗ nào
 
@@ -175,7 +175,7 @@ Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên k
 | 4 | AI có xu hướng thuyết phục đổi ý khi user nói "chấp nhận rủi ro, không care" | Ghi rõ đây là câu trả lời hợp lệ và đủ – việc của AI là đảm bảo user *thấy* rủi ro, không phải ép tránh rủi ro |
 | 5 | Xong nhiều nhóm rồi không ai chủ động tổng hợp thành file, hỏi đáp nằm rải trong chat | Thêm bước cuối: chủ động hỏi Chat tổng hợp thành 1 file duy nhất |
 
-### Vòng 2 – 6 chỗ, tìm ra lúc chạy khô
+### Vòng 2 – 7 chỗ, tìm ra lúc chạy khô và lúc thử thật
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -185,5 +185,6 @@ Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên k
 | 4 | Ép đủ 2 phương án thay thế cho mọi luồng đẻ ra rác. Luồng Nạp/rút trên testnet chỉ là một link tới Circle Faucet, không có tech nào để chọn, AI vẫn nặn ra "tự build faucet riêng" | Cho phép nói thẳng "chỉ có 1 lựa chọn" hoặc "chỗ này không cần tech gì" |
 | 5 | Không có chỗ đánh dấu "bản đầu chưa làm". Quy đổi VNĐ nằm trong PRD nhưng TapTip cố ý hoãn – prompt không cho nói vậy nên AI vẫn chọn sẵn nguồn tỷ giá | Cho phép trả lời "luồng này bản đầu chưa làm" → ghi CHƯA CHỌN, không chọn tech |
 | 6 | Hỏi tiền, hỏi chain, quên môi trường chạy: cái nào đòi HTTPS, đòi khai báo domain trước, đòi quyền thiết bị. Đây đúng là chỗ ngốn thời gian nhất lúc TapTip build thật (Passkey Domain Config trên Circle Console là mục riêng, khác Allowed Domain của Client Key) | Thêm việc bắt buộc thứ tư: cảnh báo điều kiện môi trường ngay lúc đề xuất, kèm chỗ phải vào khai báo. Ràng buộc thêm dòng giai đoạn testnet/mainnet |
+| 7 | Ngân sách hỏi cứng cho mọi dự án, kể cả lúc đã nói rõ đây là demo/hackathon chạy trên testnet – câu hỏi vô nghĩa, chẳng ai cân đo chi phí hạ tầng lúc đó | Đổi câu ngân sách thành có điều kiện: bỏ qua nếu đang ở giai đoạn testnet/demo, chỉ hỏi khi tính lên production |
 
 Xong bước này mới qua Bước 4, vẽ wireframe để chốt mỗi màn hình trông ra sao trước khi cho AI code.
