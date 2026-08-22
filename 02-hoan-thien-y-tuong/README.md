@@ -61,7 +61,7 @@ XONG THÌ TỰ ĐỘNG LÀM 2 VIỆC NÀY, ĐỪNG ĐỢI MÌNH NHẮC:
 
 ## Ví dụ: PRD của TapTip
 
-Đây là kết quả chạy thật prompt trên, dự án mẫu của series – [`example/`](../example/). Bản đầy đủ: [`example/docs/02-hoan-thien-y-tuong.md`](../example/docs/02-hoan-thien-y-tuong.md).
+Đây là kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/02-hoan-thien-y-tuong.md`](https://github.com/KattyFury/taptip/blob/main/docs/02-hoan-thien-y-tuong.md).
 
 **App:** Lì xì và tip nhanh chóng cho bất kỳ ai, chỉ bằng cách log in bằng email.
 

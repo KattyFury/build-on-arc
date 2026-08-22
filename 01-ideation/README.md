@@ -93,7 +93,7 @@ Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới
 
 ## Ví dụ: Tip & Lì xì đi qua 4 câu
 
-Đây là kết quả chạy thật prompt trên, và là dự án mẫu của cả series – [`example/`](../example/). Bản đầy đủ: [`example/docs/01-ideation.md`](../example/docs/01-ideation.md).
+Đây là kết quả chạy thật prompt trên với **TapTip** – lúc dự án này còn build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/01-ideation.md`](https://github.com/KattyFury/taptip/blob/main/docs/01-ideation.md).
 
 **Câu 0 – Định hướng Arc.** Peer-to-peer payments.
 

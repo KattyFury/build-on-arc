@@ -131,7 +131,7 @@ File tổng hợp của vòng này để cạnh file vòng 1. Bước 5 sẽ m�
 
 ## Ví dụ: Product Discovery của TapTip
 
-Đây là kết quả chạy thật prompt trên. Bản đầy đủ: [`example/docs/03-planning.md`](../example/docs/03-planning.md).
+Đây là kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/03-planning.md`](https://github.com/KattyFury/taptip/blob/main/docs/03-planning.md).
 
 Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
@@ -147,7 +147,7 @@ Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
 ### Stack TapTip chốt ra sao
 
-Đây là stack thật của [`example/app`](../example/app), chốt xong trước khi vòng 2 được viết thành prompt – nên đọc ngược lại thì thấy đúng 4 phần mà prompt đang bắt trả lời:
+Đây là stack thật của [`taptip/app`](https://github.com/KattyFury/taptip/tree/main/app), chốt xong trước khi vòng 2 được viết thành prompt – nên đọc ngược lại thì thấy đúng 4 phần mà prompt đang bắt trả lời:
 
 | Chỗ | Chọn gì | Vì sao | Loại cái gì, vì sao | Đổi sau này |
 |---|---|---|---|---|
@@ -159,7 +159,7 @@ Chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
 
 Hai dòng cuối mới là chỗ đáng học. Một cái **dễ đổi** nên không cần cân lâu. Một cái được quyền trả lời **"bản đầu chưa làm"** – không chọn tech cho thứ chưa định làm, đỡ được một dependency thừa.
 
-> **Fork rẻ hơn tự dựng, nhưng không free.** Đo ngay trong repo: `example/app/package.json` vẫn kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Chưa kể 2 lỗi có sẵn của app mẫu phải tự vá: một file client bị `import` nhưng không tồn tại trong repo gốc, và một lỗi type ở route webhook. Fork là nhận cả đồ thừa lẫn nợ của người ta – biết trước thì đỡ hoảng, nên prompt bắt AI nói luôn cái mất chứ không chỉ khoe cái được.
+> **Fork rẻ hơn tự dựng, nhưng không free.** Đo được ngay trong repo `taptip`: `app/package.json` vẫn kéo theo `openai`, `pdf-parse`, `mammoth`, `millify`, và cả `viem` lẫn `web3` – không file nào trong `app/`, `components/`, `lib/` import chúng. Chưa kể 2 lỗi có sẵn của app mẫu phải tự vá: một file client bị `import` nhưng không tồn tại trong repo gốc, và một lỗi type ở route webhook. Fork là nhận cả đồ thừa lẫn nợ của người ta – biết trước thì đỡ hoảng, nên prompt bắt AI nói luôn cái mất chứ không chỉ khoe cái được.
 
 *(Prompt vòng 2 viết sau khi TapTip đã chốt stack, nên nó được kiểm bằng cách chạy lại với chính spec TapTip, và sau đó với một ý tưởng khác đang thử thật trên testnet – tổng 7 chỗ hụt tìm ra ở hai lượt đó đã sửa vào prompt, xem bảng dưới.)*
 

@@ -37,11 +37,11 @@ Mấu chốt nằm ở câu "hỏi platform và đề xuất hệ lưới, chờ
 - **Đừng duyệt qua loa.** Nút to/nhỏ sai, nút đặt sai vị trí (VD nằm quá xa tầm tay khi dùng một tay) là chuyện nhỏ lúc còn là khung, tốn gấp nhiều lần token nếu để tới lúc thành sản phẩm mới sửa.
 - **Rút rule chung sau khi sửa vài màn đầu**, rồi áp cho toàn bộ màn còn lại – ví dụ nút hành động luôn nằm cố định một vị trí, cỡ chữ số tiền/label đồng bộ. Làm vậy để cả bộ màn hình đồng nhất, không cái nào lệch.
 - **Không biết đẹp/hợp lý là gì thì tham khảo web2** – app cùng nhóm chức năng (app chuyển tiền thì xem app ngân hàng) đã được hàng triệu người dùng thử rồi.
-- **Hệ lưới là tỷ lệ, không phải pixel cố định.** Con số kiểu "mỗi hàng ~81.2px" chỉ để hình dung trên MỘT kích thước màn hình cụ thể lúc vẽ khung – khi code thật phải chuyển thành tỷ lệ co giãn (`flex-grow`, `%`, `vh`/`vw`), không hardcode px. Máy khách xài màn hình nhỏ hơn/lớn hơn mà thiết kế cứng theo px thì layout vỡ ngay. Nếu code bằng Tailwind CSS v4, dùng `style={{ flexGrow: N }}` inline thay vì class `flex-[N]` – bản v4 không build class đó thành CSS thật (xem chi tiết ở `HANDOFF.md` mục 4.8).
+- **Hệ lưới là tỷ lệ, không phải pixel cố định.** Con số kiểu "mỗi hàng ~81.2px" chỉ để hình dung trên MỘT kích thước màn hình cụ thể lúc vẽ khung – khi code thật phải chuyển thành tỷ lệ co giãn (`flex-grow`, `%`, `vh`/`vw`), không hardcode px. Máy khách xài màn hình nhỏ hơn/lớn hơn mà thiết kế cứng theo px thì layout vỡ ngay. Nếu code bằng Tailwind CSS v4, dùng `style={{ flexGrow: N }}` inline thay vì class `flex-[N]` – bản v4 không build class đó thành CSS thật.
 
 ## Ví dụ: Wireframe TapTip
 
-Kết quả chạy thật prompt trên. Bản đầy đủ: [`example/docs/04-wireframe.md`](../example/docs/04-wireframe.md).
+Kết quả chạy thật prompt trên với **TapTip**, dự án từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip). Bản đầy đủ: [`docs/04-wireframe.md`](https://github.com/KattyFury/taptip/blob/main/docs/04-wireframe.md).
 
 Chốt trước khi vẽ: platform **PWA**, khung 375×812, **chia dọc 10 hàng**. Xong rồi rút ra 2 nguyên tắc áp cho mọi màn – đây mới là thứ giữ cả bộ màn hình đồng nhất, chứ không phải từng màn vẽ đẹp riêng:
 

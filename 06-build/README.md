@@ -137,7 +137,7 @@ Lặp tới khi **không ai còn chê được gì nữa** thì mới coi là xo
 
 ## 5 thứ làm bạn chậm gấp nhiều lần
 
-Dự án mẫu trong [`example/`](../example/) chỉ có 5 tính năng, lại fork sẵn code nền của Circle – vậy mà mất nhiều buổi. Không phải vì khó, mà vì 5 cái bẫy dưới đây. Tránh được là nhanh hơn hẳn:
+TapTip (dự án từng build song song với series, giờ ở [`KattyFury/taptip`](https://github.com/KattyFury/taptip)) chỉ có 5 tính năng, lại fork sẵn code nền của Circle – vậy mà mất nhiều buổi. Không phải vì khó, mà vì 5 cái bẫy dưới đây. Tránh được là nhanh hơn hẳn:
 
 1. **Không đọc docs/skill của SDK trước khi code.** Lao vào code rồi mới tra khi gặp lỗi – mất cả buổi cho mấy lỗi mà trang đầu tài liệu đã ghi rõ cách tránh. Đụng SDK lạ thì đọc 5 phút trước, tiết kiệm 5 tiếng sau.
 2. **Sửa giao diện mà không nhìn thấy được kết quả.** Sửa layout cả chục vòng theo kiểu đoán, mỗi lần lại phải chụp màn hình gửi cho AI. Bảo AI dựng cách tự kiểm tra trước (chụp màn hình tự động, đo toạ độ từng phần tử) rồi hãy sửa – tìm ra nguyên nhân trong một lần.
@@ -145,7 +145,7 @@ Dự án mẫu trong [`example/`](../example/) chỉ có 5 tính năng, lại fo
 4. **Gộp nhiều sửa đổi rồi mới kiểm tra một lượt.** Xoá dòng import mà quên dòng đang dùng nó → app crash. Bắt AI chạy kiểm tra lỗi + tải lại app ngay sau mỗi lần sửa, đừng để dồn.
 5. **Né giới hạn kỹ thuật bằng cách đổi trải nghiệm người dùng.** Gặp giới hạn của gói miễn phí, AI đề xuất đổi luôn cách đăng nhập cho nhanh – may mà bắt lại kịp. Giới hạn kỹ thuật không phải lý do để đổi thứ người dùng của bạn sẽ chạm vào mỗi ngày; tìm cách giữ đúng trải nghiệm trước.
 
-Chi tiết từng lỗi (kèm nguyên nhân kỹ thuật thật) nằm ở [`example/docs/06-build.md`](../example/docs/06-build.md).
+Chi tiết từng lỗi (kèm nguyên nhân kỹ thuật thật) nằm ở [`docs/06-build.md`](https://github.com/KattyFury/taptip/blob/main/docs/06-build.md).
 
 ## Kết quả cuối
 
@@ -161,21 +161,21 @@ Một website để người khác vào trải nghiệm thật, đã qua tay ng�
 
 ## Ví dụ
 
-Dự án mẫu [`example/`](../example/) – TapTip, fork từ [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) – đi đúng 3 giai đoạn trên.
+TapTip, fork từ [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) – đi đúng 3 giai đoạn trên. Dự án này từng build song song với series, giờ đã tách sang repo riêng [`KattyFury/taptip`](https://github.com/KattyFury/taptip).
 
-**Giai đoạn 1** xong toàn bộ 5 tính năng với UI mộc: [`example/docs/06-build.md`](../example/docs/06-build.md).
+**Giai đoạn 1** xong toàn bộ 5 tính năng với UI mộc: [`docs/06-build.md`](https://github.com/KattyFury/taptip/blob/main/docs/06-build.md).
 
 **Giai đoạn 2** đi đủ 3 nhịp:
 
 | Nhịp | Kết quả thật |
 |---|---|
-| 2.1 Đóng gói spec hiện trạng | [`example/docs/08-design-spec-hien-trang.md`](../example/docs/08-design-spec-hien-trang.md) – Claude Code tự đọc code viết ra |
+| 2.1 Đóng gói spec hiện trạng | [`docs/08-design-spec-hien-trang.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-design-spec-hien-trang.md) – Claude Code tự đọc code viết ra |
 | 2.2 Chỉnh ở Claude Design | Đổi hẳn bảng màu (xám/đỏ → trắng/vàng `#FFCC00`/xanh `#0B53BF`), đổi font (Archivo → Nunito + Comfortaa riêng cho con số), dời lại vị trí một số khối |
-| 2.3 Xuất gói cho Code dựng lại | Gói [`design_handoff_taptip/`](../design_handoff_taptip/) (mô tả + bản dựng tĩnh 15 màn + asset) → kết quả build ở [`example/docs/08-redesign-handoff.md`](../example/docs/08-redesign-handoff.md) |
+| 2.3 Xuất gói cho Code dựng lại | Gói [`design_handoff_taptip/`](https://github.com/KattyFury/taptip/tree/main/design_handoff_taptip) (mô tả + bản dựng tĩnh 15 màn + asset) → kết quả build ở [`docs/08-redesign-handoff.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-redesign-handoff.md) |
 
 Đúng như cảnh báo ở 2.3: bản dựng lại **pass hết kiểm tra tự động** (typecheck sạch, build thành công 24 route) mà vẫn có 3 lỗi chỉ lòi ra khi chụp ảnh và đo thật – trong đó có lỗi nút bấm hiện ra thành **ô rỗng không có chữ**. Số đo và cách tìm ra ghi ở mục 7 của file trên.
 
-> 🚧 **Giai đoạn 3 đang chạy.** Phần này chỉ viết được sau khi app có người dùng thật – có người dùng thì mới có cái để sửa theo.
+**Giai đoạn 3 tạm gác** cùng lúc dự án được tách repo – app cần người dùng thật mới có cái để sửa theo, phần này để dành cho lúc quay lại `KattyFury/taptip`.
 
 ---
 

@@ -58,7 +58,7 @@ claude
 
 Máy build TapTip đã từng build dự án khác trước đó (ezwallet), nên Node.js, Git, Claude Code, tài khoản GitHub đều có sẵn – không chạy prompt từ Bước 1 của mục này. Thay vào đó verify từng phần: `node --version`, `git --version`, `claude --version` đều ra kết quả, `claude mcp list` xác nhận Arc MCP đã connect. Verify Arc MCP còn sống bằng cách hỏi thật một câu ("USDC as gas token trên Arc") – trả về đúng nội dung từ docs.arc.io, không phải câu trả lời bịa.
 
-Chi tiết đầy đủ: [`example/docs/05-setup.md`](../example/docs/05-setup.md).
+Chi tiết đầy đủ: [`docs/05-setup.md`](https://github.com/KattyFury/taptip/blob/main/docs/05-setup.md) (repo `KattyFury/taptip`).
 
 ### Prompt này từng hụt chỗ nào
 

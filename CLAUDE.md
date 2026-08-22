@@ -6,9 +6,15 @@
 
 ## Repo này là gì
 
-Series hướng dẫn build app trên Arc, **kèm luôn dự án mẫu** trong `example/`. Hai thứ được
-build **song song**: viết bước nào thì đem bước đó ra dùng thật để build `example/`, prompt
-hụt chỗ nào thì sửa lại bước đó. Prompt chưa đem đi dùng thật thì chưa được đăng.
+Series hướng dẫn build app trên Arc: lý thuyết, prompt copy-dán được, và kinh nghiệm thật rút
+ra sau khi chạy. **Prompt chưa đem đi chạy thật thì chưa được đăng** – không nhất thiết phải
+build trong repo này, chạy thử với dự án thật của ai đó (của tác giả hay người khác) là đủ, ghi
+lại chỗ hụt vào mục "Prompt này từng hụt chỗ nào" của bước đó.
+
+Repo này **thuần hướng dẫn** – không giữ code dự án mẫu song song bên trong. Từng làm vậy với
+TapTip (build song song, viết bước nào build bước đó vào `example/`), nhưng gây xao nhãng khỏi
+việc viết guide nên đã tách TapTip ra repo riêng
+[`KattyFury/taptip`](https://github.com/KattyFury/taptip) (2026-08-22).
 
 ---
 
@@ -43,8 +49,8 @@ bằng trí nhớ.
 
 ## ⚠️ THƯ MỤC – đừng build đè vào repo hướng dẫn
 
-- `example/` – dự án mẫu **của tác giả series**. Người đọc chỉ ĐỌC để tham chiếu, không sửa, không build đè.
-- Dự án của user → **thư mục riêng, NGOÀI repo này.** Chưa có thì hỏi user muốn đặt ở đâu rồi tạo.
+Repo này không chứa code dự án nào, kể cả dự án mẫu – chỉ có `.md` hướng dẫn. Dự án của user
+→ **thư mục riêng, NGOÀI repo này.** Chưa có thì hỏi user muốn đặt ở đâu rồi tạo.
 
 Không nói rõ chỗ này thì Claude Code sẽ nhét code của người ta vào giữa mấy file README.
 Đã lường trước, đừng để xảy ra.
@@ -93,15 +99,15 @@ I'm a code noob, so I don't try to build DEXs or complex AMMs. I aim for **small
 - **Tiếng Việt đời thường**, xưng "mình" / "anh em" như bài gốc trên X. Câu ngắn. Không sáo.
 - Bảng khi so sánh, blockquote cho ghi chú đáng nhớ, mỗi bước kết bằng một câu dẫn sang bước sau.
 - **Dấu gạch dài: CHỈ dùng en dash `–` (U+2013). TUYỆT ĐỐI KHÔNG em dash `—` (U+2014).**
-  Áp dụng cho mọi chữ người đọc nhìn thấy: README các bước, tài liệu, bài đăng. (Comment code
-  tiếng Việt trong `example/` thì không bắt buộc.)
-- **Ví dụ ở mọi bước dùng chung dự án trong `example/`**, nối tiếp nhau, không đổi sang sản phẩm
-  khác giữa chừng. Chỉ nói những gì `example/` làm thật – cần dẫn chứng thì trỏ vào file thật,
-  không chế số liệu. Quy định đầy đủ: `HANDOFF.md`.
+  Áp dụng cho mọi chữ người đọc nhìn thấy: README các bước, tài liệu, bài đăng.
+- **Mục "Ví dụ" ở mỗi bước là tuỳ chọn, không bắt buộc.** Repo không giữ dự án mẫu song song
+  bên trong nữa (xem "Repo này là gì"). Có ví dụ thì phải là **quyết định có thật** từ một dự án
+  thật – không bịa câu hỏi rồi bịa câu trả lời, dẫn chứng thì trỏ link ra ngoài repo (GitHub của
+  dự án đó).
 - Sửa prompt thì **ghi lại nó từng hụt gì** ở mục "Prompt này từng hụt chỗ nào" của bước đó –
-  đừng lặng lẽ sửa. Chỗ hụt mới là phần dạy được nhiều nhất.
-- **Tách commit:** một commit cho phần build `example/`, một commit cho phần sửa hướng dẫn.
-  `git log` là bằng chứng cho người đọc thấy prompt tiến hoá thế nào.
+  đừng lặng lẽ sửa. Đây là phần BẮT BUỘC của mỗi bước, kể cả khi không có mục Ví dụ.
+- Prompt sửa xong nên chạy thử trước khi coi là chốt (chạy thật với ai đó, hoặc tự chạy khô) –
+  chỗ hụt lòi ra lúc chạy mới là thứ đáng ghi, đừng đoán chỗ hụt trên giấy.
 
 ---
 
@@ -140,14 +146,14 @@ When I'm in **planning phase**, don't rush to code. When I have a spec, don't re
 
 ## Tech Stack – chọn theo từng dự án, KHÔNG khoá cứng
 
-Đây là series hướng dẫn, không phải một sản phẩm duy nhất — mỗi dự án (kể cả `example/`) chọn stack theo cái phù hợp nhất lúc đó, kể cả fork nguyên sample app của Circle rồi đổi stack theo sample đó. Đừng mặc định Cloudflare Workers/Pages chỉ vì đó là stack quen thuộc của tác giả ở dự án khác (ezwallet).
+Đây là series hướng dẫn, không phải một sản phẩm duy nhất — dự án nào dùng để minh hoạ cũng chọn stack theo cái phù hợp nhất lúc đó, không khoá cứng theo dự án khác. Đừng mặc định Cloudflare Workers/Pages chỉ vì đó là stack quen thuộc của tác giả ở dự án khác (ezwallet).
 
 - **Chains**: Arc / Seismic / Monad (EVM-compatible)
 - **AI**: Anthropic API
 - Backend/frontend/hosting: quyết định theo từng dự án, ghi rõ trong `HANDOFF.md` hoặc README của dự án đó.
 - **Secrets**: không hardcode key trong source, bất kể dùng stack nào.
 
-**`example/` (TapTip) — đã chốt 2026-08-07:** fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase + Circle Modular Wallets/Passkey), vì đã có sẵn passkey + gasless P2P đúng spec, không dựng lại từ đầu.
+**TapTip — fork nguyên sample app thay vì tự dựng (đã chốt 2026-08-07):** fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase + Circle Modular Wallets/Passkey), vì đã có sẵn passkey + gasless P2P đúng spec, không dựng lại từ đầu. Code đã tách sang [`KattyFury/taptip`](https://github.com/KattyFury/taptip), giữ quyết định này lại đây làm ví dụ vì Vòng 2 Bước 3 (chốt stack) đang dẫn chứng nó.
 
 **Trước khi research Arc/Circle lại từ đầu (tốn token):** đọc `ARC-RESOURCES.md` — link docs chính thức, network params Arc Testnet, cách cài App Kit SDK. Chỉ gọi MCP `arc-docs`/`circle` khi file đó chưa đủ chi tiết.
 

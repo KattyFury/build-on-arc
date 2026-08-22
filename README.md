@@ -42,31 +42,28 @@ Bước nào cũng cùng một hình dạng, quen một bước là quen hết:
 
 1. **Lý thuyết** – bước này để làm gì, vì sao đừng bỏ qua
 2. **Prompt** – khối copy được, dán thẳng vào Chat
-3. **Ví dụ** – dự án mẫu trong [`example/`](example/) đi qua đúng bước đó
+3. **Ví dụ** (một số bước) – quyết định có thật từ một dự án thật, đi qua đúng bước đó
 4. **Prompt này từng hụt chỗ nào** – bản đầu của prompt sai ở đâu, sửa thế nào
 
-Mục 4 là thứ ít series nào có. Prompt trong đây không phải viết một lần là xong – nó được đem đi dùng thật, hụt chỗ nào thì sửa, và chỗ hụt được ghi lại nguyên vẹn. Xem `git log` là thấy nó tiến hoá thế nào.
+Mục 4 là thứ ít series nào có, và có ở **mọi** bước. Prompt trong đây không phải viết một lần là xong – nó được đem đi chạy thử, hụt chỗ nào thì sửa, và chỗ hụt được ghi lại nguyên vẹn. Xem `git log` là thấy nó tiến hoá thế nào.
 
 ## Cấu trúc
 
-| Bước | Làm gì | Prompt | Ví dụ |
-|---|---|---|---|
-| [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ | ✅ |
-| [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ | ✅ |
-| [`03-planning/`](03-planning/README.md) | 2 vòng: AI hỏi ngược bạn về UX/logic/lỗi/bảo mật, rồi chốt stack cho từng luồng | ✅ | ✅ |
-| [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code, kèm hệ lưới áp cho mọi màn | ✅ | ✅ |
-| [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ | ✅ |
-| [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng | ✅ | ✅ |
-| [`example/`](example/) | **Dự án mẫu, build song song với series** – TapTip, Tip & Lì xì nhanh trên Arc | – | – |
+| Bước | Làm gì | Prompt |
+|---|---|---|
+| [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ |
+| [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ |
+| [`03-planning/`](03-planning/README.md) | 2 vòng: AI hỏi ngược bạn về UX/logic/lỗi/bảo mật, rồi chốt stack cho từng luồng | ✅ |
+| [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code, kèm hệ lưới áp cho mọi màn | ✅ |
+| [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ |
+| [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng | ✅ |
 
 Đi lần lượt từng bước, xong bước nào mới qua bước đó.
 
 ## Về dự án mẫu
 
-Ví dụ ở mọi bước đều lấy từ **cùng một dự án** trong [`example/`](example/): *Tip & Lì xì nhanh trên Arc*. Bước sau nối tiếp bước trước trên đúng dự án đó, không đổi sản phẩm giữa chừng – bạn chỉ phải nạp bối cảnh một lần rồi theo được tới cuối.
+Repo này **thuần hướng dẫn** – không giữ code dự án mẫu song song bên trong. Từng thử cách đó với TapTip (Tip & Lì xì nhanh trên Arc, build song song với series), nhưng việc vừa viết guide vừa vá bug/deploy một app thật khiến công việc chính bị xao nhãng – nên đã tách TapTip ra [`KattyFury/taptip`](https://github.com/KattyFury/taptip), quay lại sau.
 
-Nó được build **song song với series**: viết xong bước nào thì đem đúng bước đó ra dùng để build tiếp. Nên mọi câu trong phần ví dụ là thứ đã xảy ra thật, không phải tình huống nghĩ ra cho đẹp bài – kể cả mấy chỗ làm sai rồi phải quay lại sửa.
-
-> ⚠️ `example/` là dự án của tụi mình, để bạn tham chiếu. **Dự án của bạn build ở thư mục riêng, đừng build đè vào đây.**
+Mục "Ví dụ" ở một số bước vẫn còn vì dẫn chứng những quyết định có thật từ TapTip lúc nó còn là dự án mẫu ở đây – link trỏ sang repo mới. Prompt vẫn phải chạy thử thật trước khi đăng (không nhất thiết build trong repo này), và chỗ hụt tìm ra được ghi vào mục "Prompt này từng hụt chỗ nào" của từng bước.
 
 *(Quy định viết bài dành cho tác giả nằm ở `HANDOFF.md`, không để ở đây cho khỏi lệch hai chỗ.)*
