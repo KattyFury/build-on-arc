@@ -34,6 +34,16 @@ Một câu cho dễ nhớ: **Chat để nghĩ, Code để giữ và để làm.*
 3. **ĐỨNG CHỜ.** Không hỏi thêm, không gợi ý, không trả lời thay. User đang nói chuyện ở cửa sổ khác.
 4. **NHẬN** kết quả user dán về → lưu vào `docs/0N-<tên-bước>.md` trong thư mục dự án của user → xác nhận đã lưu → hỏi có sang bước sau không.
 
+**Ngoại lệ duy nhất – Bước 3 có 2 vòng, tức 2 lượt 4 nhịp:** giao prompt Vòng 1 → nhận → lưu `docs/03-planning.md`; rồi giao prompt Vòng 2 (chốt stack) → nhận → lưu `docs/03-stack.md`. Đừng qua Bước 4 khi chưa có file Vòng 2 – thiếu nó thì Bước 5-6 không biết phải cài gì.
+
+**Thư mục dự án tạo ngay ở Bước 1**, lúc lưu file đầu tiên (hỏi user đặt ở đâu – xem mục THƯ MỤC). Bước 5 chỉ nối thư mục đó với git/GitHub, không tạo mới.
+
+### Từ Bước 5 → 6
+
+- **Bước 5** chạy ngay trong Claude Code (đã cài sẵn vì user đang dùng nó để đọc repo này): đọc `05-setup/README.md`, **tự chạy** lệnh kiểm tra/cài đặt trong thư mục dự án thay vì bắt user chép lệnh qua lại. Việc cần user tự tay (đăng nhập GitHub, tạo tài khoản dịch vụ, lấy API key) thì dừng lại chỉ đúng chỗ.
+- **Bước 6** làm việc trong thư mục dự án. Prompt của từng giai đoạn nằm ở `06-build/README.md` của repo này – đọc từ đó, đừng bắt user chép.
+- **Đích cuối là link sản phẩm chạy thật** (Giai đoạn 3), không phải code chạy được ở máy. Chưa có link cho người ngoài vào thì chưa xong series.
+
 ### ⚠️ Luật chống đốt token – vi phạm là hỏng cả ý tưởng
 
 **Một bước = một lần giao prompt + một lần nhận kết quả chốt.** Tuyệt đối không để user dán

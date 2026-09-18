@@ -20,7 +20,7 @@ Lý do tách Giai đoạn 2 ra thành một vòng riêng: **sửa giao diện b�
 
 ## Giai đoạn 1 – Logic và flow
 
-Copy 2 file spec (Bước 3, Bước 4) vào folder dự án. Mở PowerShell, chạy `claude` để mở Claude Code, dán prompt dưới.
+Các file spec từ Bước 1-4 đã nằm sẵn trong `docs/` của folder dự án (đi tay thì copy chúng vào đó). Mở terminal **ngay trong folder dự án**, chạy `claude` để mở Claude Code, dán prompt dưới.
 
 ```
 Đọc toàn bộ folder dự án [tên dự án của bạn] trước khi build.
@@ -53,7 +53,8 @@ Ba nhịp, đi đúng thứ tự: **đóng gói → thiết kế tới khi ưng 
 Yêu cầu file spec:
 - Sản phẩm là gì, người dùng là ai, chạy trên khổ màn hình nào
 - Toàn bộ design token đang dùng: màu, font, cỡ chữ, bo góc, đổ bóng, khoảng cách
-- Hệ lưới / cách chia bố cục từng màn
+- Hệ lưới / cách chia bố cục từng màn (khung gốc, số hàng/cột, khe, lề)
+- Liệt kê riêng mọi con số KHÔNG theo luật của Bước 4 (cỡ chữ không chia hết cho 3, khoảng cách/kích thước không chia hết cho 8) – để bên thiết kế sửa cho đúng thang
 - Liệt kê TỪNG màn: có gì trên đó, đặt ở đâu, chữ hiển thị chính xác là gì, bấm vào thì ra sao
 - Các trạng thái: đang tải, trống, lỗi, disabled
 - Ràng buộc kỹ thuật nào bắt buộc phải giữ nguyên khi đổi giao diện
@@ -75,6 +76,8 @@ Mở [Claude Chat](https://claude.ai), đính file spec vừa xuất, rồi bả
 - Bảng màu, màu chính là màu gì, màu nhấn dùng vào đâu
 - Khoảng cách, bo góc, đổ bóng
 
+Nói luôn với nó luật số từ Bước 4 ngay câu đầu: *"Giữ đúng hệ lưới trong spec. Cỡ chữ chỉ dùng bội số của 3, khoảng cách và kích thước khối chỉ dùng bội số của 8."* Không nói thì nó vẽ đẹp bằng số tuỳ hứng, sang tới Code lại phải chuẩn hoá một lần nữa.
+
 Sửa bao nhiêu vòng cũng được – ở đây nó chỉ vẽ lại, **không đụng vào code dự án**, nên sai thì sửa tiếp, không tốn gì ngoài mấy phút. Đây chính là lý do tách giai đoạn này ra: chỗ này lặp rẻ, còn lặp ở Claude Code thì đắt.
 
 Chưa ưng thì **chưa đưa sang Code**. Nhìn còn thấy gợn ở đâu là nói tiếp ở đây.
@@ -85,7 +88,7 @@ Khi nhìn đã thuận mắt, bảo nó đóng gói lại:
 
 ```
 Thiết kế tới đây là chốt. Xuất cho tôi một gói bàn giao để đưa cho Claude Code dựng lại trong dự án thật, gồm:
-- File mô tả: design token (màu, font, cỡ chữ, bo góc, đổ bóng), hệ lưới, và từng màn có gì đặt ở đâu
+- File mô tả: design token (màu, font, thang chữ bội số của 3, bo góc, đổ bóng), hệ lưới (khung gốc, số hàng/cột, khe, lề – khoảng cách bội số của 8), và từng màn có gì đặt ở đâu, ghi bằng số đo
 - Bản dựng tĩnh của TẤT CẢ các màn ở đúng khổ màn hình thật, để làm bản tham chiếu
 - Toàn bộ asset: logo, icon, hình
 ```
@@ -98,7 +101,9 @@ Gói này mang về folder dự án, rồi quay lại Claude Code:
 Yêu cầu:
 - Gom mọi màu/font/cỡ chữ/bo góc/đổ bóng về MỘT chỗ định nghĩa duy nhất, component chỉ được dùng lại từ đó. Không viết màu hay cỡ chữ trực tiếp trong từng màn.
 - Hệ lưới cũng định nghĩa một chỗ dùng chung cho các màn cùng dạng, đừng chép lại ở từng file.
-- Mọi kích thước và khoảng cách neo theo tỷ lệ màn hình, không hardcode pixel.
+- Dựng đúng px trên khung gốc của bản thiết kế (vd 390×844), rồi phóng/thu NGUYÊN khung cho vừa màn máy thật. Không để từng khối tự co giãn riêng.
+- Cỡ chữ chỉ lấy từ thang chữ (bội số của 3), khoảng cách và kích thước khối chỉ là bội số của 8. Gặp số lẻ trong gói bàn giao thì hỏi tôi, đừng tự làm tròn.
+- Cái gì bản thiết kế không vẽ thì KHÔNG có trong app – kể cả chi tiết đang có sẵn trong code cũ. Không tự thêm hiệu ứng, chữ gợi ý, viền, icon "cho đủ".
 - Icon lấy từ đúng bộ trong gói bàn giao, không tự thay bằng icon library khác.
 
 Làm xong thì tự chạy app, tự chụp màn hình và tự đo lại vị trí các khối, đối chiếu với bản dựng tham chiếu rồi báo tôi số đo. Đừng đoán bằng mắt.
@@ -114,7 +119,19 @@ Chưa ưng chỗ nào thì **quay lại 2.2 sửa ở Claude Design**, đừng n
 
 Đây mới là giai đoạn quyết định sản phẩm có ai xài không.
 
-1. **Đưa sản phẩm lên live**, có link cho người ngoài vào được.
+1. **Đưa sản phẩm lên live**, có link cho người ngoài vào được. Dán prompt này vào Claude Code:
+
+```
+Đưa app lên live để người ngoài vào dùng được, theo đúng chỗ host đã chốt trong file stack (docs/03-stack.md).
+
+- Trước khi deploy: chạy build production thật một lần (không chỉ dev server) – build production kiểm tra chặt hơn, lỗi hay lòi ra ở đây.
+- Liệt kê cho tôi những việc chỉ tôi làm được (tạo tài khoản host, đăng nhập, nhập API key/secret lên host, khai báo domain trên console của nhà cung cấp) – dừng lại đợi tôi làm xong từng việc.
+- Secret nhập thẳng lên host, không commit vào code.
+- Deploy xong: tự mở link thật kiểm tra trang lên được, đi thử luồng chính một lượt, báo tôi link.
+- Nói rõ cho tôi: lần sau sửa code thì push lên GitHub có tự cập nhật web không, hay phải chạy lệnh deploy bằng tay? Ghi câu trả lời vào HANDOFF/MEMORY của dự án.
+```
+
+   Câu cuối cứu được một buổi: TapTip từng sửa, commit, push xong xuôi mà web vẫn y như cũ – vì deploy là việc chạy tay, push không tự làm.
 2. **Tự mình xài thật** như một người dùng bình thường, không phải như người viết ra nó – đi hết flow từ đầu, đừng bỏ qua bước nào vì "biết rồi".
 3. **Đưa cho người khác test.** Quan trọng là người *không* biết gì về dự án. Đừng hướng dẫn trước, cứ đưa link rồi ngồi nhìn họ mò – chỗ họ khựng lại chính là chỗ sai, dù bạn thấy nó hiển nhiên.
 4. **Ghi lại mọi lời chê**, kể cả lời khó nghe. "Không hiểu bấm gì tiếp" cũng là bug, ngang với app crash.
@@ -131,7 +148,7 @@ Lặp tới khi **không ai còn chê được gì nữa** thì mới coi là xo
 - **Kiên nhẫn đi từng tính năng một.** Đừng để nó gộp nhiều tính năng vào một lượt build vì "cho nhanh".
 - **Xong hẳn giai đoạn này mới sang giai đoạn kia.** Logic ổn định trước thì chỉnh giao diện sau không làm gãy flow.
 - **Đừng chỉnh giao diện bằng mồm ở Giai đoạn 1.** Ngứa mắt thì ghi lại, để dành xử một lượt ở Giai đoạn 2.
-- **Ở Giai đoạn 2, mọi vị trí/kích thước phải neo theo tỷ lệ màn hình, không phải pixel cố định.** Hardcode px (VD "cao 80px", "cách 40px") chỉ đúng trên đúng một kích thước màn hình – khách dùng máy nhỏ hơn/lớn hơn là vỡ layout ngay. Dùng đơn vị co giãn (`flex-grow`, `%`, `vh`/`vw`, `cqh`) cho mọi khoảng cách lấy từ hệ lưới ở Bước 4. Tailwind CSS v4 không build được class `flex-[N]` (arbitrary value phân số) – dùng `style={{ flex: "N 1 0" }}` inline.
+- **Ở Giai đoạn 2, dựng đúng px trên khung gốc rồi phóng/thu nguyên khung** – đúng hệ lưới đã chốt ở Bước 4 (chữ bội số của 3, khoảng cách/khối bội số của 8). Đừng để từng khối tự co giãn theo màn hình: cả TapTip lẫn EZwallet từng làm vậy và cùng lệch khỏi bản vẽ, mỗi máy lệch một kiểu (chi tiết ở ví dụ Bước 4).
 - **Bắt AI tự kiểm tra bằng số đo, đừng để nó (và bạn) đoán bằng mắt.** Xem mục 2 phần dưới.
 - **Build app không phải thả cho AI tự làm hết.** Có lúc phải tự tay tạo tài khoản, lấy API key, tạo database, deploy smart contract – cứ làm rồi sửa, ai cũng chật vật ở bước này.
 
@@ -200,6 +217,16 @@ Bù lại, EZwallet đã đi xa hơn hẳn ở **Giai đoạn 3** – phần đ�
 **3. Thông báo nhận tiền đến rất chậm – bug nghiêm trọng hơn vẻ ngoài.** Người dùng báo "thông báo tới rất lâu". Truy ra: hàm tên là "poll" (ngụ ý hỏi lặp lại) nhưng thực chất chỉ gọi đúng một lần lúc mở màn – đứng yên ở một màn thì tiền về cũng không ai hỏi lại. Vì đây là app cho người lớn tuổi xử lý tiền bạc, im lặng ở đúng màn hình tiền là lỗi nặng ngang một crash, không phải lỗi vặt bỏ qua được. Sửa: hỏi lặp lại theo nhịp khác nhau tuỳ màn (đang đứng chờ nhận tiền thì hỏi dày hơn), và hỏi ngay khi người dùng quay lại mở app.
 
 > Cả ba đều bắt đầu từ đúng bước 3 và 4 của Giai đoạn 3: đưa cho người thật dùng, và ghi lại lời chê dù có vẻ nhỏ. Không có bước đó thì cả ba lỗi này vẫn nằm im, "chạy được" trên giấy nhưng sai khi chạm vào người dùng thật.
+
+## Prompt này từng hụt chỗ nào
+
+| # | Hụt gì | Sửa thế nào |
+|---|---|---|
+| 1 | Prompt dựng giao diện bảo "neo mọi kích thước theo tỷ lệ màn hình". Cả TapTip lẫn EZwallet làm đúng như vậy và cùng lệch khỏi bản vẽ – mỗi khối tự co giãn một kiểu | Dựng đúng px trên khung gốc, phóng/thu nguyên khung (xem Bước 4, chỗ hụt #6-7) |
+| 2 | Không cấm thêm thứ bản thiết kế không vẽ. Khi dựng lại theo Figma, cả hai app đều bị AI tự giữ chi tiết từ code cũ (nút, chữ gợi ý, viền, cảnh báo) – tác giả phải bắt qua nhiều vòng | Thêm dòng: cái gì bản thiết kế không vẽ thì không có trong app, kể cả khi code cũ đang có |
+| 3 | Không có luật số cho bên thiết kế. Bản vẽ ra cỡ chữ 19/23/35, lề 25 – đẹp, nhưng lẻ, sang code phải chuẩn hoá tay | Đưa luật chữ bội số của 3, khoảng cách/khối bội số của 8 vào cả 3 nhịp: spec hiện trạng, lúc chỉnh ở Claude Design, gói bàn giao |
+| 4 | Giai đoạn 3 bảo "đưa lên live" mà không nói đưa thế nào – người mới kẹt đúng ở cửa cuối, chưa ra được sản phẩm. Phát hiện lúc đi thử cả series như một người mới | Thêm prompt deploy: build production trước, liệt kê việc chỉ người dùng làm được, tự kiểm tra link thật, ghi rõ push có tự deploy không |
+| 5 | Giai đoạn 1 bảo "copy 2 file spec vào folder dự án" trong khi Claude Code đã lưu sẵn 5 file ở `docs/` từ Bước 1-4 | Trỏ thẳng vào `docs/`, chỉ copy khi đi tay |
 
 ---
 

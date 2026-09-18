@@ -127,7 +127,7 @@ Còn một câu đáng hỏi cuối buổi, không nhét vào prompt vì tuỳ n
 
 > Chốt stack không phải là khoá cứng vĩnh viễn. Nó có nghĩa từ đây trở đi, đổi stack là **quyết định của mình** và có ghi lý do – chứ không phải AI lẳng lặng đổi giữa chừng, mình biết sau cùng.
 
-File tổng hợp của vòng này để cạnh file vòng 1. Bước 5 sẽ mở đúng nó ra để biết phải cài gì.
+File tổng hợp của vòng này để cạnh file vòng 1 (đi bằng Claude Code thì nó tự lưu thành `docs/03-planning.md` và `docs/03-stack.md`). Bước 5 sẽ mở đúng file stack ra để biết phải cài gì.
 
 ## Ví dụ: Product Discovery của TapTip và EZwallet
 

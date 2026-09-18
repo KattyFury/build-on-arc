@@ -19,7 +19,24 @@ User yêu cầu 2 việc:
 
 Cũng sửa: `README.md` mục "Về dự án mẫu" (bảng 2 dự án), `CLAUDE.md` mục Tech Stack (TapTip là Developer-Controlled không passkey, không phải "giấu ví sau passkey").
 
-**⚠️ Mâu thuẫn tìm ra, CHƯA sửa vào prompt – chờ user quyết:** cả 2 app khi dựng theo Figma tháng 9 đều cho thấy luật "hệ lưới = 1/N chiều cao, neo tỷ lệ, không hardcode px" ở `04-wireframe` (prompt + mục "Trả lời sao cho ăn tiền") và `06-build` (Giai đoạn 2 + mục "Trả lời sao cho ăn tiền") **thiếu/sai**: (a) lưới thật có khe giữa hàng nên 1 hàng ≠ 1/N; (b) TapTip cuối cùng khoá khung px cố định 390×844 rồi scale cả khung. Mới ghi vào mục Ví dụ như sự thật đã xảy ra, không đụng prompt vì luật CLAUDE.md: sửa prompt phải ghi "hụt chỗ nào" + nên chạy thử.
+### 09-18 (tiếp): LUẬT LƯỚI MỚI + ĐI THỬ CẢ SERIES TỪ Ý TƯỞNG TỚI SẢN PHẨM
+
+**User chốt luật (thay luật "tỷ lệ 1/N" cũ):** chữ bội số của 3, khoảng cách + khối bội số của 8, vẫn chia hàng/cột, ưu tiên nhiều hàng nhiều cột (12 hoặc 15). User cũng chốt mục tiêu: **repo phải đưa được người dùng từ ý tưởng tới sản phẩm** – dùng câu này làm thước đo cho mọi thay đổi sau.
+
+- `04-wireframe`: khối prompt có luật "HỆ LƯỚI VÀ CON SỐ" (khung gốc cố định, khai đủ hàng/cột/khe/lề + phép tính, bội 8, chữ bội 3, vùng chạm ≥48, lề là chỗ duy nhất được lẻ) + tự tổng hợp file cuối bước. Mục mới "Hệ lưới mẫu cho mobile": 390×844, **15 cột × 16 / 12 hàng × 56, khe 8** → lề 19, trên 48 / dưới 36; span cột 24k−8, span hàng 64k−8; vuông khớp lưới duy nhất 8 cột × 3 hàng = 184. Thang chữ 36/24/18/15/12. Máy khác cỡ: px trên khung gốc + scale nguyên khung. Bảng hụt lên 11 dòng.
+- `06-build`: prompt 2.1/2.2/2.3 + dựng lại mang luật số; bỏ "neo tỷ lệ"; cấm thêm thứ bản thiết kế không vẽ; **thêm prompt deploy** ở Giai đoạn 3; GĐ1 trỏ `docs/`. Thêm mục "Prompt này từng hụt chỗ nào" (trước đó bước 6 THIẾU mục bắt buộc này) – 5 dòng.
+- `05-setup`: chạy thẳng trong Claude Code (tự chạy lệnh), dùng lại thư mục dự án đã có từ Bước 1, thêm bước 11 đọc `docs/03-stack.md` cài đúng stack + giữ secret ngoài git. Hụt thêm #3-5.
+- `CLAUDE.md`: Bước 3 = 2 lượt (lưu `docs/03-planning.md` + `docs/03-stack.md`), thư mục dự án tạo ở Bước 1, thêm mục "Từ Bước 5 → 6", đích cuối là link chạy thật.
+- `README.md`: bảng cấu trúc + câu "đích cuối là link sản phẩm chạy thật".
+
+**5 lượt thử đã chạy (chạy khô, Claude Code tự làm – CHƯA có người thật chạy lại):**
+1. Áp lưới mẫu 15×15 vào Home TapTip → hàng 40px, nút < cỡ ngón tay → đổi sang 12 hàng × 56 + luật vùng chạm ≥48.
+2. Script kiểm phép tính lưới mẫu (khớp, mọi span chia hết 8) + soi luật mới vào số thật cũ: bắt được hết (hàng 48.8/70, lề 25, chữ 19/23/35/28/22/17/32/20/16).
+3. Đi thử cả chuỗi README → CLAUDE.md → Bước 1-6 như người mới: lòi 4 chỗ đứt (Bước 3 hai vòng vs giao thức 1 prompt; Bước 4 không có file kết quả; Bước 5 Chat vs Code + tạo trùng thư mục; Bước 6 không có cách deploy) → đã sửa hết.
+4. Quét cả repo tìm luật cũ còn sót (`tỷ lệ`, `1/N`, `cqh`, `flex-grow`) → chỉ còn ở đoạn kể lịch sử. Em dash = 0. Đường dẫn `docs/0N` nhất quán giữa CLAUDE.md/05/06.
+5. Đọc lại trọn Bước 4 → lòi mâu thuẫn tự gây: lề vừa bắt bội 8 vừa hứng phần dư → sửa (hụt #11).
+
+**Còn nợ:** chưa có người thật chạy lại prompt Bước 4 mới với một dự án để xem AI có tuân luật số không – nên làm khi có dự án tiếp theo.
 
 ---
 

@@ -54,11 +54,11 @@ Mục 4 là thứ ít series nào có, và có ở **mọi** bước. Prompt tro
 | [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ |
 | [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ |
 | [`03-planning/`](03-planning/README.md) | 2 vòng: AI hỏi ngược bạn về UX/logic/lỗi/bảo mật, rồi chốt stack cho từng luồng | ✅ |
-| [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code, kèm hệ lưới áp cho mọi màn | ✅ |
-| [`05-setup/`](05-setup/README.md) | Setup môi trường rồi bắt đầu build | ✅ |
-| [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → live rồi sửa theo người dùng | ✅ |
+| [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code, trên hệ lưới nhiều hàng/cột: chữ bội số của 3, khoảng cách và khối bội số của 8 | ✅ |
+| [`05-setup/`](05-setup/README.md) | Setup môi trường, nối dự án với GitHub, cài đúng stack đã chốt | ✅ |
+| [`06-build/`](06-build/README.md) | Build theo 3 giai đoạn: logic/flow → giao diện qua Claude Design → deploy lên live rồi sửa theo người dùng | ✅ |
 
-Đi lần lượt từng bước, xong bước nào mới qua bước đó.
+Đi lần lượt từng bước, xong bước nào mới qua bước đó. Đích cuối là **một link sản phẩm chạy thật**, người ngoài vào dùng được – không phải code chạy được trên máy mình.
 
 ## Về dự án mẫu
 
