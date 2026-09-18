@@ -104,7 +104,7 @@ Yêu cầu:
 Làm xong thì tự chạy app, tự chụp màn hình và tự đo lại vị trí các khối, đối chiếu với bản dựng tham chiếu rồi báo tôi số đo. Đừng đoán bằng mắt.
 ```
 
-**Chỗ dễ mất công nhất:** không có câu "tự chạy, tự chụp, tự đo" cuối cùng thì rất dễ nhận về một bản build *biên dịch sạch nhưng nhìn sai*. Ở dự án mẫu, code pass hết kiểm tra mà nút bấm hiện ra là ô rỗng không có chữ – chỉ chụp ảnh lên mới thấy.
+**Chỗ dễ mất công nhất:** không có câu "tự chạy, tự chụp, tự đo" cuối cùng thì rất dễ nhận về một bản build *biên dịch sạch nhưng nhìn sai*. Ở TapTip, code pass hết kiểm tra mà nút bấm hiện ra là ô rỗng không có chữ – chỉ chụp ảnh lên mới thấy.
 
 Chưa ưng chỗ nào thì **quay lại 2.2 sửa ở Claude Design**, đừng ngồi tả bằng lời cho Claude Code sửa vặt từng li.
 
@@ -161,9 +161,37 @@ Một website để người khác vào trải nghiệm thật, đã qua tay ng�
 
 ## Ví dụ
 
+### TapTip – đi đúng 3 giai đoạn
+
+[`KattyFury/taptip`](https://github.com/KattyFury/taptip), fork từ [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments), đang chạy thật trên Arc Testnet.
+
+**Giai đoạn 1** xong toàn bộ 5 tính năng với UI mộc: [`docs/06-build.md`](https://github.com/KattyFury/taptip/blob/main/docs/06-build.md).
+
+**Giai đoạn 2** đi đủ 3 nhịp:
+
+| Nhịp | Kết quả thật |
+|---|---|
+| 2.1 Đóng gói spec hiện trạng | [`docs/08-design-spec-hien-trang.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-design-spec-hien-trang.md) – Claude Code tự đọc code viết ra |
+| 2.2 Chỉnh ở Claude Design | Đổi hẳn bảng màu, đổi font, dời lại vị trí một số khối |
+| 2.3 Xuất gói cho Code dựng lại | Gói [`design_handoff_taptip/`](https://github.com/KattyFury/taptip/tree/main/design_handoff_taptip) (mô tả + bản dựng tĩnh 15 màn + asset) → kết quả build ở [`docs/08-redesign-handoff.md`](https://github.com/KattyFury/taptip/blob/main/docs/08-redesign-handoff.md) |
+
+Đúng như cảnh báo ở 2.3: bản dựng lại **pass hết kiểm tra tự động** (typecheck sạch, build thành công 24 route) mà vẫn có 3 lỗi chỉ lòi ra khi chụp ảnh và đo thật – trong đó có lỗi nút bấm hiện ra thành **ô rỗng không có chữ**.
+
+Tháng 9, tác giả tự vẽ lại toàn bộ app trên **Figma** rồi bắt Claude Code dựng lại theo – và lần này lỗi không nằm ở chỗ thiếu mà ở chỗ **thừa**. Claude Code cứ tự giữ lại chi tiết của bản cũ mà Figma không hề vẽ: chip gợi ý `@gmail.com`, nút "Custom", dòng "Upload a QR image", khung vàng quanh camera, viền quanh QR. Tác giả phải bắt lỗi qua nhiều vòng, cuối cùng chốt thành luật cứng: **bản thiết kế là nguồn sự thật duy nhất – cái gì không vẽ là đã bỏ, không tự thêm lại "cho đủ"**. Cũng từ đợt này mới thấy đo bằng số khác nhìn bằng mắt xa tới đâu: góc nghiêng của nút là 19° chứ không phải 16°, một mã màu lệch đúng 1 ký tự (`#6697F5` thay vì `#6797F5`) – mấy thứ này nhìn ảnh không bao giờ ra, phải lấy số đo gốc từ Figma.
+
+**Giai đoạn 3** mới đi được một phần, nói thẳng:
+
+- **Người dùng thật gỡ hẳn một tính năng.** PRD ghi "quét passkey mỗi lần mở app" và app đã làm đúng như vậy. Tới lúc dùng thật, tác giả chốt lại: *"ban đầu chỉ dùng log in là chơi"* – rồi *"bỏ passkey khỏi app nha"*. Màn khoá passkey bị gỡ sạch. Đúng tinh thần Giai đoạn 3: spec viết trên giấy, người dùng thật mới là người quyết.
+- **Tính năng chính chưa từng chạy mà không ai biết.** Một đợt kiểm toán code phát hiện nút gửi tip **chưa bao giờ gửi được** – chuỗi xử lý đứt ở 3 chỗ, chỗ nào cũng im lặng, typecheck vẫn xanh. Chỉ lòi ra vì có người đi dò từng bước chứ không tin "build sạch là chạy".
+- **Còn thiếu:** chưa ai test trọn một lượt tip thật trên điện thoại thật (camera thật, quét QR thật, tiền đi thật). Mọi lần kiểm tra tới giờ đều chạy trên trình duyệt giả lập với camera giả.
+
+### EZwallet – Giai đoạn 1-2 đan xen, Giai đoạn 3 đi xa nhất
+
 [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) không được build theo đúng trình tự 3 giai đoạn của bước này (dự án có trước series), nên Giai đoạn 1 và 2 không tách bạch rõ ràng thành hai đợt riêng như prompt trên mô tả – logic và giao diện phát triển đan xen qua nhiều buổi. Đây là điều nên nói thẳng, không giả vờ khớp hoàn toàn: **làm đúng 3 giai đoạn tách bạch vẫn là cách nhanh hơn** cách EZwallet đã đi, không phải ngược lại.
 
-Bù lại, EZwallet đã đi xa hơn hẳn tới **Giai đoạn 3** – phần mà một dự án mới build song song với series chưa kịp chạm tới, vì nó đòi hỏi người dùng thật. Ba câu chuyện thật, đúng tinh thần "ghi lại mọi lời chê, sửa dần, lặp tới khi không ai chê được nữa":
+Tháng 9 EZwallet cũng dựng lại toàn bộ giao diện theo Figma, và dính y hệt TapTip: phải xoá từng chi tiết AI tự bịa thêm (một dòng cảnh báo "không hoàn tác được", một gợi ý dưới QR mà Figma không vẽ). Hai app, hai lần, cùng một lỗi – đủ để coi đây là thói quen của AI chứ không phải sự cố riêng một dự án.
+
+Bù lại, EZwallet đã đi xa hơn hẳn ở **Giai đoạn 3** – phần đòi hỏi người dùng thật. Ba câu chuyện thật, đúng tinh thần "ghi lại mọi lời chê, sửa dần, lặp tới khi không ai chê được nữa":
 
 **1. Thuật toán gợi ý số tiền – sửa 3 lần mới đúng.** Bản đầu làm tròn theo luỹ thừa 10 (0,5 → 5 → 50...), tưởng hợp lý trên giấy. Người dùng thật gõ 14,55 thì bị gợi ý nhảy hẳn sang "10 · 15 · 20" – bước nhảy quá thô ngay tại các mốc chục. Sửa lần 2 vẫn còn kẽ hở ở mốc 10 (9,99 bước 0,5 mà 10,0 nhảy thẳng lên bước 5). Lần 3 mới đúng: chỉ một bậc nhảy duy nhất, tại đúng một mốc. Bài học: **thấy đúng trên giấy không có nghĩa đúng khi người thật gõ số thật** – phải chờ phản hồi rồi sửa, không phải cố đoán đúng ngay từ đầu.
 

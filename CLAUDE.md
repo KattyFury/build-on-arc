@@ -153,7 +153,7 @@ When I'm in **planning phase**, don't rush to code. When I have a spec, don't re
 - Backend/frontend/hosting: quyết định theo từng dự án, ghi rõ trong `HANDOFF.md` hoặc README của dự án đó.
 - **Secrets**: không hardcode key trong source, bất kể dùng stack nào.
 
-**EZwallet — Circle User-Controlled Wallets thay vì Developer-Controlled:** user tự giữ PIN, Circle giữ hạ tầng MPC nhưng không tự ký thay – ngược với TapTip (đã tách repo, xem `HANDOFF.md`) từng chọn Developer-Controlled để giấu ví hoàn toàn sau passkey. Hai hướng đều hợp lệ, khác nhau ở ai chịu trách nhiệm giữ chìa khoá – chọn theo đối tượng người dùng, không có đáp án đúng chung cho mọi app ví. Chi tiết dẫn chứng ở Vòng 2 Bước 3 (chốt stack).
+**EZwallet — Circle User-Controlled Wallets thay vì Developer-Controlled:** user tự giữ PIN, Circle giữ hạ tầng MPC nhưng không tự ký thay – ngược với TapTip (repo riêng, xem `HANDOFF.md`) chọn Developer-Controlled: server ký thay, user không ký gì, quét QR là tiền đi (từ 09-02, trước đó code chạy nhầm Modular Wallets/passkey theo app mẫu fork về). Hai hướng đều hợp lệ, khác nhau ở ai chịu trách nhiệm giữ chìa khoá – chọn theo đối tượng người dùng, không có đáp án đúng chung cho mọi app ví. Chi tiết dẫn chứng ở Vòng 2 Bước 3 (chốt stack).
 
 **Trước khi research Arc/Circle lại từ đầu (tốn token):** đọc `ARC-RESOURCES.md` — link docs chính thức, network params Arc Testnet, cách cài App Kit SDK. Chỉ gọi MCP `arc-docs`/`circle` khi file đó chưa đủ chi tiết.
 

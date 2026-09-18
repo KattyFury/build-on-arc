@@ -9,12 +9,16 @@ Bước đầu tiên khi build trên Arc. Đọc phần dưới, lấy prompt pa
 Arc là chain mới với nhiều tính năng đặc biệt. Nên khai thác những tính năng đặc biệt ấy để build app có sự khác biệt, chứ build dự án đơn thuần thì copy mã nguồn của mấy dự án đình đám lẹ hơn.
 
 Usecase chính Arc định hướng trong [docs.arc.io](https://docs.arc.io):
-- Peer-to-peer payments
-- eCommerce checkout
-- Stablecoin FX
-- Agentic economy
+- **Peer-to-peer payments** – chuyển tiền trực tiếp giữa người với người bằng stablecoin, nhanh, phí thấp, chốt giao dịch chắc chắn
+- **eCommerce checkout** – cửa hàng online nhận thanh toán stablecoin, chốt nhanh, có sẵn phần tuân thủ
+- **Stablecoin FX** – đổi giữa các stablecoin theo thời gian thực, giá minh bạch, phí đoán trước được
+- **Agentic economy** – AI agent tự phối hợp, tự giao kèo và tự thanh toán cho nhau
+- **Prediction markets** – thị trường dự đoán phi tập trung, kết quả chốt bằng oracle, giao dịch token vị thế
+- **Borrow and lend** – giao thức vay/cho vay có tài sản thế chấp, vay thẳng bằng USDC
 
-**Đây là gợi ý để có điểm bắt đầu, không phải rào chắn.** Có ý tưởng rồi thì check thử có khớp 1 trong 4 hướng này không – không khớp cái nào cũng không sao, không loại. Chỉ cần ý tưởng có dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...), không phải mọi ý tưởng hay đều nhét vừa vào 1 trong 4 gạch đầu dòng đó. Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
+**Đây là gợi ý để có điểm bắt đầu, không phải rào chắn.** Có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng này không – không khớp cái nào cũng không sao, không loại. Chỉ cần ý tưởng có dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...), không phải mọi ý tưởng hay đều nhét vừa vào 1 trong 6 gạch đầu dòng đó. Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
+
+> Danh sách này đổi theo docs. Lúc series mới viết, docs.arc.io chỉ có 4 hướng đầu – 2 hướng sau (Prediction markets, Borrow and lend) được Arc thêm vào sau. Trước khi dùng, mở docs ra xem lại một lượt cho chắc.
 
 Ý tưởng có nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) thì tra ngay lúc này – đừng để dồn tới Câu 3 mới phát hiện tiền đề sai, lúc đó đã lỡ tưởng tượng cả ý tưởng trên nền sai.
 
@@ -63,7 +67,7 @@ Bạn DẪN, mình theo. Ở mỗi câu, bạn chủ động đặt câu hỏi t
 Hỏi trước: Bạn có ý tưởng chưa, hay còn chưa biết build gì? Có rồi thì vặn thử ý tưởng đó. Chưa có thì gợi ý theo câu 0.
 
 CÂU 0: Định hướng Arc
-Gợi ý 4 định hướng Arc: Peer-to-peer payments, eCommerce checkout, Stablecoin FX, Agentic economy – đây là GỢI Ý để có điểm bắt đầu, không phải rào chắn. Có ý tưởng rồi thì check thử có khớp 1 trong 4 hướng này không; không khớp cái nào cũng KHÔNG loại, chỉ cần ý tưởng dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...). Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
+Gợi ý 6 định hướng Arc: Peer-to-peer payments, eCommerce checkout, Stablecoin FX, Agentic economy, Prediction markets, Borrow and lend – đây là GỢI Ý để có điểm bắt đầu, không phải rào chắn. Có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng này không; không khớp cái nào cũng KHÔNG loại, chỉ cần ý tưởng dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...). Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
 Nếu ý tưởng nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) – tra nhanh ngay bây giờ, đừng để dồn tới câu 3 mới phát hiện tiền đề sai.
 
 CÂU 1: Thật, và đúng đối tượng
@@ -91,7 +95,36 @@ XONG CÂU 3 THÌ TỰ ĐỘNG LÀM 2 VIỆC NÀY, ĐỪNG ĐỢI MÌNH NHẮC:
 Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới qua Bước 2.
 ```
 
-## Ví dụ: EZwallet đi qua 4 câu
+## Ví dụ: TapTip và EZwallet đi qua 4 câu
+
+Hai dự án thật của tác giả, cùng hướng Peer-to-peer payments, cùng đối tượng có cả người lớn tuổi – nhưng chốt yêu cầu số một khác nhau, nên đi ra hai app khác hẳn. Đặt cạnh nhau để thấy 4 câu này lọc ra được gì.
+
+### TapTip – chạy thật đúng prompt trên
+
+[`KattyFury/taptip`](https://github.com/KattyFury/taptip) – Tip & Lì xì nhanh trên Arc, từng build song song với series rồi tách ra repo riêng. Đây là kết quả chạy thật prompt trên, bản đầy đủ: [`docs/01-ideation.md`](https://github.com/KattyFury/taptip/blob/main/docs/01-ideation.md).
+
+**Câu 0 – Định hướng Arc.** Peer-to-peer payments.
+
+**Câu 1 – Thật, và đúng đối tượng.** Gửi **tip** (bất cứ lúc nào) và **lì xì** (dịp Tết) – hai hành vi có thật trong đời sống người Việt, không phải thói quen nghĩ ra. Yêu cầu quan trọng nhất: **tốc độ**. Cả người gửi lẫn người nhận đều không cần biết gì về crypto, chỉ đăng nhập bằng email; ví được tạo tự động phía sau.
+
+**Câu 2 – Dẫn đầu hay cạnh tranh.** Chưa ai làm mảng này trên Arc – nó quá nhỏ để dự án lớn để ý. App tip ở nước khác (Ấn Độ chẳng hạn) thì không gắn với văn hoá lì xì Việt Nam. Lợi thế nằm ở **đặc thù văn hoá, không phải công nghệ** – và đó vẫn là một câu trả lời hợp lệ.
+
+**Câu 3 – Khả thi.** Hỏi AI của docs.arc.io, xác nhận được từng mảnh:
+
+| Cần gì | Kết quả |
+|---|---|
+| Ví ẩn sau email | Circle Wallets (dev-controlled) – user không thấy seed phrase |
+| Không bắt user trả gas | Arc hỗ trợ ERC-4337 + Paymaster → app trả gas thay user |
+| Đủ nhanh | Finality dưới 1 giây, benchmark thực tế **<350ms** |
+| Phí chịu được | ~$0.01/giao dịch, max $0.20 – hợp lý với khoản $0.50–$20 |
+
+**Và thứ KHÔNG có sẵn:** không có UI dựng sẵn cho luồng "gửi qua email", chỉ có `kit.send()` ở tầng SDK. Phần đăng nhập email + gửi tới email người khác phải tự build.
+
+> Chỗ đáng học nhất ở câu 3 là **một quyết định loại bớt**. Docs trả lời rằng dùng Circle Wallets hay Privy đều được. Nhưng yêu cầu số một ở câu 1 là *nhanh*, mà Privy bắt user tự ký từng giao dịch – thêm một nhịp chờ. Nên loại Privy, chọn Circle Wallets developer-controlled.
+>
+> Và phần sau của câu chuyện còn đáng học hơn: quyết định đúng ở đây **vẫn bị lọt mất lúc code**. App mẫu TapTip fork về (Bước 3) chạy sẵn kiểu ví passkey – mỗi lần tip phải quét Face ID, đúng cái nhịp chờ vừa loại Privy để tránh. Không ai đối chiếu lại code với tài liệu Bước 1, nên app chạy sai kiến trúc gần một tháng, tới lúc kiểm toán mới lòi ra và đổi hẳn sang developer-controlled như đã chốt. Chốt ở Bước 1 xong không có nghĩa là code sẽ tự theo – tới Bước 6 vẫn phải mở lại tài liệu ra đối chiếu. Còn dòng "app trả gas thay user" thì tới giờ vẫn chưa bật: ví đang tự trả gas bằng USDC của chính nó.
+
+### EZwallet – dựng ngược từ quyết định có thật
 
 Đây là dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet), ví crypto cho người dùng phổ thông/người già ("A crypto wallet simple enough for my mom to use"), chạy thật trên Arc Testnet tại [ezwallet.cash](https://ezwallet.cash). Dự án không build theo đúng trình tự 4 câu của bước này (ra đời trước cả series), nên phần dưới **dựng ngược** từ quyết định có thật – không phải chép lại một lượt chat đã xảy ra.
 
@@ -116,7 +149,7 @@ Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới
 
 ## Prompt này từng hụt chỗ nào
 
-Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào 4 hướng Arc và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Đã sửa hết vào khối prompt ở trên.
+Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào hướng nào của Arc (lúc đó docs mới có 4 hướng) và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Đã sửa hết vào khối prompt ở trên.
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -125,7 +158,7 @@ Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ h�
 | 3 | Docs đưa 2 lựa chọn, suýt kết luận "cả hai đều được" | Bắt đối chiếu lại **yêu cầu quan trọng nhất** ở câu 1 để loại – và thêm hẳn câu hỏi "yêu cầu quan trọng nhất là gì" vào câu 1 để có cái mà đối chiếu |
 | 4 | **Nặng nhất:** AI ngồi phản ứng theo người dùng thay vì dẫn | Thêm khối *"Cách làm việc"* lên đầu prompt: bạn DẪN, chủ động vặn, chưa hài lòng thì hỏi tiếp, đừng cho qua |
 | 5 | Xong câu 3 rồi đứng im, phải nhắc hai lần mới tổng hợp | Bắt tự động làm 2 việc cuối: xuất case study + rút lỗi quy trình |
-| 6 | Câu 0 đọc như danh sách đóng – ý tưởng không khớp hướng nào trong 4 gạch đầu dòng thì không rõ có bị loại hay không | Ghi rõ đây là gợi ý để có điểm bắt đầu, không phải rào chắn – không khớp cũng không sao miễn có dùng đặc thù kỹ thuật thật của Arc |
+| 6 | Câu 0 đọc như danh sách đóng – ý tưởng không khớp hướng nào trong mấy gạch đầu dòng đó thì không rõ có bị loại hay không | Ghi rõ đây là gợi ý để có điểm bắt đầu, không phải rào chắn – không khớp cũng không sao miễn có dùng đặc thù kỹ thuật thật của Arc |
 | 7 | Ý tưởng nhắc tới chi tiết cụ thể của Arc (tên token, cơ chế) không được kiểm tra ngay từ đầu – tiền đề sai chỉ lộ ra muộn ở câu 3, sau khi đã tưởng tượng cả ý tưởng trên nền đó | Thêm nhắc ngay ở câu 0: ý tưởng nhắc thứ cụ thể của Arc thì tra ngay, đừng để dồn |
 | 8 | Câu 3 được thiết kế như một bước làm 1 lần duy nhất, nhưng feasibility thật ra cần tra liên tục xuyên suốt Bước 1-3 – ý tưởng càng đi sâu càng lộ thêm chi tiết kỹ thuật cụ thể cần verify, app có thể dùng nhiều cơ chế Arc khác nhau chứ không phải một | Ghi rõ câu 3 là cửa TỐI THIỂU trước khi qua Bước 2, không phải lần duy nhất – hễ chốt dùng cơ chế Arc cụ thể nào ở bước sau, quay lại tra ngay lúc đó |
 | 9 | docs.arc.io bị hỏi cả câu hỏi không liên quan gì tới Arc (tokenomics/roadmap của token hay dự án khác) – AI của docs trả lời bừa vì ngoài phạm vi của nó | Tách rõ: câu hỏi thuộc cơ chế Arc thì hỏi docs.arc.io, câu hỏi ngoài Arc thì tự search web riêng |

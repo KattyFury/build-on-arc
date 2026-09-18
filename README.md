@@ -64,6 +64,13 @@ Mục 4 là thứ ít series nào có, và có ở **mọi** bước. Prompt tro
 
 Repo này **thuần hướng dẫn** – không giữ code dự án mẫu song song bên trong. Từng thử cách đó với TapTip (Tip & Lì xì nhanh trên Arc, build song song với series), nhưng việc vừa viết guide vừa vá bug/deploy một app thật khiến công việc chính bị xao nhãng – nên đã tách TapTip ra [`KattyFury/taptip`](https://github.com/KattyFury/taptip), quay lại sau.
 
-Mục "Ví dụ" ở mỗi bước giờ dẫn chứng từ [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) – ví crypto cho người dùng phổ thông của tác giả, chạy thật trên Arc Testnet tại [ezwallet.cash](https://ezwallet.cash). Dự án này có trước cả series nên không đi qua đúng trình tự từng bước – các ví dụ **dựng ngược** từ quyết định có thật trong `HANDOFF.md`/`README.md` của repo đó, không phải chép lại một buổi chạy prompt thật. Chỗ nào không có đủ dữ liệu thật để dựng ngược thì nói thẳng là thiếu, không nặn cho đủ. Prompt vẫn phải chạy thử thật trước khi đăng (không nhất thiết build trong repo này), và chỗ hụt tìm ra được ghi vào mục "Prompt này từng hụt chỗ nào" của từng bước.
+Mục "Ví dụ" ở mỗi bước đặt **hai dự án thật** của tác giả cạnh nhau, cùng chạy trên Arc Testnet:
+
+| Dự án | Là gì | Ví dụ lấy từ đâu |
+|---|---|---|
+| [`KattyFury/taptip`](https://github.com/KattyFury/taptip) | Tip & Lì xì nhanh, quét QR là tiền đi | **Chạy thật** đúng prompt của từng bước, có bước chạy tới 2 lần (v1, v2). Kết quả nằm nguyên trong `docs/` của repo đó |
+| [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet) | Ví crypto cho người dùng phổ thông, tại [ezwallet.cash](https://ezwallet.cash) | Có trước cả series nên **dựng ngược** từ quyết định có thật trong `HANDOFF.md`/`README.md`, không phải chép lại một buổi chạy prompt |
+
+Hai app cùng hướng P2P, cùng có người lớn tuổi trong đối tượng, nhưng chốt yêu cầu số một khác nhau (TapTip: nhanh, EZwallet: đơn giản) – nên đặt cạnh nhau là thấy mỗi bước lọc ra được gì. Chỗ nào không có đủ dữ liệu thật thì nói thẳng là thiếu, không nặn cho đủ. Prompt vẫn phải chạy thử thật trước khi đăng (không nhất thiết build trong repo này), và chỗ hụt tìm ra được ghi vào mục "Prompt này từng hụt chỗ nào" của từng bước.
 
 *(Quy định viết bài dành cho tác giả nằm ở `HANDOFF.md`, không để ở đây cho khỏi lệch hai chỗ.)*

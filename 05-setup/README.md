@@ -54,7 +54,18 @@ cd "đường-dẫn-tới-project"
 claude
 ```
 
-## Ví dụ: EZwallet
+## Ví dụ: TapTip và EZwallet
+
+### TapTip – chạy thật, trên máy đã có sẵn đồ
+
+Máy build [`KattyFury/taptip`](https://github.com/KattyFury/taptip) đã từng build dự án khác trước đó (EZwallet), nên Node.js, Git, Claude Code, tài khoản GitHub đều có sẵn – không chạy prompt từ bước 1 của mục này. Thay vào đó verify từng phần: `node --version`, `git --version`, `claude --version` đều ra kết quả, `claude mcp list` xác nhận Arc MCP đã connect. Verify Arc MCP còn sống bằng cách hỏi thật một câu ("USDC as gas token trên Arc") – trả về đúng nội dung từ docs.arc.io, không phải câu trả lời bịa. Chi tiết: [`docs/05-setup.md`](https://github.com/KattyFury/taptip/blob/main/docs/05-setup.md). Chính lần chạy này lòi ra chỗ hụt "giả định máy sạch trơn" ở dưới.
+
+Chỗ tốn công nhất của TapTip lại nằm ngoài danh sách 10 bước trên – là **tài khoản của nhà cung cấp dịch vụ**, cụ thể là Circle:
+
+- **Mất file khôi phục là mất luôn tài khoản.** Ví developer-controlled của Circle cần một mã bí mật (Entity Secret) kèm một file khôi phục. TapTip làm hỏng tài khoản Circle **hai lần** vì chuyện này. Lần thứ hai: Claude Code truyền sai đường dẫn lưu file, nhưng công cụ của Circle không báo lỗi sớm – mã bí mật vẫn được đăng ký lên server trước rồi bước ghi file mới hỏng – tức Circle đã chốt mã, còn máy mình không có file. Hết đường cứu, phải mở tài khoản thứ ba. Bài học: ngay lúc đăng ký, tự lấy nội dung file ra rồi tự lưu tay, kiểm tra file nằm đó rồi mới đi tiếp.
+- **Push lên GitHub không có nghĩa là web đã cập nhật.** TapTip deploy bằng tay (`npm run cf:deploy`), không có gì tự chạy khi push. Đã dính thật: sửa, commit, push xong xuôi, mở web ra vẫn y như cũ. Lúc setup nên hỏi rõ luôn: *"push xong thì cái gì tự chạy, cái gì phải chạy tay?"*
+
+### EZwallet – dựng ngược từ quyết định có thật
 
 Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Setup của dự án này diễn ra trước cả series nên không chạy đúng prompt trên, nhưng kết quả cuối thì trùng khớp: Node.js, Git, tài khoản GitHub, tài khoản Circle Console đều có sẵn trước khi code dòng đầu tiên.
 

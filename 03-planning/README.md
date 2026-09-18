@@ -129,7 +129,46 @@ Còn một câu đáng hỏi cuối buổi, không nhét vào prompt vì tuỳ n
 
 File tổng hợp của vòng này để cạnh file vòng 1. Bước 5 sẽ mở đúng nó ra để biết phải cài gì.
 
-## Ví dụ: Product Discovery của EZwallet
+## Ví dụ: Product Discovery của TapTip và EZwallet
+
+### TapTip – chạy thật cả 2 vòng, 2 lần
+
+[`KattyFury/taptip`](https://github.com/KattyFury/taptip) chạy bước này ở v1 ([`docs/03-planning.md`](https://github.com/KattyFury/taptip/blob/main/docs/03-planning.md)) rồi chạy lại ở v2 ([`docs/03-planning-v2.md`](https://github.com/KattyFury/taptip/blob/main/docs/03-planning-v2.md)).
+
+**Vòng 1 (v1)** chia làm 5 nhóm, mỗi nhóm 3-4 quyết định:
+
+| Nhóm | Quyết định đáng chú ý |
+|---|---|
+| Login & Onboarding | Khôi phục qua email OTP, không phải cơ chế passkey theo thiết bị – chấp nhận rủi ro vì tiền tip nhỏ |
+| Ví & Nạp/Rút | Testnet: nạp/rút = faucet only, rút bị disable |
+| Luồng gửi/quét QR | QR người nhận là QR tĩnh, không đổi, không hết hạn – giống số tài khoản |
+| Xử lý lỗi & Edge case | Balance không đủ: nút vượt quá balance bị disable từ đầu, không để quét xong mới báo lỗi |
+| Bảo mật | Bảo mật lưu key của Circle Wallets là trách nhiệm của Circle, không phải app tự thêm lớp bảo vệ |
+
+> Chỗ đáng học nhất là ở nhóm Bảo mật: hai quyết định riêng lẻ đều nghe hợp lý – "không cần xác thực thêm khi gửi" (để giữ tốc độ) và "không giới hạn số tiền mỗi lần gửi" – nhưng cộng lại nghĩa là ai cầm được điện thoại đã mở khoá thì rút sạch ví không cần thêm bước nào. Đây là trade-off được **nhìn thấy và chấp nhận có chủ đích**, không phải bị bỏ sót.
+
+Lần chạy v2, luật "chỉ ra tổ hợp rủi ro" trong prompt lại bắt được thêm một cặp: không giới hạn + không xác nhận (đã chấp nhận) mà cộng thêm quét trúng QR rác cũng im lặng thì người dùng không biết tiền đi đâu. Lần này không chấp nhận mà sửa: quét QR sai mạng hoặc QR rác thì **báo lỗi rõ ràng**. Cùng một luật trong prompt, lần trước ra "thấy rồi, chấp nhận", lần này ra "thấy rồi, sửa" – cả hai đều là kết quả đúng.
+
+**Vòng 2 – stack v1.** Chốt xong trước khi vòng 2 được viết thành prompt, nên đọc ngược lại thì thấy đúng 4 phần mà prompt đang bắt trả lời:
+
+| Chỗ | Chọn gì | Vì sao | Loại cái gì, vì sao | Đổi sau này |
+|---|---|---|---|---|
+| Khung chung | Fork [`circlefin/arc-p2p-payments`](https://github.com/circlefin/arc-p2p-payments) (Next.js + Supabase) | Sample app chính chủ đã có sẵn passkey + gasless P2P, đúng thứ Bước 2-3 chốt | Tự dựng trên Cloudflare Workers/Pages – stack quen tay của tác giả ở dự án khác, nhưng dựng lại từ đầu đúng thứ người ta cho không | Khó |
+| Dữ liệu người dùng | Giữ Supabase của app mẫu | Auth + bảng dữ liệu + realtime nằm sẵn trong đó | Đổi sang Cloudflare KV: phải viết lại auth + data layer + realtime, tức là vứt gần hết giá trị của việc fork | Khó |
+| Ví + ký giao dịch | Circle Modular Wallets (passkey, `paymaster: true` để app trả gas) | Ví ẩn sau passkey, người 60 tuổi không phải biết ví là gì | Ví tự sinh lưu trong máy: mất máy là mất tiền | Khó – đổi là người dùng mất ví |
+| Quét QR | `html5-qrcode` | Chạy thẳng trong trình duyệt, có sẵn đường lùi "nhập ảnh từ kho ảnh" khi không có quyền camera | – | Dễ, đổi thư viện khác lúc nào cũng được |
+| Quy đổi VNĐ | **Chưa chọn** | Có trong PRD nhưng bản đầu hoãn: cần tỷ giá thật, không hardcode | – | – |
+
+**Chưa tới một tháng sau, đúng 2 dòng "Khó" bị đổi thật:**
+
+- **Dữ liệu người dùng: Supabase → Cloudflare D1 + KV.** Bản free của Supabase tự tạm dừng sau khoảng 7 ngày không ai dùng. TapTip nghỉ 16 ngày, quay lại thì database đã ngủ. Chạy lại vòng 2 ở v2 và đổi hẳn – cái giá đúng như cột "Loại cái gì" đã ghi từ đầu: tự viết lại đăng nhập email OTP, bỏ realtime (mở màn nào thì tải lại màn đó).
+- **Ví: Modular Wallets (passkey) → Developer-Controlled.** Dòng này lẽ ra không bao giờ được viết như vậy: Bước 1 đã chốt developer-controlled và loại hẳn cách "user ký từng giao dịch". Nhưng app mẫu fork về chạy sẵn passkey, và bảng stack cứ thế ghi theo code thay vì theo tài liệu. Hậu quả: mỗi lần tip phải quét Face ID – phá đúng yêu cầu số một. Tiền gửi vào ví passkey cũ thì kẹt lại, vì app mới không ký được cho ví đó nữa.
+
+> **Cột "Đổi sau này" không phải để cho có.** Cả hai chỗ bị đổi đều đã ghi "Khó" từ đầu, và đổi thì đau đúng như đã ghi. Ghi trước không làm nó hết khó, nhưng lúc phải đổi thì biết ngay mình đang trả giá cho cái gì, khỏi hoảng.
+>
+> **Fork rẻ hơn tự dựng, nhưng không free.** Đợt kiểm toán code TapTip sau đó đo được: 44/85 file nguồn không ai dùng tới, hơn 30 thư viện thừa (`openai`, `pdf-parse`, `mammoth`, `web3`...), 5 lỗ bảo mật trong thư viện (2 mức cao), và đoạn cấu hình còn cho phép một địa chỉ Replit của người lạ gọi vào app. Fork là nhận luôn cả **quyết định kiến trúc** của người ta – dòng ví passkey ở trên chính là một cái như vậy, lọt vào mà không ai hỏi. Nên prompt bắt AI nói luôn cái mất khi fork, chứ không chỉ khoe cái được.
+
+### EZwallet – dựng ngược từ quyết định có thật
 
 Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Chưa từng chạy đúng prompt "Product Discovery" ở trên (dự án có trước series), nên phần dưới dựng ngược từ quyết định thật trong [`HANDOFF.md`](https://github.com/KattyFury/ezwallet/blob/main/HANDOFF.md) của repo đó – không phải bản ghi một buổi hỏi đáp.
 
@@ -145,7 +184,7 @@ Chia làm 5 nhóm, mỗi nhóm vài quyết định đáng chú ý:
 
 > Chỗ đáng học nhất không rơi vào nhóm Bảo mật mà vào chính cách nhóm đó **thay đổi theo thời gian** – khác hẳn kiểu "chấp nhận rủi ro rồi để yên" của TapTip. Bản đầu, việc đồng bộ danh bạ giữa các máy chỉ cần biết `userToken` của user – biết email là xin được, không cần chứng minh gì thêm. Không đợi ai báo lỗi, tự phát hiện lỗ hổng rồi vá thật: đổi sang bắt ký một nonce dùng-một-lần bằng đúng cây PIN đang có (không thêm thao tác nào cho user), suy ra địa chỉ từ chữ ký thay vì tin client tự khai. Bài học: "chốt bảo mật" không có nghĩa là xong vĩnh viễn – nhìn lại và tự vá được là một kết quả hợp lệ khác, không kém giá trị so với việc thấy rủi ro và chấp nhận nó.
 
-### Stack EZwallet chốt ra sao
+#### Stack EZwallet chốt ra sao
 
 Vì dự án không chạy qua đúng prompt Vòng 2, bảng dưới thưa hơn bảng của TapTip ở cột "Loại cái gì" – đúng thứ mà việc **không hỏi rõ** để lại: chỉ có lý do chọn, thiếu hẳn lý do loại phương án khác, vì lúc build không ai ép phải trả lời câu đó.
 

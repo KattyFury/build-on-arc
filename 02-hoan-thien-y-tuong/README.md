@@ -59,7 +59,39 @@ XONG THÌ TỰ ĐỘNG LÀM 2 VIỆC NÀY, ĐỪNG ĐỢI MÌNH NHẮC:
 [DÁN KẾT QUẢ BƯỚC 1 VÀO ĐÂY]
 ```
 
-## Ví dụ: PRD của EZwallet
+## Ví dụ: PRD của TapTip và EZwallet
+
+### TapTip – chạy thật 2 lần, v1 và v2
+
+[`KattyFury/taptip`](https://github.com/KattyFury/taptip) chạy prompt này thật **hai lần**: bản v1 lúc mới lên ý tưởng, bản v2 sau 3 tuần có app thật trong tay. Bản đầy đủ: [`docs/02-hoan-thien-y-tuong.md`](https://github.com/KattyFury/taptip/blob/main/docs/02-hoan-thien-y-tuong.md) (v1) và [`docs/02-v2-hoan-thien-y-tuong.md`](https://github.com/KattyFury/taptip/blob/main/docs/02-v2-hoan-thien-y-tuong.md) (v2).
+
+**PRD v1:**
+
+**App:** Lì xì và tip nhanh chóng cho bất kỳ ai, chỉ bằng cách log in bằng email.
+
+**Ai dùng:** Cả người gửi lẫn người nhận có thể là người lớn tuổi, ít rành công nghệ (mẹ/bà, khoảng 60 tuổi) – phải tự thao tác được ngay từ lần đầu, không cần ai chỉ.
+
+**Mang lại điều gì:** So với chuyển khoản ngân hàng (xác thực mỗi giao dịch), app chỉ xác thực một lần lúc mở app (passkey), sau đó gửi không cần duyệt lại – vì số tiền nhỏ.
+
+**Tính năng core (thiếu thì app vô nghĩa):** đăng nhập email + passkey, nạp/rút, màn hình chính (Balance + QR code của mình + Nạp/Rút/Lịch sử), chọn số tiền có sẵn hoặc nhập số khác, quét QR người nhận gửi ngay không cần xác nhận thêm, chỉ hỗ trợ USDC quy đổi VNĐ. Nice-to-have: nút Random rút túi mù.
+
+**Ranh giới:** không hoàn tiền sau khi gửi, không token khác ngoài USDC, không chat kèm tin nhắn, không giới hạn số tiền mỗi lần gửi.
+
+**Core value:** Tip tiền và lì xì nhanh như trao tay.
+
+**v2 đổi gì, vì sao.** Lý do viết lại không nằm ở sản phẩm: tài khoản Circle cũ mất khoá (xem Bước 5), database cũ tự ngủ sau mấy ngày không dùng (xem Bước 3) – đằng nào cũng phải viết lại code, nên tận dụng chạy lại luôn Bước 2 bằng những gì đã học từ app thật:
+
+| Chỗ | v1 | v2 |
+|---|---|---|
+| Chọn số tiền | Chọn số có sẵn hoặc gõ số khác, mỗi lần gửi | **Tip Setting**: 4 mức cài sẵn ($1 / $3 / $10 / tự nhập), chọn 1 mức làm mặc định. Bấm Tip là vào thẳng màn quét, mức vừa gửi giữ nguyên cho lần sau |
+| Quy đổi VNĐ | Nằm trong core | Đẩy sang roadmap – cần nguồn tỷ giá thật, chưa chọn được thì không làm |
+| Hiển thị ví | Không nhắc | Rút gọn `0x_NNNNN` (5 số cuối) – chỉ để đọc cho dễ, không dùng làm dữ liệu gửi/nhận |
+| Ranh giới "không giới hạn số tiền" | Một dòng | Viết thẳng cái giá phải trả: điện thoại đã mở khoá rơi vào tay người khác + không giới hạn + không xác nhận = mất ví trong một lần chạm. Chấp nhận, vì là app tip số nhỏ |
+| Core value | Tip tiền và lì xì nhanh như trao tay | **Gửi tiền nên nhanh và đơn giản như trao tận tay – không phải như làm thủ tục ngân hàng** |
+
+> Chỗ đáng học là dòng core value. Bản v1 vẫn còn nhắc "tip", "lì xì" – bỏ tên tính năng ra thì câu đó gãy, tức là nó vẫn đang mô tả sản phẩm. Bản v2 bỏ hết chi tiết đi mà vẫn đứng vững như một niềm tin: gửi tiền cho người khác không nên giống làm thủ tục. Chạy phép test của bước này lần hai, trên chính câu mình từng cho qua, mới thấy lần đầu mình cho qua hơi dễ.
+
+### EZwallet – dựng ngược từ README thật
 
 Dự án thật của tác giả – [`KattyFury/ezwallet`](https://github.com/KattyFury/ezwallet). Cũng như Bước 1, dự án này ra đời trước series nên phần dưới dựng ngược từ [`README.md`](https://github.com/KattyFury/ezwallet/blob/main/README.md) thật của repo – tình cờ README đó đã viết gần đúng khuôn 6 câu, vì cùng một cách nghĩ.
 

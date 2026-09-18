@@ -2,7 +2,26 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-08-22 (đổi toàn bộ mục "Ví dụ" của 6 bước từ TapTip sang EZwallet – xem mục ngay dưới). Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+> **Cập nhật:** 2026-09-18 (Bước 1 lên 6 hướng Arc; mục "Ví dụ" của 6 bước giờ dùng CẢ TapTip lẫn EZwallet – xem mục ngay dưới). Trước đó 2026-08-22: đổi toàn bộ mục "Ví dụ" từ TapTip sang EZwallet. Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+
+## ✅ 09-18: 6 HƯỚNG ARC + VÍ DỤ DÙNG CẢ TAPTIP LẪN EZWALLET
+
+User yêu cầu 2 việc:
+
+1. **docs.arc.io giờ có 6 usecase, không còn 4** – thêm *Prediction markets* và *Borrow and lend*. Đã sửa `01-ideation/README.md` (danh sách lý thuyết kèm mô tả ngắn từng hướng, khối prompt Câu 0, thêm ghi chú "danh sách đổi theo docs"). Mục "Prompt này từng hụt" giữ nguyên chữ "4 hướng" ở chỗ kể lịch sử (lúc đó docs thật sự có 4), chỉ ghi chú thêm.
+2. **Dùng cả ezwallet và taptip làm mẫu ở mỗi bước.** Lệnh này **thay** yêu cầu 08-22 "bỏ taptip" (mục dưới). Mỗi bước giờ có `### TapTip` (chạy thật đúng prompt) rồi `### EZwallet` (dựng ngược). Nội dung TapTip lấy lại từ bản trước commit `90780ee` (đó là kết quả chạy prompt thật), rồi **cập nhật theo những gì xảy ra sau 08-22** – đã đọc thật `taptip/HANDOFF.md` + `docs/02-v2`, `03-planning-v2`, `04-wireframe-v2`:
+   - 01: thêm hậu truyện của quyết định loại Privy – code fork về chạy passkey (ký từng giao dịch), trái Bước 1 gần 1 tháng, đổi sang Developer-Controlled 09-02. Gas Station vẫn chưa bật.
+   - 02: PRD v1 + bảng v1→v2 + core value v1 (còn nhắc "tip/lì xì") → v2 (niềm tin độc lập).
+   - 03: Vòng 1 v1 + tổ hợp rủi ro mới bắt được ở v2 (QR rác). Stack v1 + đúng 2 dòng "Khó" bị đổi thật (Supabase tự pause → D1+KV; Modular Wallets → Developer-Controlled). Số liệu kiểm toán fork 09-02.
+   - 04: wireframe v1 + v2 chỉ vẽ lại màn đổi + lưới Figma 15 hàng gap 8px, khoá khung 390×844 rồi scale. EZwallet thêm lỗi thiếu khe 16px giữa hàng (84.4px vs 70px, lệch ~14px nhiều tháng).
+   - 05: TapTip verify máy có sẵn + 2 bài học tài khoản: file khôi phục Entity Secret (brick 2 account), push ≠ deploy.
+   - 06: 3 giai đoạn TapTip + đợt dựng lại theo Figma tháng 9 (AI tự giữ chi tiết cũ Figma không vẽ – EZwallet dính y hệt) + Giai đoạn 3: gỡ passkey theo phản hồi thật, kiểm toán lòi ra gửi tip chưa từng chạy, **chưa test trên điện thoại thật**.
+
+Cũng sửa: `README.md` mục "Về dự án mẫu" (bảng 2 dự án), `CLAUDE.md` mục Tech Stack (TapTip là Developer-Controlled không passkey, không phải "giấu ví sau passkey").
+
+**⚠️ Mâu thuẫn tìm ra, CHƯA sửa vào prompt – chờ user quyết:** cả 2 app khi dựng theo Figma tháng 9 đều cho thấy luật "hệ lưới = 1/N chiều cao, neo tỷ lệ, không hardcode px" ở `04-wireframe` (prompt + mục "Trả lời sao cho ăn tiền") và `06-build` (Giai đoạn 2 + mục "Trả lời sao cho ăn tiền") **thiếu/sai**: (a) lưới thật có khe giữa hàng nên 1 hàng ≠ 1/N; (b) TapTip cuối cùng khoá khung px cố định 390×844 rồi scale cả khung. Mới ghi vào mục Ví dụ như sự thật đã xảy ra, không đụng prompt vì luật CLAUDE.md: sửa prompt phải ghi "hụt chỗ nào" + nên chạy thử.
+
+---
 
 ## ✅ 08-22 (tiếp): ĐỔI VÍ DỤ TỪ TAPTIP SANG EZWALLET
 
@@ -88,18 +107,18 @@ Series hướng dẫn build app trên Arc, viết cho người Việt không rà
 
 - GitHub: https://github.com/KattyFury/build-on-arc (public)
 - Local: `D:\Files\Claude\Build on Arc\build-on-arc`
-- Dự án từng là ví dụ, giờ ở repo riêng: https://github.com/KattyFury/taptip
+- Hai dự án dùng làm ví dụ (repo riêng): https://github.com/KattyFury/taptip (chạy thật prompt) + https://github.com/KattyFury/ezwallet (dựng ngược)
 
 ## 1. Đang ở đâu
 
 | Bước | Thư mục | Trạng thái |
 |---|---|---|
-| 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa theo lỗi tìm ra qua TapTip lẫn LuckyStaker) + ví dụ dựng ngược từ EZwallet (link ra `ezwallet` repo) + 9 dòng "prompt từng hụt chỗ nào" |
-| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ **XONG TRỌN** — prompt + ví dụ dựng ngược từ EZwallet + "prompt từng hụt chỗ nào" |
-| 3. Plan chi tiết | `03-planning/` | ✅ **XONG TRỌN** cả 2 vòng — Vòng 1 (phỏng vấn ngược) + Vòng 2 (chốt stack, dẫn chứng bằng stack thật của EZwallet – bảng thưa hơn TapTip vì thiếu dữ liệu "loại gì", nói thẳng lý do) + 7 dòng "hụt chỗ nào" ở Vòng 2 |
-| 4. Wireframe | `04-wireframe/` | ✅ **XONG TRỌN** — lý thuyết + prompt (5 điều bổ sung rút từ lúc code thật) + ví dụ dựng ngược từ EZwallet (cùng hệ lưới 10 hàng, độc lập với series) + 5 dòng "hụt chỗ nào" |
-| 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt + ví dụ dựng ngược từ EZwallet (thêm kinh nghiệm chế độ mock + 2 tiến trình song song) + "prompt từng hụt chỗ nào" |
-| 6. Build | `06-build/` | ✅ README xong (3 giai đoạn). Ví dụ dùng EZwallet — Giai đoạn 1/2 nói thẳng không tách bạch được (dự án có trước series); Giai đoạn 3 (live + sửa theo người dùng) viết được đầy đủ lần đầu tiên, TapTip chưa từng tới được giai đoạn này |
+| 1. Lên ý tưởng | `01-ideation/` | ✅ **XONG TRỌN** — lý thuyết + prompt (đã sửa theo lỗi tìm ra qua TapTip lẫn LuckyStaker) + ví dụ TapTip (chạy thật) + EZwallet (dựng ngược) + 6 hướng Arc (09-18) + 9 dòng "prompt từng hụt chỗ nào" |
+| 2. Hoàn thiện ý tưởng | `02-hoan-thien-y-tuong/` | ✅ **XONG TRỌN** — prompt + ví dụ TapTip (PRD v1 + v2) + EZwallet (dựng ngược) + "prompt từng hụt chỗ nào" |
+| 3. Plan chi tiết | `03-planning/` | ✅ **XONG TRỌN** cả 2 vòng — Vòng 1 (phỏng vấn ngược) + Vòng 2 (chốt stack, ví dụ TapTip v1 + 2 dòng "Khó" bị đổi thật, và EZwallet – bảng thưa hơn vì thiếu dữ liệu "loại gì") + 7 dòng "hụt chỗ nào" ở Vòng 2 |
+| 4. Wireframe | `04-wireframe/` | ✅ **XONG TRỌN** — lý thuyết + prompt (5 điều bổ sung rút từ lúc code thật) + ví dụ TapTip (v1, v2, lưới Figma 15 hàng) + EZwallet (lưới 10 hàng, lỗi thiếu khe giữa hàng) + 5 dòng "hụt chỗ nào" |
+| 5. Setup môi trường | `05-setup/` | ✅ **XONG TRỌN** — lý thuyết + prompt + ví dụ TapTip (máy có sẵn, file khôi phục Circle, push ≠ deploy) + EZwallet (chế độ mock + 2 tiến trình song song) + "prompt từng hụt chỗ nào" |
+| 6. Build | `06-build/` | ✅ README xong (3 giai đoạn). Ví dụ TapTip (đủ 3 giai đoạn, Giai đoạn 3 mới một phần, chưa test máy thật) + EZwallet (Giai đoạn 1/2 đan xen, Giai đoạn 3 đầy đủ nhất) |
 
 ### Vòng lặp đã chạy thật lần đầu (Bước 1, 08-06, với TapTip)
 
