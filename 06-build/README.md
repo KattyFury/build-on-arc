@@ -52,7 +52,7 @@ arc-studio login
 arc-studio skills install --tool claude-code
 ```
 
-`arc-studio login` mở trình duyệt để bạn tự bấm xác nhận. Lệnh cuối gắn Arc Studio vào Claude Code. Mở lại Claude Code rồi nói kết quả muốn có, đừng nói lệnh:
+`arc-studio login` mở trình duyệt để bạn tự bấm xác nhận. Lệnh cuối gắn Arc Studio vào Claude Code. Trên Windows, lệnh cuối hay báo "Claude Code not found" dù Claude Code đã cài (bản CLI 1.1.3 gọi `claude` mà không tìm ra `claude.cmd`). Vá bằng cách chạy tay đúng 2 lệnh nó định chạy: `claude plugin marketplace add "<thư mục npm global>/node_modules/@circle-fin/arc-studio-cli" --scope user` rồi `claude plugin install arc-studio@arc-studio-cli -y` (thư mục npm global xem bằng `npm root -g`). Mở lại Claude Code rồi nói kết quả muốn có, đừng nói lệnh:
 
 ```
 Giao cho Arc Studio: viết và deploy contract [mô tả theo spec, vd "ERC-721, mỗi ảnh một token, lưu hash + con trỏ + thời điểm chụp"] lên Arc testnet. Gửi kèm file spec làm ngữ cảnh. Xong thì pull phần contracts về thư mục contracts/ của dự án này, ghi địa chỉ contract + link explorer vào HANDOFF, rồi báo tôi.

@@ -31,7 +31,7 @@ Các bước cần hoàn thành:
 6. Folder project: nếu đã có (chứa docs/ từ các bước lên kế hoạch) thì dùng luôn, chưa có thì tạo. Init git, connect tới repo GitHub vừa tạo
 7. Thêm Arc MCP server vào Claude Code (server: https://docs.arc.io/mcp)
 8. Verify: hỏi Claude Code 1 câu liên quan Arc Docs để confirm MCP hoạt động
-8b. Nếu app có smart contract (xem docs/03-stack.md): cài Arc Studio CLI để Claude Code giao phần contract cho Arc Studio – `npm install -g @circle-fin/arc-studio-cli`, rồi `arc-studio login` (mở trình duyệt, tôi tự bấm xác nhận), rồi `arc-studio skills install --tool claude-code`. Verify bằng `arc-studio whoami`. Cần Node.js 20 trở lên.
+8b. Nếu app có smart contract (xem docs/03-stack.md): cài Arc Studio CLI để Claude Code giao phần contract cho Arc Studio – `npm install -g @circle-fin/arc-studio-cli`, rồi `arc-studio login` (mở trình duyệt, tôi tự bấm xác nhận), rồi `arc-studio skills install --tool claude-code`. Verify bằng `arc-studio whoami`. Cần Node.js 20 trở lên. Windows báo "Claude Code not found" ở lệnh skills install thì làm theo cách vá ghi ở Bước 6, mục Arc Studio.
 9. Nếu project CHƯA có CLAUDE.md: tạo bằng lệnh dưới. **Nếu đã có rồi thì bỏ qua bước này** – đừng ghi đè, hỏi tôi trước nếu không chắc:
 
 curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md
