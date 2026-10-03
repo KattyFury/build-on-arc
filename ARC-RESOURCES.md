@@ -6,6 +6,7 @@
 
 - **Arc Docs**: https://docs.arc.io — khái niệm chain, RPC, deploy contract, connect wallet, evm differences.
 - **Arc App Kit** (SDK Bridge/Swap/Send/Unified Balance): https://docs.arc.io/app-kit
+- **Arc Studio** (AI coding agent của Circle, ra 09/2026): https://studio.arc.io – viết, preview, deploy app/contract lên **Arc testnet** (không deploy mainnet). Chuyên tech hơn AI của docs, thử được thật. Docs: https://docs.arc.io/ai/arc-studio. CLI cho Claude Code giao việc on-chain: `npm install -g @circle-fin/arc-studio-cli` → `arc-studio login` → `arc-studio skills install --tool claude-code` (docs: https://docs.arc.io/ai/arc-studio-cli, verify 2026-10-03).
 - **Circle Developer Docs**: https://developers.circle.com — Wallets (dev/user-controlled, modular), CCTP, Smart Contract Platform.
 - **Circle Console** (API key, kit key, entity secret, wallet sets): https://console.circle.com
 

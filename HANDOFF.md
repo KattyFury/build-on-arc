@@ -17,6 +17,8 @@ Học thêm từ spec (mục 7 + 8):
 - `06-build` Giai đoạn 1: prompt thêm khối "trước khi viết dòng code đầu tiên" – kiểm từng dòng chưa chắc bằng cách thật, báo bằng chứng, sai thì dừng sửa spec; đọc bản vẽ theo số màn; không build mục "Để sau". Đoạn giải thích dùng ví dụ caption qua Memo công khai vĩnh viễn (lấy từ mục 7 spec DailyReal, không phải chuyện đã xảy ra). Hụt #6.
 - `CLAUDE.md`: giao thức thêm ghi chú Bước 1 (bỏ Câu 0 nếu có ý tưởng), Bước 4 (gợi ý Claude Design), Bước 5-6 (tự kiểm mục cần kiểm tra trước khi code).
 
+**Thêm cùng ngày – Arc Studio:** user báo giờ ngoài AI của docs còn có Arc Studio (studio.arc.io), AI chuyên tech hơn docs. Đã verify qua docs chính thức (docs.arc.io/ai/arc-studio + /ai/arc-studio-cli, developers.circle.com/ai/arc-studio): coding agent của Circle, ra 09-18, viết/preview/deploy app + contract lên Arc testnet (không mainnet), có CLI để Claude Code giao việc. Đã sửa `01-ideation` Câu 3 (bảng chia việc docs / Arc Studio / search web, dặn Arc Studio "chỉ thử, chưa build cả app"; prompt soạn thêm khối riêng cho Arc Studio khi cần thử thật) – hụt #11. `ARC-RESOURCES.md` thêm Arc Studio + lệnh cài CLI. Chưa đụng Bước 3/5/6 (Arc Studio có thể dùng đo gas thật cho mục "Cần kiểm tra khi build", hoặc làm subagent ở Bước 6 – chờ user quyết).
+
 **Còn nợ:** các sửa này chưa chạy lại với người thật. Khi DailyReal sang Bước 6, xem Claude Code có tự kiểm mục 7 mà không cần dặn không – đó là phép thử của hụt #6 Bước 6.
 
 ---
