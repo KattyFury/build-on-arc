@@ -31,6 +31,7 @@ Các bước cần hoàn thành:
 6. Folder project: nếu đã có (chứa docs/ từ các bước lên kế hoạch) thì dùng luôn, chưa có thì tạo. Init git, connect tới repo GitHub vừa tạo
 7. Thêm Arc MCP server vào Claude Code (server: https://docs.arc.io/mcp)
 8. Verify: hỏi Claude Code 1 câu liên quan Arc Docs để confirm MCP hoạt động
+8b. Nếu app có smart contract (xem docs/03-stack.md): cài Arc Studio CLI để Claude Code giao phần contract cho Arc Studio – `npm install -g @circle-fin/arc-studio-cli`, rồi `arc-studio login` (mở trình duyệt, tôi tự bấm xác nhận), rồi `arc-studio skills install --tool claude-code`. Verify bằng `arc-studio whoami`. Cần Node.js 20 trở lên.
 9. Nếu project CHƯA có CLAUDE.md: tạo bằng lệnh dưới. **Nếu đã có rồi thì bỏ qua bước này** – đừng ghi đè, hỏi tôi trước nếu không chắc:
 
 curl -o CLAUDE.md https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md
@@ -93,5 +94,9 @@ Ba chỗ hụt nữa lòi ra khi đi thử cả series từ đầu tới cuối 
 3. **Prompt viết cho Claude Chat, trong khi người đi theo repo đang đứng sẵn trong Claude Code.** Bắt người ta chép lệnh từ Chat sang terminal rồi chép kết quả ngược lại, trong khi Claude Code tự chạy được. Sửa: prompt cho phép tự chạy nếu chạy được, chỉ đưa lệnh khi đi tay.
 4. **Bước 6 "tạo folder project" đụng với thư mục đã có từ Bước 1** (nơi đang giữ `docs/`). Làm đúng từng chữ là ra 2 thư mục. Sửa: có rồi thì dùng luôn.
 5. **Không nối với file chốt stack của Bước 3.** Setup xong môi trường chung nhưng không cài đúng gói, không nhắc tài khoản dịch vụ phải đăng ký – sang Bước 6 mới vấp. Sửa: thêm bước 11 đọc file stack, cài đúng gói, liệt kê tài khoản + chỗ khai báo, và giữ secret ngoài git.
+
+Một chỗ nữa không phải prompt sai mà là công cụ mới (10/2026):
+
+6. **Không có công cụ chuyên cho phần smart contract.** Circle ra Arc Studio – AI chuyên viết/deploy contract lên Arc testnet, có CLI gắn vào Claude Code. Sửa: thêm bước 8b, app có contract thì cài Arc Studio CLI (cách dùng ở Bước 6).
 
 Xong bước này mới qua Bước 6, ném 2 file spec vào thư mục dự án và bắt tay build.

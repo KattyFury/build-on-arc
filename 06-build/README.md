@@ -26,7 +26,7 @@ Các file spec từ Bước 1-4 đã nằm sẵn trong `docs/` của folder dự
 Đọc toàn bộ folder dự án [tên dự án của bạn] trước khi build. Spec có link bản vẽ (Figma, Claude Design) thì mở bản vẽ ra đọc luôn; màn nào spec đánh số thì đối chiếu với đúng khung mang số đó.
 
 TRƯỚC KHI VIẾT DÒNG CODE ĐẦU TIÊN – kiểm những chỗ spec chưa chắc:
-Tìm trong spec mục "Cần kiểm tra khi build" (hoặc bất cứ chỗ nào ghi "ước tính", "chưa rõ", "cần đo lại", "cần chốt"). Kiểm từng dòng bằng cách thật: đo trên testnet, tra docs chính thức, gọi thử API – không trả lời bằng trí nhớ. Báo tôi kết quả từng dòng kèm bằng chứng (con số đo được, link docs, output lệnh). Dòng nào ra khác với spec thì dừng lại để tôi sửa spec trước, đừng tự chọn cách khác rồi code luôn. Mục "Để sau" trong spec là thứ KHÔNG build ở bản này.
+Tìm trong spec mục "Cần kiểm tra khi build" (hoặc bất cứ chỗ nào ghi "ước tính", "chưa rõ", "cần đo lại", "cần chốt"). Kiểm từng dòng bằng cách thật: đo trên testnet, tra docs chính thức, gọi thử API – không trả lời bằng trí nhớ. Báo tôi kết quả từng dòng kèm bằng chứng (con số đo được, link docs, output lệnh). Dòng nào cần đo thật trên Arc testnet (phí gas, giới hạn dung lượng, contract có chạy không) mà máy đã cài Arc Studio CLI thì giao cho Arc Studio deploy một contract thử rồi đo – lấy số đo, địa chỉ contract và link explorer từ kết quả nó trả về, không tự bịa. Dòng nào ra khác với spec thì dừng lại để tôi sửa spec trước, đừng tự chọn cách khác rồi code luôn. Mục "Để sau" trong spec là thứ KHÔNG build ở bản này.
 
 GIAI ĐOẠN 1 – Logic và flow
 Build từng tính năng một theo đúng thứ tự trong file spec tính năng. Với mỗi tính năng, code logic và flow trước, gồm xử lý dữ liệu, điều hướng giữa màn hình, validate, xử lý lỗi đúng theo spec. UI lúc này để mộc, chưa cần đẹp, chỉ cần đủ để test được flow. Sau khi xong 1 tính năng, dừng lại báo tôi test, đợi tôi xác nhận OK rồi mới qua tính năng tiếp theo. Không tự thêm tính năng ngoài spec.
@@ -39,6 +39,32 @@ Trước khi bắt đầu, xác nhận lại với tôi bạn hiểu thứ tự 
 Claude Code sẽ kiểm mục "cần kiểm tra" trước, rồi đọc spec, liệt kê lại thứ tự tính năng sắp build, đợi xác nhận rồi mới bắt đầu.
 
 **Vì sao phải kiểm trước khi code:** spec nào cũng có những câu viết lúc chưa chắc. Spec DailyReal (nhật ký ảnh, mỗi ảnh một NFT trên Arc) ghi thẳng phí gas mint + memo là *"ước tính từ gas limit, chưa phải số công bố chính thức"*, chưa biết Memo chứa được bao nhiêu chữ, chưa biết The Graph có hỗ trợ Arc không – và gom hết vào một mục riêng. Không bắt kiểm trước thì AI code luôn trên giả định đó. Có chỗ sai là sửa được, có chỗ sai là mất luôn: caption gửi qua Memo nằm **công khai, vĩnh viễn** trên chain, quên mã hoá thì caption của người dùng đầu tiên đã lộ, không có nút xoá. Spec chưa có mục này thì quay lại Vòng 2 Bước 3 lấy (file stack giờ có sẵn mục đó). Xong tính năng đầu tiên, nó dừng lại chờ mở app test flow – mọi thứ đúng thì gõ "OK" để nó tiếp tục.
+
+### Giao phần smart contract cho Arc Studio
+
+[Arc Studio](https://docs.arc.io/ai/arc-studio) là AI coding agent của Circle, chuyên về Arc: viết contract Solidity, compile, deploy lên Arc testnet, chạy giao dịch thật trong sandbox của nó. Claude Code giỏi việc chung, Arc Studio giỏi đúng mảng on-chain – app có contract thì để Claude Code giao phần đó cho Arc Studio, khỏi bắt Claude Code tự mò.
+
+Cài một lần (Bước 5 đã có, chưa cài thì chạy trong terminal – cần Node.js 20 trở lên):
+
+```bash
+npm install -g @circle-fin/arc-studio-cli
+arc-studio login
+arc-studio skills install --tool claude-code
+```
+
+`arc-studio login` mở trình duyệt để bạn tự bấm xác nhận. Lệnh cuối gắn Arc Studio vào Claude Code. Mở lại Claude Code rồi nói kết quả muốn có, đừng nói lệnh:
+
+```
+Giao cho Arc Studio: viết và deploy contract [mô tả theo spec, vd "ERC-721, mỗi ảnh một token, lưu hash + con trỏ + thời điểm chụp"] lên Arc testnet. Gửi kèm file spec làm ngữ cảnh. Xong thì pull phần contracts về thư mục contracts/ của dự án này, ghi địa chỉ contract + link explorer vào HANDOFF, rồi báo tôi.
+```
+
+Ba điều phải nhớ:
+
+- **Code nằm ở sandbox của Arc Studio, không phải máy bạn.** Chưa `pull` về thư mục dự án và commit lên GitHub thì coi như chưa có. Nguồn sự thật vẫn là thư mục dự án.
+- **Chỉ testnet.** Arc Studio không deploy mainnet thay bạn. Lên mainnet là việc riêng, làm sau.
+- **Kết quả nó trả về chưa phải sự thật đã kiểm.** Docs của chính Arc Studio ghi vậy. Địa chỉ contract thì copy từ kết quả, mở explorer xem có thật không; contract đụng tiền thì vẫn phải đọc lại, test trước khi cho người dùng thật xài.
+
+Deploy contract có thể mất 5-20 phút – cứ để nó chạy, ngắt giữa chừng là lượt đó bị huỷ.
 
 **Tiêu chí "xong" ở Giai đoạn 1: nút bấm đúng vị trí mong muốn + flow chạy đúng, thế là đủ.** Ngứa mắt cỡ nào cũng kệ, đừng bắt AI chỉnh màu/spacing/font lúc này.
 
@@ -233,6 +259,7 @@ Bù lại, EZwallet đã đi xa hơn hẳn ở **Giai đoạn 3** – phần đ�
 | 4 | Giai đoạn 3 bảo "đưa lên live" mà không nói đưa thế nào – người mới kẹt đúng ở cửa cuối, chưa ra được sản phẩm. Phát hiện lúc đi thử cả series như một người mới | Thêm prompt deploy: build production trước, liệt kê việc chỉ người dùng làm được, tự kiểm tra link thật, ghi rõ push có tự deploy không |
 | 5 | Giai đoạn 1 bảo "copy 2 file spec vào folder dự án" trong khi Claude Code đã lưu sẵn 5 file ở `docs/` từ Bước 1-4 | Trỏ thẳng vào `docs/`, chỉ copy khi đi tay |
 | 6 | Giai đoạn 1 bảo "đọc toàn bộ folder" rồi code luôn, không phân biệt câu nào trong spec đã chắc, câu nào mới là ước tính. Lòi ra khi nhận spec DailyReal: spec có hẳn mục "Cần kiểm tra khi build", người giao spec phải dặn riêng "nhớ bảo Claude Code đọc cả mục 7 trước khi viết code" – tức prompt chưa tự lo chuyện đó | Thêm khối "trước khi viết dòng code đầu tiên": kiểm từng dòng chưa chắc bằng cách thật, báo bằng chứng, sai thì dừng sửa spec. Kèm đọc bản vẽ theo số màn, và không build mục "Để sau" |
+| 7 | Không có chỗ nào nói phần smart contract giao cho ai – Claude Code tự viết, tự deploy, tự mò lỗi Arc. Từ 09/2026 Circle có Arc Studio chuyên đúng việc này, kèm CLI để Claude Code giao việc | Thêm mục "Giao phần smart contract cho Arc Studio" (cài, prompt giao việc, 3 điều phải nhớ); dòng nào trong mục "cần kiểm tra" phải đo trên testnet thì giao Arc Studio đo |
 
 ---
 
