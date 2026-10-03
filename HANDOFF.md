@@ -19,6 +19,14 @@ Học thêm từ spec (mục 7 + 8):
 
 **Thêm cùng ngày – Arc Studio:** user báo giờ ngoài AI của docs còn có Arc Studio (studio.arc.io), AI chuyên tech hơn docs. Đã verify qua docs chính thức (docs.arc.io/ai/arc-studio + /ai/arc-studio-cli, developers.circle.com/ai/arc-studio): coding agent của Circle, ra 09-18, viết/preview/deploy app + contract lên Arc testnet (không mainnet), có CLI để Claude Code giao việc. Đã sửa `01-ideation` Câu 3 (bảng chia việc docs / Arc Studio / search web, dặn Arc Studio "chỉ thử, chưa build cả app"; prompt soạn thêm khối riêng cho Arc Studio khi cần thử thật) – hụt #11. `ARC-RESOURCES.md` thêm Arc Studio + lệnh cài CLI. User duyệt luôn 2 chỗ còn lại: `06-build` thêm mục "Giao phần smart contract cho Arc Studio" (cài CLI, prompt giao việc, 3 điều nhớ: code ở sandbox phải pull + commit, chỉ testnet, kết quả chưa kiểm) + khối "cần kiểm tra" giao Arc Studio đo trên testnet – hụt #7. `05-setup` thêm bước 8b cài CLI khi app có contract – hụt #6.
 
+**Lỗi CLI trên Windows (đã ghi vào Bước 5-6):** `arc-studio skills install --tool claude-code` báo "Claude Code not found" dù có Claude Code – code gọi `execFileSync('claude')` không tìm ra `claude.cmd`. Vá: chạy tay `claude plugin marketplace add "$(npm root -g)/@circle-fin/arc-studio-cli" --scope user` rồi `claude plugin install arc-studio@arc-studio-cli -y`.
+
+**Trạng thái máy Dell cuối phiên 10-03:** Arc Studio CLI 1.1.3 đã cài global, đã `arc-studio login`, plugin `arc-studio@arc-studio-cli` (scope user) đã gắn vào Claude Code – mở lại Claude Code thì thấy skill `arc-studio` + subagent `arc-studio:arc-studio`. `arc-studio apps` thấy 3 app trên tài khoản: On Chain Photo Diary (có vẻ là DailyReal làm trên web), Arc Studio Product Showcase Builder, Personal AI Agent Workspace. **Chưa cho Arc Studio chạy thật lượt nào.**
+
+**Việc tiếp theo (chờ user chọn):**
+1. Thử nhanh: hỏi Arc Studio trên app On Chain Photo Diary (`arc-studio ls --app af34c042-daee-4506-8fe0-4d210274f245`) – ~1 phút.
+2. Thử thật mục 7 DailyReal: deploy ERC-721 nhỏ lên Arc testnet, mint 1 token kèm Memo, đo gas thật – 5-20 phút, tốn hạn mức Arc Studio. Kết quả này cũng là phép thử cho mục "Giao phần smart contract cho Arc Studio" ở Bước 6 – chỗ nào hụt thì ghi vào bảng hụt Bước 6.
+
 **Còn nợ:** các sửa này chưa chạy lại với người thật. Khi DailyReal sang Bước 6, xem Claude Code có tự kiểm mục 7 mà không cần dặn không – đó là phép thử của hụt #6 Bước 6.
 
 ---
