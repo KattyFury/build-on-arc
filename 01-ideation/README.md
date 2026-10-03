@@ -16,11 +16,11 @@ Usecase chính Arc định hướng trong [docs.arc.io](https://docs.arc.io):
 - **Prediction markets** – thị trường dự đoán phi tập trung, kết quả chốt bằng oracle, giao dịch token vị thế
 - **Borrow and lend** – giao thức vay/cho vay có tài sản thế chấp, vay thẳng bằng USDC
 
-**Đây là gợi ý để có điểm bắt đầu, không phải rào chắn.** Có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng này không – không khớp cái nào cũng không sao, không loại. Chỉ cần ý tưởng có dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...), không phải mọi ý tưởng hay đều nhét vừa vào 1 trong 6 gạch đầu dòng đó. Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
+**Câu 0 chỉ là điểm bắt đầu cho người chưa có ý tưởng, không phải bộ lọc.** Chưa biết build gì thì 6 hướng này là chỗ để bắt đầu nghĩ. Có ý tưởng rồi thì **bỏ qua Câu 0, đi thẳng Câu 1** – đừng đem ý tưởng ra so với 6 gạch đầu dòng này, khớp hay không khớp đều không nói lên ý tưởng tốt hay dở. Ý tưởng có tận dụng được đặc thù kỹ thuật của Arc (USDC làm gas, finality nhanh, Memo, gas sponsorship...) hay không thì để Câu 3 soi, không phải ở đây.
 
 > Danh sách này đổi theo docs. Lúc series mới viết, docs.arc.io chỉ có 4 hướng đầu – 2 hướng sau (Prediction markets, Borrow and lend) được Arc thêm vào sau. Trước khi dùng, mở docs ra xem lại một lượt cho chắc.
 
-Ý tưởng có nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) thì tra ngay lúc này – đừng để dồn tới Câu 3 mới phát hiện tiền đề sai, lúc đó đã lỡ tưởng tượng cả ý tưởng trên nền sai.
+Một điều áp cho cả người đã có ý tưởng: ý tưởng có nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) thì tra ngay lúc này – đừng để dồn tới Câu 3 mới phát hiện tiền đề sai, lúc đó đã lỡ tưởng tượng cả ý tưởng trên nền sai.
 
 ### Câu 1: Thật, và đúng đối tượng
 
@@ -64,11 +64,11 @@ Bạn DẪN, mình theo. Ở mỗi câu, bạn chủ động đặt câu hỏi t
 
 Đi từng câu một, xong câu này mới sang câu sau.
 
-Hỏi trước: Bạn có ý tưởng chưa, hay còn chưa biết build gì? Có rồi thì vặn thử ý tưởng đó. Chưa có thì gợi ý theo câu 0.
+Hỏi trước: Bạn có ý tưởng chưa, hay còn chưa biết build gì? Có rồi thì BỎ QUA câu 0, vào thẳng câu 1 mà vặn ý tưởng đó. Chưa có thì bắt đầu từ câu 0.
+Dù có hay chưa: nếu ý tưởng nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) – tra nhanh ngay bây giờ, đừng để dồn tới câu 3 mới phát hiện tiền đề sai.
 
-CÂU 0: Định hướng Arc
-Gợi ý 6 định hướng Arc: Peer-to-peer payments, eCommerce checkout, Stablecoin FX, Agentic economy, Prediction markets, Borrow and lend – đây là GỢI Ý để có điểm bắt đầu, không phải rào chắn. Có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng này không; không khớp cái nào cũng KHÔNG loại, chỉ cần ý tưởng dùng đặc thù kỹ thuật thật của Arc (USDC làm gas, finality nhanh, gas sponsorship...). Chưa có ý tưởng thì đây là điểm bắt đầu để gợi hướng.
-Nếu ý tưởng nhắc tới cái gì cụ thể của Arc hoặc hệ sinh thái quanh nó (tên token, cơ chế, tính năng chưa chắc đã sống) – tra nhanh ngay bây giờ, đừng để dồn tới câu 3 mới phát hiện tiền đề sai.
+CÂU 0: Định hướng Arc (CHỈ khi mình chưa có ý tưởng)
+Gợi ý 6 định hướng Arc: Peer-to-peer payments, eCommerce checkout, Stablecoin FX, Agentic economy, Prediction markets, Borrow and lend – đây là điểm bắt đầu để gợi hướng cho người chưa có ý tưởng, KHÔNG phải bộ lọc. Mình đã có ý tưởng thì không đem nó ra so với 6 hướng này, không hỏi "ý tưởng thuộc hướng nào", không loại hay ép pivot vì không khớp. Chuyện ý tưởng có dùng được đặc thù kỹ thuật của Arc hay không thì để câu 3 soi.
 
 CÂU 1: Thật, và đúng đối tượng
 Xác định mình làm cho ai, trong chính xã hội Việt Nam. Arc định hướng builder địa phương làm cho người địa phương. KHÔNG bắt buộc phải giải quyết một vấn đề – thứ vui, thứ người ta thật sự muốn dùng cũng tính. Nhưng nó phải là thứ mình hoặc người mình biết THẬT SỰ làm ngoài đời, không tưởng tượng ra. Hỏi thêm: yêu cầu quan trọng nhất của sản phẩm này là gì (nhanh? rẻ? riêng tư? vui?) – câu này sẽ dùng lại ở câu 3 để loại phương án.
@@ -77,6 +77,7 @@ CÂU 2: Dẫn đầu hay cạnh tranh
 Ý tưởng có lead mảng này không? Nếu đã có dự án làm rồi, ưu điểm cạnh tranh là gì? Nhắc mình: ưu điểm KHÔNG bắt buộc phải là công nghệ, hiểu văn hoá/thói quen bản địa cũng là lợi thế.
 
 CÂU 3: Khả thi (cửa tối thiểu trước khi qua Bước 2, không phải lần kiểm duy nhất)
+Chỉ ra ý tưởng dùng tới đặc thù kỹ thuật nào của Arc (USDC làm gas, finality nhanh, Memo, gas sponsorship...). Đây là chỗ soi chuyện "có đáng build trên Arc không", không phải câu 0.
 Trước khi soạn câu hỏi, tách rõ 2 loại thắc mắc: cái gì thuộc CƠ CHẾ CỦA ARC (SDK, kiến trúc on-chain, tốc độ, phí, tính năng còn sống hay chưa) thì hỏi docs.arc.io. Cái gì KHÔNG thuộc Arc (tokenomics/roadmap của dự án hay token khác, tính năng bên thứ ba) thì bảo mình tự search web riêng – đừng ép docs.arc.io trả lời ngoài phạm vi của nó.
 
 Chốt được ý tưởng rồi, soạn 1 câu hỏi feasibility cho phần thuộc Arc, đưa ra thành khối riêng để dễ copy. Bắt buộc:
@@ -149,7 +150,7 @@ Hai dự án thật của tác giả, cùng hướng Peer-to-peer payments, cùn
 
 ## Prompt này từng hụt chỗ nào
 
-Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào hướng nào của Arc (lúc đó docs mới có 4 hướng) và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Đã sửa hết vào khối prompt ở trên.
+Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào hướng nào của Arc (lúc đó docs mới có 4 hướng) và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Chỗ hụt #10 lộ ra ở lượt chạy với DailyReal (nhật ký ảnh thật, khoá vĩnh viễn trên Arc) – một ý tưởng có sẵn từ đầu và không thuộc hướng nào trong 6 hướng. Đã sửa hết vào khối prompt ở trên.
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -162,6 +163,7 @@ Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ h�
 | 7 | Ý tưởng nhắc tới chi tiết cụ thể của Arc (tên token, cơ chế) không được kiểm tra ngay từ đầu – tiền đề sai chỉ lộ ra muộn ở câu 3, sau khi đã tưởng tượng cả ý tưởng trên nền đó | Thêm nhắc ngay ở câu 0: ý tưởng nhắc thứ cụ thể của Arc thì tra ngay, đừng để dồn |
 | 8 | Câu 3 được thiết kế như một bước làm 1 lần duy nhất, nhưng feasibility thật ra cần tra liên tục xuyên suốt Bước 1-3 – ý tưởng càng đi sâu càng lộ thêm chi tiết kỹ thuật cụ thể cần verify, app có thể dùng nhiều cơ chế Arc khác nhau chứ không phải một | Ghi rõ câu 3 là cửa TỐI THIỂU trước khi qua Bước 2, không phải lần duy nhất – hễ chốt dùng cơ chế Arc cụ thể nào ở bước sau, quay lại tra ngay lúc đó |
 | 9 | docs.arc.io bị hỏi cả câu hỏi không liên quan gì tới Arc (tokenomics/roadmap của token hay dự án khác) – AI của docs trả lời bừa vì ngoài phạm vi của nó | Tách rõ: câu hỏi thuộc cơ chế Arc thì hỏi docs.arc.io, câu hỏi ngoài Arc thì tự search web riêng |
+| 10 | Sửa ở #6 chưa đủ: prompt vẫn bảo "có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng không", tức vẫn đem ý tưởng có sẵn ra so – Câu 0 vẫn mang dáng một bộ lọc, chỉ là bộ lọc "dễ tính" | Câu 0 chỉ dành cho người chưa có ý tưởng. Có ý tưởng rồi thì bỏ qua, vào thẳng Câu 1. Chuyện có dùng đặc thù kỹ thuật của Arc hay không chuyển sang Câu 3 |
 
 Lỗi số 4 là lỗi làm hỏng nhiều nhất trong lượt đầu. Prompt bảo AI "hỏi bạn từng câu" nhưng không bảo nó *dẫn*, nên nó thành thư ký ghi chép: bạn nói gì nó gật nấy, chỉ góp ý khi bạn đã nói xong. Bạn tự dẫn được thì cần gì cố vấn.
 

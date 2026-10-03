@@ -29,6 +29,7 @@ Vẫn làm tay được, không sao: mở thư mục của bước, copy khối 
 | Bước | Công cụ | Vì sao |
 |---|---|---|
 | 1 → 4 | **Claude Chat** (web) | Hỏi đáp qua lại và vẽ spec thì Chat nhanh hơn hẳn |
+| Riêng wireframe ở Bước 4, nếu chưa biết Figma | **Claude Design** | Nhờ nó vẽ khung ra hình thật, khỏi phải học Figma |
 | 5 trở đi | **Claude Code** | Đụng file thật, chạy lệnh thật |
 | Riêng phần giao diện ở Bước 6 | **Claude Design** rồi mới về Code | Chốt hình hài ở chỗ lặp rẻ trước, đưa sang Code dựng một lần |
 
@@ -51,7 +52,7 @@ Mục 4 là thứ ít series nào có, và có ở **mọi** bước. Prompt tro
 
 | Bước | Làm gì | Prompt |
 |---|---|---|
-| [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng, qua đủ 4 câu: đúng định hướng Arc, đúng đối tượng, có điểm hơn, khả thi | ✅ |
+| [`01-ideation/`](01-ideation/README.md) | Lên ý tưởng: chưa có thì bắt đầu từ 6 hướng của Arc, có rồi thì vào thẳng 3 câu – đúng đối tượng, có điểm hơn, khả thi | ✅ |
 | [`02-hoan-thien-y-tuong/`](02-hoan-thien-y-tuong/README.md) | Viết ý tưởng thành 6 câu PRD + rút core value | ✅ |
 | [`03-planning/`](03-planning/README.md) | 2 vòng: AI hỏi ngược bạn về UX/logic/lỗi/bảo mật, rồi chốt stack cho từng luồng | ✅ |
 | [`04-wireframe/`](04-wireframe/README.md) | Vẽ wireframe chốt từng màn trước khi code, trên hệ lưới nhiều hàng/cột: chữ bội số của 3, khoảng cách và khối bội số của 8 | ✅ |

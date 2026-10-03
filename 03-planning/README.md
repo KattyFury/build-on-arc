@@ -104,7 +104,7 @@ Bốn việc bắt buộc làm trong lúc đi:
 - Cái nào KHÔNG chạy được trên chain mình chọn, hoặc chạy được nhưng thiếu tính năng, phải cảnh báo ngay lúc đề xuất – đừng để mình cài xong mới biết.
 - Cái nào đòi điều kiện môi trường mới chạy được – bắt buộc HTTPS, phải khai báo trước domain trên console của nhà cung cấp, phải xin quyền thiết bị (camera, thông báo), không chạy được trên localhost – nói ngay lúc đề xuất, kèm chỗ phải vào khai báo.
 
-Đi hết rồi thì tổng hợp thành một file duy nhất: bảng stack theo luồng, danh sách thứ cần cài, thứ cần đăng ký tài khoản, mục những chỗ phải khai báo/cấu hình trước khi chạy được, và mục riêng liệt kê các quyết định khó đổi.
+Đi hết rồi thì tổng hợp thành một file duy nhất: bảng stack theo luồng, danh sách thứ cần cài, thứ cần đăng ký tài khoản, mục những chỗ phải khai báo/cấu hình trước khi chạy được, mục riêng liệt kê các quyết định khó đổi, và mục "CẦN KIỂM TRA KHI BUILD": mọi con số mới là ước tính (phí gas, chi phí lưu trữ...), mọi giới hạn chưa rõ (dung lượng tối đa, số request), mọi công cụ chưa chắc có hỗ trợ chain mình chọn, mọi luồng tiền chưa chốt cách làm – mỗi dòng ghi rõ kiểm bằng cách nào (đo thật trên testnet, tra docs, gọi thử). Đừng viết số ước tính như thể đã chắc. Có cả mục "ĐỂ SAU": thứ đã bàn nhưng cố ý không làm ở bản đầu.
 
 Đây là plan sản phẩm của mình:
 ```
@@ -210,7 +210,7 @@ Vì dự án không chạy qua đúng prompt Vòng 2, bảng dưới thưa hơn 
 | 4 | AI có xu hướng thuyết phục đổi ý khi user nói "chấp nhận rủi ro, không care" | Ghi rõ đây là câu trả lời hợp lệ và đủ – việc của AI là đảm bảo user *thấy* rủi ro, không phải ép tránh rủi ro |
 | 5 | Xong nhiều nhóm rồi không ai chủ động tổng hợp thành file, hỏi đáp nằm rải trong chat | Thêm bước cuối: chủ động hỏi Chat tổng hợp thành 1 file duy nhất |
 
-### Vòng 2 – 7 chỗ, tìm ra lúc chạy khô và lúc thử thật
+### Vòng 2 – 8 chỗ, tìm ra lúc chạy khô và lúc thử thật
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -221,5 +221,6 @@ Vì dự án không chạy qua đúng prompt Vòng 2, bảng dưới thưa hơn 
 | 5 | Không có chỗ đánh dấu "bản đầu chưa làm". Quy đổi VNĐ nằm trong PRD nhưng TapTip cố ý hoãn – prompt không cho nói vậy nên AI vẫn chọn sẵn nguồn tỷ giá | Cho phép trả lời "luồng này bản đầu chưa làm" → ghi CHƯA CHỌN, không chọn tech |
 | 6 | Hỏi tiền, hỏi chain, quên môi trường chạy: cái nào đòi HTTPS, đòi khai báo domain trước, đòi quyền thiết bị. Đây đúng là chỗ ngốn thời gian nhất lúc TapTip build thật (Passkey Domain Config trên Circle Console là mục riêng, khác Allowed Domain của Client Key) | Thêm việc bắt buộc thứ tư: cảnh báo điều kiện môi trường ngay lúc đề xuất, kèm chỗ phải vào khai báo. Ràng buộc thêm dòng giai đoạn testnet/mainnet |
 | 7 | Ngân sách hỏi cứng cho mọi dự án, kể cả lúc đã nói rõ đây là demo/hackathon chạy trên testnet – câu hỏi vô nghĩa, chẳng ai cân đo chi phí hạ tầng lúc đó | Đổi câu ngân sách thành có điều kiện: bỏ qua nếu đang ở giai đoạn testnet/demo, chỉ hỏi khi tính lên production |
+| 8 | File tổng hợp không có chỗ cho những gì **chưa chắc**. Spec của DailyReal (nhật ký ảnh trên Arc) cho thấy chỗ đáng có: phí gas mint + memo mới là ước tính từ gas limit, Memo giới hạn dung lượng bao nhiêu chưa rõ, The Graph có hỗ trợ Arc không chưa rõ, cách thu phí Arweave từ người dùng chưa chốt – spec đó gom hết vào một mục "Cần kiểm tra khi build" và ghi "ước tính, cần đo lại" cạnh từng con số. Thiếu mục này thì số ước tính sang tới Bước 6 sẽ được code như số thật | Thêm vào file tổng hợp mục "CẦN KIỂM TRA KHI BUILD" (kèm cách kiểm từng dòng) và mục "ĐỂ SAU". Bước 6 bắt Claude Code kiểm mục này trước khi viết code |
 
 Xong bước này mới qua Bước 4, vẽ wireframe để chốt mỗi màn hình trông ra sao trước khi cho AI code.

@@ -36,6 +36,10 @@ Một câu cho dễ nhớ: **Chat để nghĩ, Code để giữ và để làm.*
 
 **Ngoại lệ duy nhất – Bước 3 có 2 vòng, tức 2 lượt 4 nhịp:** giao prompt Vòng 1 → nhận → lưu `docs/03-planning.md`; rồi giao prompt Vòng 2 (chốt stack) → nhận → lưu `docs/03-stack.md`. Đừng qua Bước 4 khi chưa có file Vòng 2 – thiếu nó thì Bước 5-6 không biết phải cài gì.
 
+**Bước 1:** user đã có ý tưởng thì Câu 0 (6 hướng Arc) bỏ qua – nó chỉ là điểm bắt đầu cho người chưa có ý tưởng, không phải bộ lọc. Đừng đem ý tưởng có sẵn ra so với 6 hướng.
+
+**Bước 4:** sau khi lưu `docs/04-wireframe.md`, nếu user chưa biết Figma thì gợi ý nhờ Claude Design vẽ (prompt nằm trong `04-wireframe/README.md`, mục "Chưa biết Figma?"). Link bản vẽ mang về thì lưu vào `docs/` cạnh file wireframe.
+
 **Thư mục dự án tạo ngay ở Bước 1**, lúc lưu file đầu tiên (hỏi user đặt ở đâu – xem mục THƯ MỤC). Bước 5 chỉ nối thư mục đó với git/GitHub, không tạo mới.
 
 ### Từ Bước 5 → 6
@@ -53,7 +57,8 @@ từng lượt hội thoại của Chat ngược vào đây – đó là trả t
 
 **Từ Bước 5 trở đi** Code mới vào việc thật. Nguồn sự thật là mấy file trong `docs/` mà 4 bước
 đầu đẻ ra – **đọc hết chúng trước khi viết dòng code đầu tiên**, đừng bắt user kể lại ý tưởng
-bằng trí nhớ.
+bằng trí nhớ. Có link bản vẽ thì mở ra đọc. Có mục "Cần kiểm tra khi build" thì **kiểm từng dòng
+bằng cách thật (đo testnet, tra docs) và báo kết quả trước khi code** – không đợi user dặn.
 
 ---
 

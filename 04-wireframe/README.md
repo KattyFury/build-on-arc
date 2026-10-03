@@ -30,7 +30,7 @@ Màn nào phụ thuộc hệ điều hành hoặc trình duyệt (hướng dẫn
 
 Màn nào có dữ liệu hoặc phải chờ thì vẽ đủ trạng thái xấu: đang tải, trống chưa có gì, lỗi/mất mạng, không được cấp quyền.
 
-XONG HẾT CÁC NHÓM MÀN THÌ TỰ ĐỘNG, ĐỪNG ĐỢI MÌNH NHẮC: tổng hợp thành 1 file markdown duy nhất gồm khung gốc + hệ lưới (kèm phép tính) + thang chữ + từng màn liệt kê theo hàng/cột + trạng thái xấu của từng màn – để mình mang sang bước build.
+XONG HẾT CÁC NHÓM MÀN THÌ TỰ ĐỘNG, ĐỪNG ĐỢI MÌNH NHẮC: tổng hợp thành 1 file markdown duy nhất gồm khung gốc + hệ lưới (kèm phép tính) + thang chữ + từng màn liệt kê theo hàng/cột + trạng thái xấu của từng màn – để mình mang sang bước build. Đánh số các màn 1, 2, 3... theo thứ tự người dùng gặp, để bản vẽ sau này đặt tên khung theo đúng số đó.
 
 Đây là spec sản phẩm của mình (PRD + Product Discovery):
 [DÁN NỘI DUNG BƯỚC 2 VÀ BƯỚC 3 VÀO ĐÂY]
@@ -39,6 +39,22 @@ XONG HẾT CÁC NHÓM MÀN THÌ TỰ ĐỘNG, ĐỪNG ĐỢI MÌNH NHẮC: tổn
 > Dán kèm nếu bạn đang mở cửa sổ chat mới. Nếu dùng chung 1 cửa sổ chat xuyên suốt từ đầu thì bỏ qua – Chat đã có sẵn context, dán lại là thừa.
 
 Mấu chốt nằm ở câu "hỏi platform và đề xuất hệ lưới, chờ xác nhận trước khi vẽ, chỗ nào chưa rõ thì hỏi": bỏ câu đó ra AI sẽ tự đoán layout theo cảm tính, đúng cái mình đang muốn tránh.
+
+## Chưa biết Figma? Nhờ Claude Design vẽ
+
+Prompt trên cho ra wireframe **bằng chữ** – từng màn liệt kê theo hàng/cột. Đủ để chốt bố cục, nhưng muốn nhìn ra hình, và để Bước 6 có bản vẽ cho Claude Code đối chiếu, thì nên vẽ thành khung thật. Biết Figma thì tự vẽ theo file tổng hợp. **Chưa biết thì đừng học Figma chỉ để làm bước này** – mở Claude Design, đính file tổng hợp vừa xuất, dán prompt:
+
+```
+Vẽ wireframe theo đúng file đính kèm. Chỉ khung + label chức năng, chưa cần màu hay hình đẹp.
+- Giữ đúng khung gốc, hệ lưới, thang chữ trong file. Không tự đổi số.
+- Mỗi màn một khung, đặt tên khung theo đúng số thứ tự trong file (1, 2, 3...) kèm tên màn.
+- Vẽ luôn các trạng thái xấu đã liệt kê (đang tải, trống, lỗi, không có quyền).
+- Cái gì file không ghi thì không vẽ thêm. Chỗ nào file chưa rõ thì hỏi tôi, đừng tự suy diễn.
+```
+
+Vẽ ở đây vẫn là **wireframe**, không phải giao diện: chưa chọn màu, font, đổ bóng – mấy thứ đó để Giai đoạn 2 của Bước 6 làm, cũng bằng Claude Design. Sửa khung bao nhiêu vòng cũng được, lặp ở đây rẻ hơn lặp trong code.
+
+Đánh số màn là để spec và bản vẽ nói cùng một thứ tiếng. DailyReal (nhật ký ảnh trên Arc) vẽ 13 màn đánh số 1 đến 13, spec chỉ cần dán link bản vẽ kèm một dòng *"13 màn, đánh số 1 đến 13, đọc theo số thứ tự"*, còn lại mỗi màn trong spec mở đầu bằng đúng số đó – Claude Code đọc "màn 12" là biết mở khung nào. Vẽ xong thì lưu link bản vẽ (hoặc xuất ảnh từng màn) vào `docs/` cạnh file tổng hợp.
 
 ## Trả lời sao cho ăn tiền
 
@@ -121,7 +137,7 @@ Bốn màn chính (Gửi/Nhận/Lịch sử/Menu) giữ nguyên hàng 10 cho tha
 
 ## Prompt này từng hụt chỗ nào
 
-Tám chỗ, đều lòi ra lúc đem wireframe đi code thật ở Bước 6 – không chỗ nào nhìn bản vẽ mà thấy được. Chỗ #1-5 từ lần đầu build TapTip, #6-8 từ đợt cả TapTip lẫn EZwallet dựng lại theo Figma (09/2026):
+Chỗ #1-8 đều lòi ra lúc đem wireframe đi code thật ở Bước 6 – không chỗ nào nhìn bản vẽ mà thấy được. Chỗ #1-5 từ lần đầu build TapTip, #6-8 từ đợt cả TapTip lẫn EZwallet dựng lại theo Figma (09/2026). #9-11 từ lượt đi thử cả series như một người mới, #12 từ buổi chạy với DailyReal:
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -136,5 +152,6 @@ Tám chỗ, đều lòi ra lúc đem wireframe đi code thật ở Bước 6 –
 | 9 | Prompt không bảo tổng hợp kết quả – vẽ xong nhiều nhóm màn, không có file nào để mang sang Bước 6. Lòi ra khi đi thử cả series như một người mới | Thêm bước cuối tự động: 1 file gồm khung, lưới kèm phép tính, thang chữ, từng màn theo hàng/cột |
 | 10 | Chạy khô bộ lưới mẫu 15 hàng trên khung 844: mỗi hàng chỉ còn 40px, nút 1 hàng nhỏ hơn cỡ ngón tay chạm thoải mái | Thêm luật vùng chạm tối thiểu 48; lưới mẫu đổi sang 12 hàng × 56px |
 | 11 | Đọc lại bản sửa: luật vừa bắt lề là bội số của 8, vừa bảo phần dư dồn vào lề – khung 390 hay 844 thì phần dư gần như không bao giờ chia hết cho 8, AI sẽ kẹt giữa hai luật | Lề là chỗ duy nhất được phép lẻ, mọi thứ bên trong lưới vẫn bội số của 8 |
+| 12 | Bước này mặc định ai cũng tự vẽ lại được wireframe bằng chữ thành khung thật trên Figma. Người chưa biết Figma kẹt ở đây: hoặc bỏ qua bản vẽ, hoặc mất công học một công cụ chỉ để dùng một lần | Thêm mục "Chưa biết Figma? Nhờ Claude Design vẽ" kèm prompt; file tổng hợp đánh số màn để bản vẽ đặt tên khung theo đúng số |
 
 Xong bước này mới qua Bước 5, setup môi trường để bắt đầu code.

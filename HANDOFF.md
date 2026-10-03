@@ -2,7 +2,24 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-09-18 (Bước 1 lên 6 hướng Arc; mục "Ví dụ" của 6 bước giờ dùng CẢ TapTip lẫn EZwallet – xem mục ngay dưới). Trước đó 2026-08-22: đổi toàn bộ mục "Ví dụ" từ TapTip sang EZwallet. Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+> **Cập nhật:** 2026-10-03 (Câu 0 chỉ cho người chưa có ý tưởng; Claude Design vẽ wireframe; mục "Cần kiểm tra khi build" từ spec DailyReal – xem mục ngay dưới). Trước đó 2026-09-18 (Bước 1 lên 6 hướng Arc; mục "Ví dụ" của 6 bước giờ dùng CẢ TapTip lẫn EZwallet – xem mục ngay dưới). Trước đó 2026-08-22: đổi toàn bộ mục "Ví dụ" từ TapTip sang EZwallet. Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+
+## ✅ 10-03: HỌC TỪ SPEC DAILYREAL + 2 BÀI HỌC CỦA BUỔI CHẠY
+
+User chạy series với một ý tưởng mới – **DailyReal** (nhật ký ảnh thật, chụp bằng camera trong app, mỗi ảnh một NFT trên Arc, caption mã hoá gửi qua Memo; wireframe 13 màn trên Figma). Spec cuối buổi có 8 mục, đáng học nhất là mục 7 "Cần kiểm tra khi build" (số ước tính, giới hạn chưa rõ, công cụ chưa chắc hỗ trợ Arc, luồng thu phí Arweave chưa chốt) và mục 8 "Để sau". Người giao spec phải dặn riêng "nhớ bảo Claude Code đọc cả mục 7 trước khi viết code" – tức prompt chưa tự lo. DailyReal chưa có repo/link public, nên chỉ nhắc tên + trích đúng nội dung spec, KHÔNG viết mục "Ví dụ" cho nó.
+
+User chốt 2 bài học, đã ghi vào repo:
+1. **Câu 0 chỉ là điểm bắt đầu cho người chưa có ý tưởng, không phải bộ lọc.** `01-ideation`: lý thuyết + prompt đổi thành "có ý tưởng rồi thì BỎ QUA câu 0, vào thẳng câu 1"; bỏ câu "check thử có khớp 1 trong 6 hướng"; chuyện "có dùng đặc thù Arc không" chuyển sang Câu 3. Hụt #10 (sửa ở #6 08-21 chưa đủ – vẫn đem ý tưởng ra so). `README.md` bảng cấu trúc đổi mô tả Bước 1.
+2. **Bước wireframe gợi ý nhờ Claude Design vẽ cho người chưa biết Figma.** `04-wireframe`: mục mới "Chưa biết Figma? Nhờ Claude Design vẽ" kèm prompt (vẫn là wireframe, chưa style); file tổng hợp đánh số màn để bản vẽ đặt tên khung theo số (như DailyReal 1-13). Hụt #12. `README.md` bảng công cụ thêm dòng Claude Design cho Bước 4.
+
+Học thêm từ spec (mục 7 + 8):
+- `03-planning` Vòng 2: file tổng hợp thêm mục "CẦN KIỂM TRA KHI BUILD" (kèm cách kiểm từng dòng, cấm viết số ước tính như số chắc) + mục "ĐỂ SAU". Hụt Vòng 2 #8.
+- `06-build` Giai đoạn 1: prompt thêm khối "trước khi viết dòng code đầu tiên" – kiểm từng dòng chưa chắc bằng cách thật, báo bằng chứng, sai thì dừng sửa spec; đọc bản vẽ theo số màn; không build mục "Để sau". Đoạn giải thích dùng ví dụ caption qua Memo công khai vĩnh viễn (lấy từ mục 7 spec DailyReal, không phải chuyện đã xảy ra). Hụt #6.
+- `CLAUDE.md`: giao thức thêm ghi chú Bước 1 (bỏ Câu 0 nếu có ý tưởng), Bước 4 (gợi ý Claude Design), Bước 5-6 (tự kiểm mục cần kiểm tra trước khi code).
+
+**Còn nợ:** các sửa này chưa chạy lại với người thật. Khi DailyReal sang Bước 6, xem Claude Code có tự kiểm mục 7 mà không cần dặn không – đó là phép thử của hụt #6 Bước 6.
+
+---
 
 ## ✅ 09-18: 6 HƯỚNG ARC + VÍ DỤ DÙNG CẢ TAPTIP LẪN EZWALLET
 

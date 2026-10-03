@@ -23,7 +23,10 @@ Lý do tách Giai đoạn 2 ra thành một vòng riêng: **sửa giao diện b�
 Các file spec từ Bước 1-4 đã nằm sẵn trong `docs/` của folder dự án (đi tay thì copy chúng vào đó). Mở terminal **ngay trong folder dự án**, chạy `claude` để mở Claude Code, dán prompt dưới.
 
 ```
-Đọc toàn bộ folder dự án [tên dự án của bạn] trước khi build.
+Đọc toàn bộ folder dự án [tên dự án của bạn] trước khi build. Spec có link bản vẽ (Figma, Claude Design) thì mở bản vẽ ra đọc luôn; màn nào spec đánh số thì đối chiếu với đúng khung mang số đó.
+
+TRƯỚC KHI VIẾT DÒNG CODE ĐẦU TIÊN – kiểm những chỗ spec chưa chắc:
+Tìm trong spec mục "Cần kiểm tra khi build" (hoặc bất cứ chỗ nào ghi "ước tính", "chưa rõ", "cần đo lại", "cần chốt"). Kiểm từng dòng bằng cách thật: đo trên testnet, tra docs chính thức, gọi thử API – không trả lời bằng trí nhớ. Báo tôi kết quả từng dòng kèm bằng chứng (con số đo được, link docs, output lệnh). Dòng nào ra khác với spec thì dừng lại để tôi sửa spec trước, đừng tự chọn cách khác rồi code luôn. Mục "Để sau" trong spec là thứ KHÔNG build ở bản này.
 
 GIAI ĐOẠN 1 – Logic và flow
 Build từng tính năng một theo đúng thứ tự trong file spec tính năng. Với mỗi tính năng, code logic và flow trước, gồm xử lý dữ liệu, điều hướng giữa màn hình, validate, xử lý lỗi đúng theo spec. UI lúc này để mộc, chưa cần đẹp, chỉ cần đủ để test được flow. Sau khi xong 1 tính năng, dừng lại báo tôi test, đợi tôi xác nhận OK rồi mới qua tính năng tiếp theo. Không tự thêm tính năng ngoài spec.
@@ -33,7 +36,9 @@ Chưa làm giao diện. Chỉ khi tất cả tính năng trong spec đã đượ
 Trước khi bắt đầu, xác nhận lại với tôi bạn hiểu thứ tự build các tính năng là gì dựa theo spec.
 ```
 
-Claude Code sẽ đọc spec, liệt kê lại thứ tự tính năng sắp build, đợi xác nhận rồi mới bắt đầu. Xong tính năng đầu tiên, nó dừng lại chờ mở app test flow – mọi thứ đúng thì gõ "OK" để nó tiếp tục.
+Claude Code sẽ kiểm mục "cần kiểm tra" trước, rồi đọc spec, liệt kê lại thứ tự tính năng sắp build, đợi xác nhận rồi mới bắt đầu.
+
+**Vì sao phải kiểm trước khi code:** spec nào cũng có những câu viết lúc chưa chắc. Spec DailyReal (nhật ký ảnh, mỗi ảnh một NFT trên Arc) ghi thẳng phí gas mint + memo là *"ước tính từ gas limit, chưa phải số công bố chính thức"*, chưa biết Memo chứa được bao nhiêu chữ, chưa biết The Graph có hỗ trợ Arc không – và gom hết vào một mục riêng. Không bắt kiểm trước thì AI code luôn trên giả định đó. Có chỗ sai là sửa được, có chỗ sai là mất luôn: caption gửi qua Memo nằm **công khai, vĩnh viễn** trên chain, quên mã hoá thì caption của người dùng đầu tiên đã lộ, không có nút xoá. Spec chưa có mục này thì quay lại Vòng 2 Bước 3 lấy (file stack giờ có sẵn mục đó). Xong tính năng đầu tiên, nó dừng lại chờ mở app test flow – mọi thứ đúng thì gõ "OK" để nó tiếp tục.
 
 **Tiêu chí "xong" ở Giai đoạn 1: nút bấm đúng vị trí mong muốn + flow chạy đúng, thế là đủ.** Ngứa mắt cỡ nào cũng kệ, đừng bắt AI chỉnh màu/spacing/font lúc này.
 
@@ -227,6 +232,7 @@ Bù lại, EZwallet đã đi xa hơn hẳn ở **Giai đoạn 3** – phần đ�
 | 3 | Không có luật số cho bên thiết kế. Bản vẽ ra cỡ chữ 19/23/35, lề 25 – đẹp, nhưng lẻ, sang code phải chuẩn hoá tay | Đưa luật chữ bội số của 3, khoảng cách/khối bội số của 8 vào cả 3 nhịp: spec hiện trạng, lúc chỉnh ở Claude Design, gói bàn giao |
 | 4 | Giai đoạn 3 bảo "đưa lên live" mà không nói đưa thế nào – người mới kẹt đúng ở cửa cuối, chưa ra được sản phẩm. Phát hiện lúc đi thử cả series như một người mới | Thêm prompt deploy: build production trước, liệt kê việc chỉ người dùng làm được, tự kiểm tra link thật, ghi rõ push có tự deploy không |
 | 5 | Giai đoạn 1 bảo "copy 2 file spec vào folder dự án" trong khi Claude Code đã lưu sẵn 5 file ở `docs/` từ Bước 1-4 | Trỏ thẳng vào `docs/`, chỉ copy khi đi tay |
+| 6 | Giai đoạn 1 bảo "đọc toàn bộ folder" rồi code luôn, không phân biệt câu nào trong spec đã chắc, câu nào mới là ước tính. Lòi ra khi nhận spec DailyReal: spec có hẳn mục "Cần kiểm tra khi build", người giao spec phải dặn riêng "nhớ bảo Claude Code đọc cả mục 7 trước khi viết code" – tức prompt chưa tự lo chuyện đó | Thêm khối "trước khi viết dòng code đầu tiên": kiểm từng dòng chưa chắc bằng cách thật, báo bằng chứng, sai thì dừng sửa spec. Kèm đọc bản vẽ theo số màn, và không build mục "Để sau" |
 
 ---
 
