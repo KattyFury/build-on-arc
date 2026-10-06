@@ -44,15 +44,15 @@ Nhiều ý tưởng AI đưa ra nghe hay nhưng không làm được, hoặc qu�
 
 Cũng cần tách rõ nguồn tra cứu: câu hỏi thuộc **cơ chế của Arc** (SDK, kiến trúc on-chain, tốc độ, phí, tính năng còn sống hay chưa) thì hỏi docs.arc.io. Câu hỏi **không thuộc Arc** (tokenomics/roadmap của dự án hay token khác, tính năng của bên thứ ba) thì tự search web riêng – ép AI của docs.arc.io trả lời ngoài phạm vi của nó, nó sẽ đoán bừa chứ không biết thật.
 
-**Giờ còn có Arc Studio** ([studio.arc.io](https://studio.arc.io), Circle ra mắt 09/2026) – AI coding agent chuyên tech hơn hẳn AI của docs: không chỉ đọc tài liệu mà còn viết được contract, deploy thử lên Arc testnet, chạy giao dịch thật trong sandbox. Chia việc cho rõ:
+**Câu nào phải thử thật mới biết thì đừng thử ở đây.** Kiểu: contract này viết được không, gas thật bao nhiêu, cơ chế A ghép với B có chạy không. Docs chỉ trả lời được "có không, hoạt động thế nào" – phần còn lại ghi thành một danh sách **"cần thử khi build"** rồi mang theo. Bước 3 gom nó vào mục "Cần kiểm tra khi build" của spec, tới Bước 6 Claude Code giao cho Arc Studio (AI coding agent của Circle, deploy thử được lên Arc testnet) đo thật qua CLI.
 
-| Loại câu hỏi | Hỏi ở đâu |
+| Loại câu hỏi | Làm ở đâu |
 |---|---|
-| Arc có cái này không, nó hoạt động thế nào | AI của docs.arc.io |
-| Kỹ thuật sâu, nhất là loại phải thử mới biết: contract này viết được không, gas thật bao nhiêu, cơ chế A ghép với B có chạy không | Arc Studio |
+| Arc có cái này không, nó hoạt động thế nào | AI của docs.arc.io – ngay bây giờ |
+| Phải thử mới biết: gas thật, contract chạy không, A ghép B có được không | Ghi vào danh sách "cần thử khi build" → Bước 6, Arc Studio |
 | Không thuộc Arc | Tự search web |
 
-Arc Studio là agent để build app, nên câu đầu tiên nói rõ *chỉ hỏi để đánh giá khả thi, chưa build cả app* – không thì nó lao vào dựng luôn. Nó chỉ deploy lên testnet, không đụng mainnet, nên thử thoải mái.
+> Vì sao không thử luôn bằng Arc Studio ở bước này: một lượt deploy thử mất 5-20 phút, trong khi ý tưởng ở Bước 1 còn đổi liên tục – thử xong có khi Bước 2 đã bỏ luôn tính năng đó. Ở Bước 6, Claude Code gọi Arc Studio qua CLI ngay trong thư mục dự án, có sẵn spec làm ngữ cảnh, kết quả kéo thẳng về repo – nhanh và đáng tiền hơn nhiều so với mở web studio.arc.io ra chat tay.
 
 Ba điều quyết định câu trả lời có xài được hay không:
 
@@ -88,19 +88,19 @@ CÂU 2: Dẫn đầu hay cạnh tranh
 
 CÂU 3: Khả thi (cửa tối thiểu trước khi qua Bước 2, không phải lần kiểm duy nhất)
 Chỉ ra ý tưởng dùng tới đặc thù kỹ thuật nào của Arc (USDC làm gas, finality nhanh, Memo, gas sponsorship...). Đây là chỗ soi chuyện "có đáng build trên Arc không", không phải câu 0.
-Trước khi soạn câu hỏi, tách rõ 2 loại thắc mắc: cái gì thuộc CƠ CHẾ CỦA ARC (SDK, kiến trúc on-chain, tốc độ, phí, tính năng còn sống hay chưa) thì hỏi docs.arc.io nếu là câu "có không, hoạt động thế nào", hoặc Arc Studio (studio.arc.io – AI coding agent của Circle, viết và deploy thử được lên Arc testnet) nếu là câu kỹ thuật sâu, phải thử mới biết. Cái gì KHÔNG thuộc Arc (tokenomics/roadmap của dự án hay token khác, tính năng bên thứ ba) thì bảo mình tự search web riêng – đừng ép docs.arc.io trả lời ngoài phạm vi của nó.
+Trước khi soạn câu hỏi, tách rõ 2 loại thắc mắc: cái gì thuộc CƠ CHẾ CỦA ARC (SDK, kiến trúc on-chain, tốc độ, phí, tính năng còn sống hay chưa) thì hỏi docs.arc.io. Câu nào docs không trả lời chắc được, phải thử thật trên testnet mới biết (gas thật, contract có chạy không, cơ chế A ghép B có được không) thì KHÔNG thử ở bước này – ghi vào danh sách "CẦN THỬ KHI BUILD", để Bước 6 giao Arc Studio đo. Cái gì KHÔNG thuộc Arc (tokenomics/roadmap của dự án hay token khác, tính năng bên thứ ba) thì bảo mình tự search web riêng – đừng ép docs.arc.io trả lời ngoài phạm vi của nó.
 
 Chốt được ý tưởng rồi, soạn 1 câu hỏi feasibility cho phần thuộc Arc, đưa ra thành khối riêng để dễ copy. Bắt buộc:
 - Viết câu hỏi BẰNG TIẾNG ANH (AI của docs trả lời chính xác hơn).
 - Hỏi thẳng vào cơ chế kỹ thuật cụ thể: tên SDK, tên kiến trúc (account abstraction, Paymaster, gas sponsorship...), con số (tốc độ, phí). KHÔNG hỏi chung chung kiểu "does Arc support X".
 - Hỏi luôn cái gì KHÔNG có sẵn, phần nào phải tự build.
-Kèm hướng dẫn: "Copy đoạn trên, vào docs.arc.io, mở khung chat AI của Docs, paste vào rồi gửi. Xong đem câu trả lời quay lại đây." Phần nào phải thử thật mới biết thì soạn thêm 1 khối riêng cho Arc Studio (studio.arc.io), mở đầu bằng câu: "Only answer and run small tests to assess feasibility – do not build the full app yet."
+Kèm hướng dẫn: "Copy đoạn trên, vào docs.arc.io, mở khung chat AI của Docs, paste vào rồi gửi. Xong đem câu trả lời quay lại đây."
 Đọc câu trả lời để đánh giá khả thi. Nếu nó đưa ra nhiều lựa chọn kiến trúc song song thì TUYỆT ĐỐI KHÔNG kết luận "cả hai đều được" – đem từng cái đối chiếu lại yêu cầu quan trọng nhất ở câu 1 để loại bớt, rồi nói rõ vì sao loại.
 
-Nhắc mình: đây là cửa TỐI THIỂU trước khi qua Bước 2, không phải lần kiểm feasibility duy nhất của cả dự án. Bước 2, 3 sẽ khui thêm chi tiết kỹ thuật cụ thể – hễ tới lúc phải chốt dùng đúng một cơ chế nào đó của Arc, quay lại hỏi docs.arc.io hoặc Arc Studio ngay lúc đó, đừng đợi gộp lại review một lần.
+Nhắc mình: đây là cửa TỐI THIỂU trước khi qua Bước 2, không phải lần kiểm feasibility duy nhất của cả dự án. Bước 2, 3 sẽ khui thêm chi tiết kỹ thuật cụ thể – hễ tới lúc phải chốt dùng đúng một cơ chế nào đó của Arc, quay lại hỏi docs.arc.io ngay lúc đó, đừng đợi gộp lại review một lần.
 
 XONG CÂU 3 THÌ TỰ ĐỘNG LÀM 2 VIỆC NÀY, ĐỪNG ĐỢI MÌNH NHẮC:
-1. Tổng hợp toàn bộ thành một case study gọn (4 câu + kết luận pass/không pass), định dạng markdown để mình copy đi lưu.
+1. Tổng hợp toàn bộ thành một case study gọn (4 câu + kết luận pass/không pass + danh sách "CẦN THỬ KHI BUILD", mỗi dòng ghi rõ cần đo cái gì), định dạng markdown để mình copy đi lưu.
 2. Rút ra những lỗi quy trình vừa gặp trong lúc chạy 4 câu này – chỗ nào mình bị hỏi hụt, chỗ nào suýt kết luận sai – viết thành một khối riêng.
 
 Chỗ nào chưa hợp lý thì rèn lại cho hợp lý, xong xuôi hết mới qua Bước 2.
@@ -160,7 +160,7 @@ Hai dự án thật của tác giả, cùng hướng Peer-to-peer payments, cùn
 
 ## Prompt này từng hụt chỗ nào
 
-Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào hướng nào của Arc (lúc đó docs mới có 4 hướng) và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Chỗ hụt #11 không phải prompt sai mà là thế giới đổi: có thêm Arc Studio. Chỗ hụt #10 lộ ra ở lượt chạy với DailyReal (nhật ký ảnh thật, khoá vĩnh viễn trên Arc) – một ý tưởng có sẵn từ đầu và không thuộc hướng nào trong 6 hướng. Đã sửa hết vào khối prompt ở trên.
+Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ hụt (# 1-5). Bốn chỗ hụt sau (# 6-9) lộ ra ở một lượt thử thật khác, với một ý tưởng không khớp thẳng vào hướng nào của Arc (lúc đó docs mới có 4 hướng) và có dùng nhiều cơ chế khác nhau của Arc lẫn ngoài Arc – đúng kiểu tình huống bản đầu của Câu 0 và Câu 3 chưa xử lý được. Chỗ hụt #11 không phải prompt sai mà là thế giới đổi: có thêm Arc Studio. Chỗ hụt #12 là cách sửa #11 dùng thật thấy chậm, nên dời Arc Studio sang Bước 6. Chỗ hụt #10 lộ ra ở lượt chạy với DailyReal (nhật ký ảnh thật, khoá vĩnh viễn trên Arc) – một ý tưởng có sẵn từ đầu và không thuộc hướng nào trong 6 hướng. Đã sửa hết vào khối prompt ở trên.
 
 | # | Hụt gì | Sửa thế nào |
 |---|---|---|
@@ -174,7 +174,8 @@ Bản đầu của prompt chạy ra được ý tưởng, nhưng lộ 5 chỗ h�
 | 8 | Câu 3 được thiết kế như một bước làm 1 lần duy nhất, nhưng feasibility thật ra cần tra liên tục xuyên suốt Bước 1-3 – ý tưởng càng đi sâu càng lộ thêm chi tiết kỹ thuật cụ thể cần verify, app có thể dùng nhiều cơ chế Arc khác nhau chứ không phải một | Ghi rõ câu 3 là cửa TỐI THIỂU trước khi qua Bước 2, không phải lần duy nhất – hễ chốt dùng cơ chế Arc cụ thể nào ở bước sau, quay lại tra ngay lúc đó |
 | 9 | docs.arc.io bị hỏi cả câu hỏi không liên quan gì tới Arc (tokenomics/roadmap của token hay dự án khác) – AI của docs trả lời bừa vì ngoài phạm vi của nó | Tách rõ: câu hỏi thuộc cơ chế Arc thì hỏi docs.arc.io, câu hỏi ngoài Arc thì tự search web riêng |
 | 10 | Sửa ở #6 chưa đủ: prompt vẫn bảo "có ý tưởng rồi thì check thử có khớp 1 trong 6 hướng không", tức vẫn đem ý tưởng có sẵn ra so – Câu 0 vẫn mang dáng một bộ lọc, chỉ là bộ lọc "dễ tính" | Câu 0 chỉ dành cho người chưa có ý tưởng. Có ý tưởng rồi thì bỏ qua, vào thẳng Câu 1. Chuyện có dùng đặc thù kỹ thuật của Arc hay không chuyển sang Câu 3 |
-| 11 | Câu 3 chỉ biết một nguồn kỹ thuật là AI của docs.arc.io. Từ 09/2026 Circle có Arc Studio – AI chuyên tech hơn, thử được thật trên testnet – prompt không nhắc thì người đọc không biết mà dùng | Tách việc: "có không, hoạt động thế nào" hỏi docs; câu kỹ thuật sâu, phải thử mới biết thì hỏi Arc Studio, dặn chỉ thử, chưa build cả app |
+| 11 | Câu 3 chỉ biết một nguồn kỹ thuật là AI của docs.arc.io. Từ 09/2026 Circle có Arc Studio – AI chuyên tech hơn, thử được thật trên testnet – prompt không nhắc thì người đọc không biết mà dùng | Tách việc: "có không, hoạt động thế nào" hỏi docs; câu kỹ thuật sâu, phải thử mới biết thì hỏi Arc Studio, dặn chỉ thử, chưa build cả app. **Đã thay bằng #12** |
+| 12 | Sửa ở #11 làm Bước 1 chậm hẳn: thử trên Arc Studio mỗi lượt mất 5-20 phút, chat tay trên web, trong khi ý tưởng còn đang đổi – thử xong có khi bước sau bỏ luôn tính năng đó | Câu 3 chỉ hỏi docs.arc.io. Câu phải thử mới biết thì ghi vào danh sách "cần thử khi build", Bước 3 gom vào spec, Bước 6 Claude Code giao Arc Studio đo qua CLI ngay trong thư mục dự án |
 
 Lỗi số 4 là lỗi làm hỏng nhiều nhất trong lượt đầu. Prompt bảo AI "hỏi bạn từng câu" nhưng không bảo nó *dẫn*, nên nó thành thư ký ghi chép: bạn nói gì nó gật nấy, chỉ góp ý khi bạn đã nói xong. Bạn tự dẫn được thì cần gì cố vấn.
 

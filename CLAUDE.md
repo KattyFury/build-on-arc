@@ -36,7 +36,7 @@ Một câu cho dễ nhớ: **Chat để nghĩ, Code để giữ và để làm.*
 
 **Ngoại lệ duy nhất – Bước 3 có 2 vòng, tức 2 lượt 4 nhịp:** giao prompt Vòng 1 → nhận → lưu `docs/03-planning.md`; rồi giao prompt Vòng 2 (chốt stack) → nhận → lưu `docs/03-stack.md`. Đừng qua Bước 4 khi chưa có file Vòng 2 – thiếu nó thì Bước 5-6 không biết phải cài gì.
 
-**Bước 1:** user đã có ý tưởng thì Câu 0 (6 hướng Arc) bỏ qua – nó chỉ là điểm bắt đầu cho người chưa có ý tưởng, không phải bộ lọc. Đừng đem ý tưởng có sẵn ra so với 6 hướng.
+**Bước 1:** user đã có ý tưởng thì Câu 0 (6 hướng Arc) bỏ qua – nó chỉ là điểm bắt đầu cho người chưa có ý tưởng, không phải bộ lọc. Đừng đem ý tưởng có sẵn ra so với 6 hướng. Câu 3 chỉ hỏi AI của docs.arc.io – câu phải thử thật mới biết thì ghi vào danh sách "cần thử khi build", để Bước 6 giao Arc Studio qua CLI, không thử ở Bước 1.
 
 **Bước 4:** sau khi lưu `docs/04-wireframe.md`, nếu user chưa biết Figma thì gợi ý nhờ Claude Design vẽ (prompt nằm trong `04-wireframe/README.md`, mục "Chưa biết Figma?"). Link bản vẽ mang về thì lưu vào `docs/` cạnh file wireframe.
 

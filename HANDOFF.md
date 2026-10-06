@@ -2,7 +2,21 @@
 
 > File làm việc của tác giả, không phải nội dung cho người đọc series. Mở máy mới thì đọc file này trước.
 > Luật cho Claude Code nằm ở `CLAUDE.md`. File này ghi **đang ở đâu** và **quy định viết bài**.
-> **Cập nhật:** 2026-10-03 (Câu 0 chỉ cho người chưa có ý tưởng; Claude Design vẽ wireframe; mục "Cần kiểm tra khi build" từ spec DailyReal – xem mục ngay dưới). Trước đó 2026-09-18 (Bước 1 lên 6 hướng Arc; mục "Ví dụ" của 6 bước giờ dùng CẢ TapTip lẫn EZwallet – xem mục ngay dưới). Trước đó 2026-08-22: đổi toàn bộ mục "Ví dụ" từ TapTip sang EZwallet. Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+> **Cập nhật:** 2026-10-06 (Arc Studio dời từ Bước 1 sang Bước 6 – xem mục ngay dưới). Trước đó 2026-10-03 (Câu 0 chỉ cho người chưa có ý tưởng; Claude Design vẽ wireframe; mục "Cần kiểm tra khi build" từ spec DailyReal – xem mục ngay dưới). Trước đó 2026-09-18 (Bước 1 lên 6 hướng Arc; mục "Ví dụ" của 6 bước giờ dùng CẢ TapTip lẫn EZwallet – xem mục ngay dưới). Trước đó 2026-08-22: đổi toàn bộ mục "Ví dụ" từ TapTip sang EZwallet. Cùng ngày trước đó: tách TapTip ra repo riêng `KattyFury/taptip`, repo này trở về thuần hướng dẫn. Trước đó cùng đợt: sửa Bước 1 + Bước 3 Vòng 2 theo lỗi thật tìm ra khi thử với LuckyStaker; thêm Vòng 2 "chốt stack" vào Bước 3, đóng nốt ví dụ + chỗ hụt của Bước 4, dọn sạch em dash.
+
+## ✅ 10-06: DỜI ARC STUDIO TỪ BƯỚC 1 SANG BƯỚC 6
+
+User thấy dùng Arc Studio ở Bước 1 tốn thời gian (deploy thử 5-20 phút/lượt, chat tay trên web, ý tưởng còn đổi). Chốt: Bước 1 chỉ hỏi Arc Docs, Arc Studio dời sang bước build, dùng qua CLI gắn vào Claude Code.
+
+- `01-ideation`: Câu 3 bỏ Arc Studio (lý thuyết + bảng + prompt). Câu phải thử mới biết thì ghi vào danh sách "cần thử khi build", case study cuối bước xuất kèm danh sách này. Hụt #12 (#11 đánh dấu đã thay).
+- `03-planning` Vòng 2: mục "CẦN KIỂM TRA KHI BUILD" gom luôn danh sách từ Bước 1.
+- `05-setup` 8b: cài CLI cả khi mục cần kiểm tra có dòng phải đo trên testnet (không chỉ khi có contract).
+- `06-build`: mục đổi tên "Giao phần on-chain cho Arc Studio", nói rõ dùng qua CLI trong Claude Code (agent `arc-studio`), thêm prompt "chỉ đo một dòng". Hụt #8.
+- `CLAUDE.md`: ghi chú Bước 1 – Câu 3 chỉ hỏi docs.
+
+**Còn nợ:** chưa chạy thật lượt Arc Studio nào qua CLI (xem 2 việc chờ ở mục 10-03 dưới) – prompt "chỉ đo một dòng" mới viết, chưa thử.
+
+---
 
 ## ✅ 10-03: HỌC TỪ SPEC DAILYREAL + 2 BÀI HỌC CỦA BUỔI CHẠY
 

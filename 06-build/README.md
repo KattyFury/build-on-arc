@@ -40,9 +40,11 @@ Claude Code sẽ kiểm mục "cần kiểm tra" trước, rồi đọc spec, li
 
 **Vì sao phải kiểm trước khi code:** spec nào cũng có những câu viết lúc chưa chắc. Spec DailyReal (nhật ký ảnh, mỗi ảnh một NFT trên Arc) ghi thẳng phí gas mint + memo là *"ước tính từ gas limit, chưa phải số công bố chính thức"*, chưa biết Memo chứa được bao nhiêu chữ, chưa biết The Graph có hỗ trợ Arc không – và gom hết vào một mục riêng. Không bắt kiểm trước thì AI code luôn trên giả định đó. Có chỗ sai là sửa được, có chỗ sai là mất luôn: caption gửi qua Memo nằm **công khai, vĩnh viễn** trên chain, quên mã hoá thì caption của người dùng đầu tiên đã lộ, không có nút xoá. Spec chưa có mục này thì quay lại Vòng 2 Bước 3 lấy (file stack giờ có sẵn mục đó). Xong tính năng đầu tiên, nó dừng lại chờ mở app test flow – mọi thứ đúng thì gõ "OK" để nó tiếp tục.
 
-### Giao phần smart contract cho Arc Studio
+### Giao phần on-chain cho Arc Studio
 
-[Arc Studio](https://docs.arc.io/ai/arc-studio) là AI coding agent của Circle, chuyên về Arc: viết contract Solidity, compile, deploy lên Arc testnet, chạy giao dịch thật trong sandbox của nó. Claude Code giỏi việc chung, Arc Studio giỏi đúng mảng on-chain – app có contract thì để Claude Code giao phần đó cho Arc Studio, khỏi bắt Claude Code tự mò.
+[Arc Studio](https://docs.arc.io/ai/arc-studio) là AI coding agent của Circle, chuyên về Arc: viết contract Solidity, compile, deploy lên Arc testnet, chạy giao dịch thật trong sandbox của nó. Claude Code giỏi việc chung, Arc Studio giỏi đúng mảng on-chain – app có contract, hoặc spec còn dòng phải đo thật trên testnet (danh sách "cần thử khi build" mang từ Bước 1), thì để Claude Code giao phần đó cho Arc Studio, khỏi bắt Claude Code tự mò.
+
+**Dùng qua CLI ngay trong Claude Code, đừng mở web studio.arc.io ra chat tay.** Gắn CLI xong, Claude Code có thêm agent `arc-studio` – nó tự soạn việc, gửi kèm spec làm ngữ cảnh, đợi Arc Studio chạy xong rồi kéo code + số đo về thẳng thư mục dự án. Mình chỉ nói kết quả muốn có, không phải copy qua lại giữa hai cửa sổ.
 
 Cài một lần (Bước 5 đã có, chưa cài thì chạy trong terminal – cần Node.js 20 trở lên):
 
@@ -56,6 +58,12 @@ arc-studio skills install --tool claude-code
 
 ```
 Giao cho Arc Studio: viết và deploy contract [mô tả theo spec, vd "ERC-721, mỗi ảnh một token, lưu hash + con trỏ + thời điểm chụp"] lên Arc testnet. Gửi kèm file spec làm ngữ cảnh. Xong thì pull phần contracts về thư mục contracts/ của dự án này, ghi địa chỉ contract + link explorer vào HANDOFF, rồi báo tôi.
+```
+
+Chỉ cần đo một dòng trong mục "Cần kiểm tra khi build" (chưa build thật) thì nói vậy:
+
+```
+Giao cho Arc Studio đo dòng [chép dòng cần kiểm, vd "phí gas mint 1 NFT kèm Memo 200 ký tự"] trên Arc testnet: deploy contract thử tối giản, chạy đúng giao dịch đó, trả về số đo + tx hash + link explorer. Chỉ đo, chưa build app. Ghi kết quả vào mục Cần kiểm tra của spec rồi báo tôi.
 ```
 
 Ba điều phải nhớ:
@@ -260,6 +268,7 @@ Bù lại, EZwallet đã đi xa hơn hẳn ở **Giai đoạn 3** – phần đ�
 | 5 | Giai đoạn 1 bảo "copy 2 file spec vào folder dự án" trong khi Claude Code đã lưu sẵn 5 file ở `docs/` từ Bước 1-4 | Trỏ thẳng vào `docs/`, chỉ copy khi đi tay |
 | 6 | Giai đoạn 1 bảo "đọc toàn bộ folder" rồi code luôn, không phân biệt câu nào trong spec đã chắc, câu nào mới là ước tính. Lòi ra khi nhận spec DailyReal: spec có hẳn mục "Cần kiểm tra khi build", người giao spec phải dặn riêng "nhớ bảo Claude Code đọc cả mục 7 trước khi viết code" – tức prompt chưa tự lo chuyện đó | Thêm khối "trước khi viết dòng code đầu tiên": kiểm từng dòng chưa chắc bằng cách thật, báo bằng chứng, sai thì dừng sửa spec. Kèm đọc bản vẽ theo số màn, và không build mục "Để sau" |
 | 7 | Không có chỗ nào nói phần smart contract giao cho ai – Claude Code tự viết, tự deploy, tự mò lỗi Arc. Từ 09/2026 Circle có Arc Studio chuyên đúng việc này, kèm CLI để Claude Code giao việc | Thêm mục "Giao phần smart contract cho Arc Studio" (cài, prompt giao việc, 3 điều phải nhớ); dòng nào trong mục "cần kiểm tra" phải đo trên testnet thì giao Arc Studio đo |
+| 8 | Bước 1 từng dặn thử khả thi bằng Arc Studio ngay lúc lên ý tưởng – dùng thật thấy chậm (5-20 phút một lượt, chat tay trên web, ý tưởng còn đổi). Dời hẳn sang đây thì Bước 6 phải đón được danh sách "cần thử khi build" từ Bước 1 | Đổi tên mục thành "Giao phần on-chain cho Arc Studio": nhận cả dòng cần đo lẫn contract, nói rõ dùng qua CLI trong Claude Code, thêm prompt "chỉ đo một dòng" |
 
 ---
 
