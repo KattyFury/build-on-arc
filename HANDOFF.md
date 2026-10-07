@@ -122,7 +122,7 @@ User: "cảm giác nó không mang lại hiệu quả, còn gây xao nhãng" –
 
 **Quyết định giữ lại, không xoá:** mục "Ví dụ" + "Prompt này từng hụt chỗ nào" trong 6 file `0N-*/README.md` vẫn dẫn chứng TapTip – đây là lịch sử thật, xoá đi là mất bằng chứng cho luật "chỉ nói những gì làm thật, không chế số liệu". Link đã trỏ đúng sang `KattyFury/taptip`, verify được như cũ, chỉ khác chỗ ở.
 
-**Việc còn treo:** repo `taptip` local ở `D:\Files\Claude\Build on Arc\taptip\` – dev server/`.env.local`/credentials không di chuyển theo (secrets không commit từ đầu), cần tự dựng lại khi quay lại làm tiếp, xem `taptip/HANDOFF.md` mục "Trạng thái nghỉ".
+**Việc còn treo:** repo `taptip` local ở `D:\Files\Claude\project_arc_taptip\` (đổi tên + chuyển 2026-10) – dev server/`.env.local`/credentials không di chuyển theo (secrets không commit từ đầu), cần tự dựng lại khi quay lại làm tiếp, xem `taptip/HANDOFF.md` mục "Trạng thái nghỉ".
 
 ---
 
